@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    jkube.io/scm-url: https://gitlab.fic.udc.es/ferramentas.2021/medusa
+    jkube.io/issue-system: Redmine
+    jkube.io/issue-tracker-url: https://redmine.fic.udc.es/project/medusa/issues
+    jkube.io/scm-tag: head
+  labels:
+    app: medusa
+    provider: jkube
+    version: 0.1-SNAPSHOT
+    group: es.udc.fi.dc.fd
+  name: medusa
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: medusa
+      provider: jkube
+      group: es.udc.fi.dc.fd
+  template:
+    metadata:
+      annotations:
+        jkube.io/scm-url: https://gitlab.fic.udc.es/ferramentas.2021/medusa
+        jkube.io/issue-system: Redmine
+        jkube.io/issue-tracker-url: https://redmine.fic.udc.es/project/medusa/issues
+        jkube.io/scm-tag: head
+      labels:
+        app: medusa
+        provider: jkube
+        version: 0.1-SNAPSHOT
+        group: es.udc.fi.dc.fd
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        image: gitlab.fic.udc.es:5050/ferramentas.2021/medusa:latest
+        imagePullPolicy: Always
+        name: deploy-medusa
+        securityContext:
+          privileged: false
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+        - name: medusa
