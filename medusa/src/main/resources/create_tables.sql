@@ -1,7 +1,7 @@
-DROP TABLE User;
 DROP TABLE Enterprise;
 DROP TABLE Bank_account;
 DROP TABLE Transfer_history;
+DROP TABLE User;
 
 
 CREATE TABLE User (
@@ -32,7 +32,9 @@ CREATE TABLE  Bank_account (
     id BIGINT NOT NULL AUTO_INCREMENT,
     accountNumber BIGINT NOT NULL,
     balance FLOAT NOT NULL,
+    owner BIGINT NOT NULL,
     CONSTRAINT Bank_accountPK PRIMARY KEY (id),
+    CONSTRAINT Bank_accountFK FOREIGN KEY (owner) REFERENCES User(id),
     CONSTRAINT accountNumberUnique UNIQUE (accountNumber)
 ) ENGINE = InnoDB;
 
