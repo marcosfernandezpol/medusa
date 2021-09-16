@@ -28,9 +28,6 @@ public class User {
 
 	/** The user login. */
 	private String login;
-
-	/** The user name. */
-	private String userName;
 	
 	/** The first name. */
 	private String firstName;
