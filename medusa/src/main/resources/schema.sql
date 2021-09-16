@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS User;
 
 CREATE TABLE User (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    userName VARCHAR(60) COLLATE latin1_bin NOT NULL,
+    userName VARCHAR(60) NOT NULL,
     password VARCHAR(60) NOT NULL,
     firstName VARCHAR(60) NOT NULL,
     lastName VARCHAR(60) NOT NULL,
@@ -18,8 +18,8 @@ CREATE TABLE User (
 
 CREATE TABLE Enterprise (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    enterpriseName VARCHAR(60) COLLATE latin1_bin NOT NULL, 
-    acronim VARCHAR(10) COLLATE latin1_bin NOT NULL,
+    enterpriseName VARCHAR(60) NOT NULL, 
+    acronim VARCHAR(10) NOT NULL,
     fundation DATE NOT NULL,
     incomes FLOAT NOT NULL,
     annualBenefits FLOAT NOT NULL,
