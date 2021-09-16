@@ -224,7 +224,7 @@ public class User {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(city, country, firstName, id, lastName, login, password, role, userName);
+		return Objects.hash(city, country, firstName, id, lastName, login, password, role);
 	}
 
 	@Override
