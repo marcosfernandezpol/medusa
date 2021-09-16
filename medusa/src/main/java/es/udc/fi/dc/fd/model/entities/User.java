@@ -58,7 +58,6 @@ public class User {
 	 * Instantiates a new user.
 	 *
 	 * @param login     the user login
-	 * @param userName  the user name
 	 * @param firstName the first name
 	 * @param lastName  the last name
 	 * @param password  the password
@@ -69,7 +68,6 @@ public class User {
 	public User(String login, String userName, String firstName, String lastName, String password, String city, String country) {
 
 		this.login = login;
-		this.userName = userName;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
@@ -96,24 +94,6 @@ public class User {
 	 */
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	/**
-	 * Gets the user name.
-	 *
-	 * @return the user name
-	 */
-	public String getUserName() {
-		return userName;
-	}
-
-	/**
-	 * Sets the user name.
-	 *
-	 * @param userName the new user name
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 	/**
@@ -259,13 +239,12 @@ public class User {
 		return Objects.equals(city, other.city) && Objects.equals(country, other.country)
 				&& Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)
 				&& Objects.equals(lastName, other.lastName) && Objects.equals(login, other.login)
-				&& Objects.equals(password, other.password) && role == other.role
-				&& Objects.equals(userName, other.userName);
+				&& Objects.equals(password, other.password) && role == other.role;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", userName=" + userName + ", firstName=" + firstName
+		return "User [id=" + id + ", login=" + login + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", password=" + password + ", city=" + city + ", country=" + country
 				+ ", role=" + role + "]";
 	}
