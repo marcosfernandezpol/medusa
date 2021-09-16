@@ -1,5 +1,7 @@
 package es.udc.fi.dc.fd.model.entities;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 /**
  * The Class User.
  */
+
 @Entity
 public class User {
 
@@ -16,30 +19,38 @@ public class User {
 	 */
 	public enum RoleType {
 		/** The user. */
-		USER
+		ADMIN,
+		CLIENT
 	}
 
 	/** The id. */
 	private Long id;
 
+	/** The user login. */
+	private String login;
+
 	/** The user name. */
 	private String userName;
-
-	/** The password. */
-	private String password;
-
+	
 	/** The first name. */
 	private String firstName;
 
 	/** The last name. */
 	private String lastName;
+	
+	/** The password. */
+	private String password;
 
-	/** The email. */
-	private String email;
+	/** The city. */
+	private String city;
+	
+	/** The country. */
+	private String country;
 
 	/** The role. */
 	private RoleType role;
 
+	
 	/**
 	 * Instantiates a new user.
 	 */
@@ -49,19 +60,24 @@ public class User {
 	/**
 	 * Instantiates a new user.
 	 *
+	 * @param login     the user login
 	 * @param userName  the user name
-	 * @param password  the password
 	 * @param firstName the first name
 	 * @param lastName  the last name
-	 * @param email     the email
+	 * @param password  the password
+	 * @param city      the city
+	 * @param country   the country
 	 */
-	public User(String userName, String password, String firstName, String lastName, String email) {
+	
+	public User(String login, String userName, String firstName, String lastName, String password, String city, String country) {
 
+		this.login = login;
 		this.userName = userName;
-		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.email = email;
+		this.password = password;
+		this.city = city;
+		this.country = country;
 
 	}
 
@@ -158,24 +174,6 @@ public class User {
 	}
 
 	/**
-	 * Gets the email.
-	 *
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-	/**
-	 * Sets the email.
-	 *
-	 * @param email the new email
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	/**
 	 * Gets the role.
 	 *
 	 * @return the role
@@ -193,4 +191,87 @@ public class User {
 		this.role = role;
 	}
 
+	/**
+	 * Gets the login.
+	 *
+	 * @return the login
+	 */
+	public String getLogin() {
+		return login;
+	}
+
+	/**
+	 * Sets the login.
+	 *
+	 * @param login the new login
+	 */
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	/**
+	 * Gets the city.
+	 *
+	 * @return the city
+	 */
+	public String getCity() {
+		return city;
+	}
+
+	/**
+	 * Sets the city.
+	 *
+	 * @param city the new city
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	/**
+	 * Gets the country.
+	 *
+	 * @return the country
+	 */
+	public String getCountry() {
+		return country;
+	}
+
+	/**
+	 * Sets the country.
+	 *
+	 * @param country the new country
+	 */
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(city, country, firstName, id, lastName, login, password, role, userName);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(city, other.city) && Objects.equals(country, other.country)
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)
+				&& Objects.equals(lastName, other.lastName) && Objects.equals(login, other.login)
+				&& Objects.equals(password, other.password) && role == other.role
+				&& Objects.equals(userName, other.userName);
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", login=" + login + ", userName=" + userName + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", password=" + password + ", city=" + city + ", country=" + country
+				+ ", role=" + role + "]";
+	}
+
+	
 }
