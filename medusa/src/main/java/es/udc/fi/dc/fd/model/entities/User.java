@@ -46,6 +46,8 @@ public class User {
 
 	/** The role. */
 	private RoleType role;
+	
+	private String email;
 
 	
 	/**
@@ -74,6 +76,22 @@ public class User {
 		this.city = city;
 		this.country = country;
 
+	}
+	
+	
+
+	/**
+	 * @param login
+	 * @param firstName
+	 * @param lastName
+	 * @param password
+	 */
+	public User(String login, String firstName, String lastName, String password, String email) {
+		this.login = login;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+		this.email = email;
 	}
 
 	/**
@@ -155,8 +173,25 @@ public class User {
 	 *
 	 * @return the role
 	 */
+	
+	
+	
 	public RoleType getRole() {
 		return role;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	/**

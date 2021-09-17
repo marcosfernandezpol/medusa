@@ -23,7 +23,7 @@ public class UserDto {
 	private Long id;
 	
 	/** The user name. */
-	private String userName;
+	private String login;
 	
 	/** The password. */
 	private String password;
@@ -55,10 +55,10 @@ public class UserDto {
 	 * @param email the email
 	 * @param role the role
 	 */
-	public UserDto(Long id, String userName, String firstName, String lastName, String email, String role) {
+	public UserDto(Long id, String login, String firstName, String lastName, String email, String role) {
 
 		this.id = id;
-		this.userName = userName != null ? userName.trim() : null;
+		this.login = login != null ? login.trim() : null;
 		this.firstName = firstName.trim();
 		this.lastName = lastName.trim();
 		this.email = email.trim();
@@ -91,8 +91,8 @@ public class UserDto {
 	 */
 	@NotNull(groups={AllValidations.class})
 	@Size(min=1, max=60, groups={AllValidations.class})
-	public String getUserName() {
-		return userName;
+	public String getLogin() {
+		return login;
 	}
 
 	/**
@@ -100,8 +100,8 @@ public class UserDto {
 	 *
 	 * @param userName the new user name
 	 */
-	public void setUserName(String userName) {
-		this.userName = userName.trim();
+	public void setLogin(String login) {
+		this.login = login.trim();
 	}
 
 	/**

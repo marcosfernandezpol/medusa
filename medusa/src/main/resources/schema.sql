@@ -13,7 +13,7 @@ CREATE TABLE User (
     country VARCHAR(60) NOT NULL,
     city VARCHAR(60) NOT NULL,
     CONSTRAINT UserPK PRIMARY KEY (id),
-    CONSTRAINT UserNameUniqueKey UNIQUE (userName)
+    CONSTRAINT UserNameUniqueKey UNIQUE (login)
 );
 
 CREATE TABLE Enterprise (

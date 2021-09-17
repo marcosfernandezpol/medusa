@@ -15,7 +15,7 @@ public interface UserDao extends PagingAndSortingRepository<User, Long> {
 	 * @param userName the user name
 	 * @return true, if successful
 	 */
-	boolean existsByUserName(String userName);
+	boolean existsByLogin(String login);
 
 	/**
 	 * Find by user name.
@@ -23,6 +23,6 @@ public interface UserDao extends PagingAndSortingRepository<User, Long> {
 	 * @param userName the user name
 	 * @return the optional
 	 */
-	Optional<User> findByUserName(String userName);
+	Optional<User> findByLogin(String login);
 
 }

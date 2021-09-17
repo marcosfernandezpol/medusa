@@ -40,7 +40,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 		
 		userOp = userDao.findById(userId);
 		if (userOp.isPresent()) { //Aqui habría que añadir algo para cuando el user no exista
-			user = userOp.get)();
+			user = userOp.get();
 			
 			if (user.getRole() == RoleType.ADMIN) {
 				

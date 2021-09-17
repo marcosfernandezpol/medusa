@@ -42,12 +42,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void signUp(User user) throws DuplicateInstanceException {
 
-		if (userDao.existsByUserName(user.getUserName())) {
-			throw new DuplicateInstanceException("project.entities.user", user.getUserName());
+		if (userDao.existsByUserName(user.getLogin())) {
+			throw new DuplicateInstanceException("project.entities.user", user.getLogin());
 		}
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setRole(User.RoleType.USER);
+		user.setRole(User.RoleType.CLIENT);
 
 		userDao.save(user);
 

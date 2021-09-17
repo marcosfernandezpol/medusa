@@ -73,7 +73,7 @@ public class UserControllerTest {
 		userDao.save(user);
 
 		LoginParamsDto loginParams = new LoginParamsDto();
-		loginParams.setUserName(user.getUserName());
+		loginParams.setUserName(user.getLogin());
 		loginParams.setPassword(PASSWORD);
 
 		return userController.login(loginParams);
@@ -88,10 +88,10 @@ public class UserControllerTest {
 	@Test
 	public void testPostLogin_Ok() throws Exception {
 
-		AuthenticatedUserDto user = createAuthenticatedUser("admin", RoleType.USER);
+		AuthenticatedUserDto user = createAuthenticatedUser("admin", RoleType.CLIENT);
 
 		LoginParamsDto loginParams = new LoginParamsDto();
-		loginParams.setUserName(user.getUserDto().getUserName());
+		loginParams.setUserName(user.getUserDto().getLogin());
 		loginParams.setPassword(PASSWORD);
 
 		ObjectMapper mapper = new ObjectMapper();
