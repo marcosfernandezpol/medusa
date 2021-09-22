@@ -95,7 +95,8 @@
 			</activation>
 			<properties>
 				<!--  Data source properties -->
-				<dataSource.url>jdbc:h2:mem:medusa</dataSource.url>
+				<!--  dataSource.url>jdbc:h2:mem:medusa</dataSource.url-->
+				<dataSource.url>jdbc:h2:file:C:/Users/siroc/Documents/bbdd;AUTO_SERVER=TRUE </dataSource.url>
 				<testDataSource.url>jdbc:h2:mem:medusaTest</testDataSource.url>
 				<dataSource.user>sa</dataSource.user>
 				<dataSource.password></dataSource.password>

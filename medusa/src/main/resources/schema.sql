@@ -20,7 +20,7 @@ CREATE TABLE Enterprise (
     id BIGINT NOT NULL AUTO_INCREMENT,
     enterpriseName VARCHAR(60) NOT NULL, 
     acronim VARCHAR(10) NOT NULL,
-    fundation DATE NOT NULL,
+    fundation DATE,
     incomes FLOAT NOT NULL,
     annualBenefits FLOAT NOT NULL,
     CONSTRAINT EnterprisePK PRIMARY KEY (id),
@@ -28,13 +28,11 @@ CREATE TABLE Enterprise (
 );
 
 CREATE TABLE  Bank_account (
-    id BIGINT NOT NULL AUTO_INCREMENT,
     accountNumber BIGINT NOT NULL,
     balance FLOAT NOT NULL,
     owner BIGINT NOT NULL,
-    CONSTRAINT Bank_accountPK PRIMARY KEY (id),
-    CONSTRAINT Bank_accountFK FOREIGN KEY (owner) REFERENCES User(id),
-    CONSTRAINT accountNumberUnique UNIQUE (accountNumber)
+    CONSTRAINT Bank_accountPK PRIMARY KEY (accountNumber),
+    CONSTRAINT Bank_accountFK FOREIGN KEY (owner) REFERENCES User(id)
 );
 
 CREATE TABLE Transfer_history (
