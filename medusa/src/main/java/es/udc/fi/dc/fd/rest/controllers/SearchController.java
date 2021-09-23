@@ -24,7 +24,7 @@ public class SearchController {
 
 	@GetMapping("/enterprises")
 	public List<EnterpriseDto> findAllEnterpirses() {
-		return  EnterpriseConversor.toEnterprisesDtos((List<EnterpriseDto>) searchService.findAllEnterprises());
+		return  EnterpriseConversor.toEnterprisesDtos(searchService.findAllEnterprises());
 	}
 
 }
