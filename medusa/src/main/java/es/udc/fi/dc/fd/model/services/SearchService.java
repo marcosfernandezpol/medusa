@@ -1,9 +1,11 @@
 package es.udc.fi.dc.fd.model.services;
 
-import antlr.collections.List;
+import java.util.List;
+
+import es.udc.fi.dc.fd.model.entities.Enterprise;
 
 public interface SearchService {
 
-	public List findAllEnterprises();
+	public List<Enterprise> findAllEnterprises();
 	
 }

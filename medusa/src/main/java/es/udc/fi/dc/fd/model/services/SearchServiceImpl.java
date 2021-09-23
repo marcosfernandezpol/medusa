@@ -1,13 +1,13 @@
 package es.udc.fi.dc.fd.model.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import antlr.collections.List;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
 
@@ -20,9 +20,9 @@ public class SearchServiceImpl implements SearchService {
 	private EnterpriseDao enterpriseDao;
 
 	@Override
-	public List findAllEnterprises() {
+	public List<Enterprise> findAllEnterprises() {
 		
-		List enterpriseList = (List) new ArrayList<Enterprise>();
+		List<Enterprise> enterpriseList = new ArrayList<Enterprise>();
 		
 		Iterable<Enterprise> enterprises = enterpriseDao.findAll(
 				Sort.by(Sort.Direction.ASC,"enterpriseName"));

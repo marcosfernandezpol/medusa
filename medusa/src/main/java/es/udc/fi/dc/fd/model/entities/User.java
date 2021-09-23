@@ -19,8 +19,7 @@ public class User {
 	 */
 	public enum RoleType {
 		/** The user. */
-		ADMIN,
-		CLIENT
+		ADMIN, CLIENT
 	}
 
 	/** The id. */
@@ -28,28 +27,27 @@ public class User {
 
 	/** The user login. */
 	private String login;
-	
+
 	/** The first name. */
 	private String firstName;
 
 	/** The last name. */
 	private String lastName;
-	
+
 	/** The password. */
 	private String password;
 
 	/** The city. */
 	private String city;
-	
+
 	/** The country. */
 	private String country;
 
 	/** The role. */
 	private RoleType role;
-	
+
 	private String email;
 
-	
 	/**
 	 * Instantiates a new user.
 	 */
@@ -66,8 +64,9 @@ public class User {
 	 * @param city      the city
 	 * @param country   the country
 	 */
-	
-	public User(String login, String userName, String firstName, String lastName, String password, String city, String country) {
+
+	public User(String login, String userName, String firstName, String lastName, String password, String city,
+			String country) {
 
 		this.login = login;
 		this.firstName = firstName;
@@ -77,8 +76,6 @@ public class User {
 		this.country = country;
 
 	}
-	
-	
 
 	/**
 	 * @param login
@@ -92,6 +89,18 @@ public class User {
 		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
+	}
+
+	public User(String login, String firstName, String lastName, String password, String email, String country,
+			String city, RoleType role) {
+		this.login = login;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+		this.email = email;
+		this.city = city;
+		this.country = country;
+		this.role = role;
 	}
 
 	/**
@@ -173,9 +182,7 @@ public class User {
 	 *
 	 * @return the role
 	 */
-	
-	
-	
+
 	public RoleType getRole() {
 		return role;
 	}
@@ -279,10 +286,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", password=" + password + ", city=" + city + ", country=" + country
-				+ ", role=" + role + "]";
+		return "User [id=" + id + ", login=" + login + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", password=" + password + ", city=" + city + ", country=" + country + ", role=" + role + "]";
 	}
 
-	
 }

@@ -31,10 +31,9 @@ public class Enterprise {
 	//End atributes
 	
 	
-	public Enterprise(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
+	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes,
 			Float annualBenefits) {
 		super();
-		this.id = id;
 		this.enterpriseName = enterpriseName;
 		this.acronim = acronim;
 		this.fundation = fundation;
