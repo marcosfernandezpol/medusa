@@ -13,25 +13,24 @@ import javax.persistence.Id;
  */
 @Entity
 public class Enterprise {
-	
-	//Start atributes
-	
+
+	// Start atributes
+
 	private Long id;
-	
+
 	private String enterpriseName;
-	
+
 	private String acronim;
-	
+
 	private Date fundation;
-	
+
 	private Float incomes;
-	
+
 	private Float annualBenefits;
-	
-	//End atributes
-	
-	
-	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes,
+
+	// End atributes
+
+	public Enterprise(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
 			Float annualBenefits) {
 		super();
 		this.enterpriseName = enterpriseName;
@@ -40,16 +39,21 @@ public class Enterprise {
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
 	}
-	
-	
-	
-	
+
+	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, Float annualBenefits) {
+		super();
+		this.enterpriseName = enterpriseName;
+		this.acronim = acronim;
+		this.fundation = fundation;
+		this.incomes = incomes;
+		this.annualBenefits = annualBenefits;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;
@@ -95,8 +99,6 @@ public class Enterprise {
 		this.annualBenefits = annualBenefits;
 	}
 
-	
-	
 	@Override
 	public String toString() {
 		return "Enterprise [id=" + id + ", enterpriseName=" + enterpriseName + ", acronim=" + acronim + ", fundation="
@@ -121,7 +123,5 @@ public class Enterprise {
 				&& Objects.equals(enterpriseName, other.enterpriseName) && Objects.equals(fundation, other.fundation)
 				&& Objects.equals(id, other.id) && Objects.equals(incomes, other.incomes);
 	}
-	
-	
-	
+
 }
