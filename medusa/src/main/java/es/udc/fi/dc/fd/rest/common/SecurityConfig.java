@@ -3,6 +3,7 @@ package es.udc.fi.dc.fd.rest.common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -36,7 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().addFilter(new JwtFilter(authenticationManager(), jwtGenerator)).authorizeRequests()
 				.antMatchers("/users/signUp").permitAll()
 				.antMatchers("/users/login").permitAll()
-				.antMatchers("/users/loginFromServiceToken").permitAll();
+				.antMatchers("/users/loginFromServiceToken").permitAll()
+				.antMatchers(HttpMethod.GET,"/search/enterprises").permitAll()
+				.antMatchers(HttpMethod.POST,"/market/create_enterprise").hasRole("ADMIN");
 		// @formatter:on
 
 	}
