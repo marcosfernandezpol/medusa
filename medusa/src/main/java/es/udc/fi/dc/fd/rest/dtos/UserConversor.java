@@ -32,7 +32,7 @@ public class UserConversor {
 	 */
 	public static final User toUser(UserDto userDto) {
 
-		return new User(userDto.getLogin(), userDto.getPassword(), userDto.getFirstName(), userDto.getLastName(),
+		return new User(userDto.getLogin(), userDto.getFirstName(), userDto.getLastName(),userDto.getPassword(),
 				userDto.getEmail());
 	}
 

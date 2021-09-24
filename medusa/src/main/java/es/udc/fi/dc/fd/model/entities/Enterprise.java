@@ -30,6 +30,8 @@ public class Enterprise {
 
 	// End atributes
 
+	
+	
 	public Enterprise(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
 			Float annualBenefits) {
 		super();
@@ -38,6 +40,12 @@ public class Enterprise {
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
+	}
+
+	/**
+	 * 
+	 */
+	public Enterprise() {
 	}
 
 	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, Float annualBenefits) {

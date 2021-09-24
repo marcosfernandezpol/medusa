@@ -10,8 +10,9 @@ CREATE TABLE User (
     firstName VARCHAR(60) NOT NULL,
     lastName VARCHAR(60) NOT NULL,
     role TINYINT NOT NULL,
-    country VARCHAR(60) NOT NULL,
-    city VARCHAR(60) NOT NULL,
+    country VARCHAR(60),
+    city VARCHAR(60),
+    email VARCHAR(60) NOT NULL,
     CONSTRAINT UserPK PRIMARY KEY (id),
     CONSTRAINT UserNameUniqueKey UNIQUE (login)
 );

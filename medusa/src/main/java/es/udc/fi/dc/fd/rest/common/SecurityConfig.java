@@ -35,9 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// @formatter:off
 		http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and().addFilter(new JwtFilter(authenticationManager(), jwtGenerator)).authorizeRequests()
-				.antMatchers("/users/signUp").permitAll()
-				.antMatchers("/users/login").permitAll()
-				.antMatchers("/users/loginFromServiceToken").permitAll()
+				.antMatchers(HttpMethod.POST,"/users/signUp").permitAll()
+				.antMatchers(HttpMethod.POST,"/users/login").permitAll()
+				.antMatchers(HttpMethod.POST,"/users/loginFromServiceToken").permitAll()
 				.antMatchers(HttpMethod.GET,"/search/enterprises").permitAll()
 				.antMatchers(HttpMethod.POST,"/market/create_enterprise").hasRole("ADMIN");
 		// @formatter:on

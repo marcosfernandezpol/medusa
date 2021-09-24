@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 	public User login(String userName, String password) throws IncorrectLoginException {
 
 		Optional<User> user = userDao.findByLogin(userName);
-
+		
 		if (!user.isPresent()) {
 			throw new IncorrectLoginException(userName, password);
 		}
@@ -74,7 +74,8 @@ public class UserServiceImpl implements UserService {
 		if (!passwordEncoder.matches(password, user.get().getPassword())) {
 			throw new IncorrectLoginException(userName, password);
 		}
-
+		
+		
 		return user.get();
 
 	}
