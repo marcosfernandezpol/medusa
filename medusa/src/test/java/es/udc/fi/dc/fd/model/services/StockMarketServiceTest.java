@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.entities.User.RoleType;
@@ -90,21 +91,21 @@ public class StockMarketServiceTest {
 //	}
 	
 	@Test
-	public void testDepositTransfer() throws InvalidOperationException, InstanceNotFoundException{
+	public void testDepositTransfer() throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException{
 		
 		User client = createClient();
 		
-		stockMarketService.transfer(client.getId(), Float.valueOf(500));
+		stockMarketService.transfer(client.getId(), Float.valueOf(500),"INCOME");
 		
 	}
 	
 	
 	@Test
-	public void testRetireTransfer() throws InvalidOperationException, InstanceNotFoundException{
+	public void testRetireTransfer() throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException{
 		
 		User client = createClient();
 		
-		stockMarketService.transfer(client.getId(), Float.valueOf(-200));
+		stockMarketService.transfer(client.getId(), Float.valueOf(200),"WITHDRAW");
 		
 	}
 

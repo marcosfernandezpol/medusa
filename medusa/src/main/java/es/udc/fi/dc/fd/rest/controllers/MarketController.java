@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.services.StockMarketService;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
@@ -53,9 +54,9 @@ public class MarketController {
     public void transfer (
     	@RequestAttribute Long userId,
     	@Validated @RequestBody TransferParamsDto params) 
-    throws InvalidOperationException, InstanceNotFoundException{
+    throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException{
     	
-    	marketService.transfer(userId, params.getMoney());
+    	marketService.transfer(userId, params.getMoney(), params.getOperation());
     }
 	
 

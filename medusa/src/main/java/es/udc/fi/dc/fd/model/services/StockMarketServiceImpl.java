@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
 import es.udc.fi.dc.fd.model.entities.User;
@@ -61,32 +62,36 @@ public class StockMarketServiceImpl implements StockMarketService {
 	
 	
 	@Override
-	public void transfer(Long userId, Float money) 
-			throws InvalidOperationException, InstanceNotFoundException {
-		
-		//Comprobamos la existencia del usuario
+	public void transfer(Long userId, Float money, String operation)
+			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException {
+
+		// Comprobamos la existencia del usuario
 		permissionChecker.checkUser(userId);
-		
-		
-		//Recuperamos el usuario ya existente
+
+		// Recuperamos el usuario ya existente
 		Optional<User> existUser = userDao.findById(userId);
 		User user = existUser.get();
-		
-		if (money > 0) { //Caso de ingresar
+
+		if (money <= 0) {
+			throw new InvalidOperationException();
+		}
+
+		if (operation.equals("INCOME")) { // Caso de ingresar
 			user.setBalance(money + user.getBalance());
 			userDao.save(user);
-		} else if (money < 0) { //Caso de retirar
-			if (user.getBalance() > money) {
+		} else if (operation.equals("WITHDRAW")) { // Caso de retirar
+			if (user.getBalance() >= money) {
 				user.setBalance(user.getBalance() - money);
 				userDao.save(user);
 			} else {
-				throw new InvalidOperationException(); //Cantidad para retirar insuficiente
+				
+				throw new NotEnoughBalanceException("Not enough balance"); // Cantidad para retirar insuficiente
 			}
+
 		} else {
-			throw new InvalidOperationException();	//Caso de 0 (inválido)
+			throw new InvalidOperationException();
 		}
-		
-		
+
 	}
 }
 
