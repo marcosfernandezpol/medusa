@@ -19,7 +19,8 @@ public class User {
 	 */
 	public enum RoleType {
 		/** The user. */
-		ADMIN, CLIENT
+		ADMIN,
+		CLIENT
 	}
 
 	/** The id. */
@@ -27,27 +28,32 @@ public class User {
 
 	/** The user login. */
 	private String login;
-
+	
 	/** The first name. */
 	private String firstName;
 
 	/** The last name. */
 	private String lastName;
-
+	
 	/** The password. */
 	private String password;
 
 	/** The city. */
 	private String city;
-
+	
 	/** The country. */
 	private String country;
 
 	/** The role. */
 	private RoleType role;
-
+	
+	/** The email. */
 	private String email;
+	
+	/** The balance. */
+	private Float balance;
 
+	
 	/**
 	 * Instantiates a new user.
 	 */
@@ -63,10 +69,10 @@ public class User {
 	 * @param password  the password
 	 * @param city      the city
 	 * @param country   the country
+	 * @param balance 	the balance
 	 */
-
-	public User(String login, String userName, String firstName, String lastName, String password, String city,
-			String country) {
+	
+	public User(String login, String userName, String firstName, String lastName, String password, String city, String country, Float balance) {
 
 		this.login = login;
 		this.firstName = firstName;
@@ -74,8 +80,11 @@ public class User {
 		this.password = password;
 		this.city = city;
 		this.country = country;
+		this.balance = balance;
 
 	}
+	
+	
 
 	/**
 	 * @param login
@@ -89,18 +98,6 @@ public class User {
 		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
-	}
-
-	public User(String login, String firstName, String lastName, String password, String email, String country,
-			String city, RoleType role) {
-		this.login = login;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.password = password;
-		this.email = email;
-		this.city = city;
-		this.country = country;
-		this.role = role;
 	}
 
 	/**
@@ -182,7 +179,9 @@ public class User {
 	 *
 	 * @return the role
 	 */
-
+	
+	
+	
 	public RoleType getRole() {
 		return role;
 	}
@@ -264,9 +263,27 @@ public class User {
 		this.country = country;
 	}
 
+	/**
+	 * Gets the balance.
+	 *
+	 * @return the balance
+	 */
+	public Float getBalance() {
+		return balance;
+	}
+
+	/**
+	 * Sets the balance.
+	 *
+	 * @param balance the new balance
+	 */
+	public void setBalance(Float balance) {
+		this.balance = balance;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(city, country, firstName, id, lastName, login, password, role);
+		return Objects.hash(balance, city, country, email, firstName, id, lastName, login, password, role);
 	}
 
 	@Override
@@ -278,7 +295,8 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(city, other.city) && Objects.equals(country, other.country)
+		return Objects.equals(balance, other.balance) && Objects.equals(city, other.city)
+				&& Objects.equals(country, other.country) && Objects.equals(email, other.email)
 				&& Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)
 				&& Objects.equals(lastName, other.lastName) && Objects.equals(login, other.login)
 				&& Objects.equals(password, other.password) && role == other.role;
@@ -287,7 +305,12 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", login=" + login + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", password=" + password + ", city=" + city + ", country=" + country + ", role=" + role + "]";
+				+ ", password=" + password + ", city=" + city + ", country=" + country + ", role=" + role + ", email="
+				+ email + ", balance=" + balance + "]";
 	}
 
+
+	
+
+	
 }
