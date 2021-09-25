@@ -113,7 +113,7 @@ public class User {
 	 * @param role
 	 */
 	public User(String firstName, String login, String lastName, String password, String email, String city,
-			String country, RoleType role) {
+			String country, RoleType role, float balance) {
 		this.firstName = firstName;
 		this.login = login;
 		this.lastName = lastName;

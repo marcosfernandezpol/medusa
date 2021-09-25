@@ -16,7 +16,6 @@ import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.entities.User.RoleType;
 import es.udc.fi.dc.fd.model.entities.UserDao;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
-import es.udc.fi.dc.fd.model.services.exceptions.*;
 
 @Service
 @Transactional
