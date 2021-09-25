@@ -13,6 +13,7 @@ CREATE TABLE User (
     country VARCHAR(60),
     city VARCHAR(60),
     email VARCHAR(60) NOT NULL,
+    balance FLOAT NOT NULL,
     CONSTRAINT UserPK PRIMARY KEY (id),
     CONSTRAINT UserNameUniqueKey UNIQUE (login)
 );
