@@ -2,6 +2,7 @@ package es.udc.fi.dc.fd.model.services;
 
 import java.sql.Date;
 
+
 import javax.transaction.Transactional;
 
 import static org.junit.Assert.assertNotNull;
@@ -14,11 +15,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
+import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
+import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.entities.User.RoleType;
 import es.udc.fi.dc.fd.model.entities.UserDao;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
+
 
 /**
  * The Class StockMarketServiceTest.
@@ -29,27 +33,35 @@ import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
 @Transactional
 public class StockMarketServiceTest {
 
+	private final Long NON_EXISTENT_ID = Long.valueOf(-1);
+	
 	@Autowired
 	private StockMarketService stockMarketService;
 
 	@Autowired
 	private UserDao userDao;
 
+	//Creamos un usuario de tipo Administrador
 	private User createAdmin() {
-		return new User("Pol", "fdezpol", "masmejor", "password", "fdezpol007elmasmejor@gmail.com", "Santiago",
-				"Galicia", RoleType.ADMIN);
+		return new User("Pol", "fdezpol", "masmejor", "password", "fdezpol007elmasmejor@gmail.com", "Spain",
+				"Santiago", RoleType.ADMIN, 1000);
+				
+	}
+	
+	//Creamos un usuario de tipo Cliente
+	private User createClient() {
+		return new User("MariaM", "Maria", "Martinez", "password", "mariamartinez@gmail.com", "Spain",
+				"A Coruña", RoleType.CLIENT, 1200);
+				
 	}
 
-//	private User createUser() {
-//		return new User("Pol", "fdezpol", "modouser", "password", "fdezpol007humilde@gmail.com", "Lugo", "Galicia",
-//				RoleType.CLIENT);
-//	}
-
+	// Creamos una empresa
 	private Enterprise createEnterprise() {
 		return new Enterprise("MedusaEnterprises", "ME", Date.valueOf("1999-01-17"), Float.valueOf(1000),
 				Float.valueOf(10000));
 	}
 
+	
 	@Test
 	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException {
 
@@ -76,5 +88,60 @@ public class StockMarketServiceTest {
 //		assertThrows(() -> stockMarketService.createEnterprise(user.getId(), enterprise));
 //
 //	}
+	
+	@Test
+	public void testDepositTransfer() throws InvalidOperationException, InstanceNotFoundException{
+		
+		User client = createClient();
+		
+		stockMarketService.transfer(client.getId(), Float.valueOf(500));
+		
+	}
+	
+	
+	@Test
+	public void testRetireTransfer() throws InvalidOperationException, InstanceNotFoundException{
+		
+		User client = createClient();
+		
+		stockMarketService.transfer(client.getId(), Float.valueOf(-200));
+		
+	}
 
+	
+//	@Test
+//	public void testInvalidOperation1Transfer() throws InvalidOperationException, InstanceNotFoundException{
+//		
+//		User client = createClient();
+//		
+//		assertThrows(InvalidOperationException.class, ()  ->
+//		stockMarketService.transfer(client.getId(), Float.valueOf(0)));
+//		
+//	}
+//	
+//	@Test
+//	public void testInvalidOperation2Transfer() throws InvalidOperationException, InstanceNotFoundException{
+//		
+//		User client = createClient();
+//		
+//		assertThrows(InvalidOperationException.class, ()  ->
+//		stockMarketService.transfer(client.getId(), Float.valueOf(-1600)));
+//		
+//	}
+//	
+//	
+//	@Test
+//	public void testInstanceNotFoundTransfer() throws InvalidOperationException, InstanceNotFoundException{
+//		
+//		User client = createClient();
+//		
+//		assertThrows(InvalidOperationException.class, ()  ->
+//		stockMarketService.transfer(NON_EXISTENT_ID,Float.valueOf(100)));
+//		
+//	}
+//	
+	
+	
 }
+
+
