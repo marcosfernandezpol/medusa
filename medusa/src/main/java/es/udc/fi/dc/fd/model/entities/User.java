@@ -98,6 +98,31 @@ public class User {
 		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
+		this.balance = 0F;
+	}
+	
+
+	/**
+	 * @param firstName
+	 * @param login
+	 * @param lastName
+	 * @param password
+	 * @param email
+	 * @param city
+	 * @param country
+	 * @param role
+	 */
+	public User(String firstName, String login, String lastName, String password, String email, String city,
+			String country, RoleType role) {
+		this.firstName = firstName;
+		this.login = login;
+		this.lastName = lastName;
+		this.password = password;
+		this.email = email;
+		this.city = city;
+		this.country = country;
+		this.role = role;
+		this.balance = 0F;
 	}
 
 	/**
