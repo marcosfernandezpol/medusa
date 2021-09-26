@@ -1,5 +1,5 @@
 import NetworkError from "./NetworkError";
-import { config } from "../../../config/constants.js";
+import { config } from "../config/constants.js";
 
 let networkErrorCallback;
 let reauthenticationCallback;
@@ -112,6 +112,6 @@ export const fetchConfig = (method, body) => {
 };
 
 export const appFetch = (path, options, onSuccess, onErrors) =>
-  fetch(`${config.BASE_PATH}${path}`, options)
+  fetch(`${process.env.REACT_APP_BACKEND_URL}${path}`, options)
     .then((response) => handleResponse(response, onSuccess, onErrors))
     .catch(networkErrorCallback);

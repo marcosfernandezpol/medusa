@@ -22,7 +22,7 @@ export const login = (
 ) =>
   appFetch(
     "/users/login",
-    fetchConfig("POST", { userName, password }),
+    config("POST", { userName, password }),
     (authenticatedUser) => {
       processLoginSignUp(authenticatedUser, reauthenticationCallback);
     },
