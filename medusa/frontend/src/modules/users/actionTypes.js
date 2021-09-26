@@ -1,4 +1,4 @@
-export const SIGN_UP_COMPLETED = "project/users/signUpCompleted";
-export const LOGIN_COMPLETED = "project/users/loginCompleted";
-export const LOGOUT = "project/users/logout";
-export const UPDATE_PROFILE_COMPLETED = "project/users/updateProfileCompleted";
+export const SIGN_UP_COMPLETED = "medusa/users/signUpCompleted";
+export const LOGIN_COMPLETED = "medusa/users/loginCompleted";
+export const LOGOUT = "medusa/users/logout";
+export const UPDATE_PROFILE_COMPLETED = "medusa/users/updateProfileCompleted";

@@ -8,7 +8,7 @@ import users from '../../users';
 const Header = () => {
 
     const userName = useSelector(users.selectors.getUserName);
-    
+
     return (
 
         <nav className="navbar navbar-expand-lg navbar-light bg-light border">

@@ -10,7 +10,7 @@ export const signUp = (user, onSuccess, onErrors, reauthenticationCallback) => d
     backend.userService.signUp(user,
         authenticatedUser => {
             dispatch(signUpCompleted(authenticatedUser));
-            onSuccess();
+            onSuccess(user);
         },
         onErrors,
         reauthenticationCallback);

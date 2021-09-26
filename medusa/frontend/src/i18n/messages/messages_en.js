@@ -1,6 +1,6 @@
 export default {
 
-    'project.app.Footer.text': 'PA Shop - Area of Telematics Engineering - University of A Coruña',
+    'project.app.Footer.text': 'Medusa - Area of Telematics Engineering - University of A Coruña',
     'project.app.Header.home': 'Home',
     'project.app.Header.logout': 'Logout',
     'project.shopping.header.orders': 'Orders',

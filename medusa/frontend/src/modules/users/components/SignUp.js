@@ -28,7 +28,7 @@ const SignUp = () => {
         if (form.checkValidity() && checkConfirmPassword()) {
             
             dispatch(actions.signUp(
-                {userName: userName.trim(),
+                {login: userName.trim(),
                 password: password,
                 firstName: firstName.trim(),
                 lastName: lastName.trim(),
