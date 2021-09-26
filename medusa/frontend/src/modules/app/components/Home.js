@@ -1,33 +1,9 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import { config } from "../../../config/constants.js";
+import React from 'react';
 
-const Home = () => {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch(config.BASE_PATH + "/hello")
-      .then((response) => response.text())
-      .then((error) => {
-        setMessage(error);
-      });
-  }, []);
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img
-          src={process.env.PUBLIC_URL + "/assets/logo.svg"}
-          className="App-logo"
-          alt="logo"
-        />
-        <h1 className="App-title">{message}</h1>
-      </header>
-      <p className="App-intro">
-        To get started, edit <code>src/App.js</code> and save to reload.
-      </p>
+const Home = () => (
+    <div className="text-center">
+		<h1>Pagina principal</h1>
     </div>
-  );
-};
+);
 
 export default Home;

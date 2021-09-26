@@ -2,30 +2,10 @@
 
 exports[`Home renders correctly 1`] = `
 <div
-  className="App"
+  className="text-center"
 >
-  <header
-    className="App-header"
-  >
-    <img
-      alt="logo"
-      className="App-logo"
-      src="/assets/logo.svg"
-    />
-    <h1
-      className="App-title"
-    >
-      
-    </h1>
-  </header>
-  <p
-    className="App-intro"
-  >
-    To get started, edit 
-    <code>
-      src/App.js
-    </code>
-     and save to reload.
-  </p>
+  <h1>
+    Pagina principal
+  </h1>
 </div>
 `;
