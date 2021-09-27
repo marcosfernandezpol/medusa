@@ -8,7 +8,7 @@ import users from '../../users';
 const Header = () => {
 
     const userName = useSelector(users.selectors.getUserName);
-
+    
     return (
 
         <nav className="navbar navbar-expand-lg navbar-light bg-light border">
@@ -21,11 +21,17 @@ const Header = () => {
             </button>
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                
+
+                <ul className="navbar-nav mr-auto">
+                    <li>
+                        <h1>Aquí ira a busqueda de empresas</h1>
+                    </li>
+                </ul>
+
                 {userName ? 
 
                 <ul className="navbar-nav">
-
+                    
                     <li className="nav-item dropdown">
 
                         <a className="dropdown-toggle nav-link" href="/"

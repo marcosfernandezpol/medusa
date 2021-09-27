@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@popperjs/core": "^2.10.1",
+    "jquery": "^3.6.0",
     "react-intl": "^5.20.11",
     "react-redux": "^7.2.5",
     "react-thunk": "^1.0.0",
