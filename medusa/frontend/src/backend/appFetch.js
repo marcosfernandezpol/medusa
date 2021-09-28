@@ -84,6 +84,7 @@ export const getServiceToken = () =>
 export const removeServiceToken = () =>
   sessionStorage.removeItem(config.SERVICE_TOKEN_NAME);
 
+
 export const fetchConfig = (method, body) => {
   const fConfig = {
     method: method,

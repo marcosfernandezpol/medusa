@@ -2,6 +2,7 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
+import {FindEnterprises} from '../../search'
 
 import users from '../../users';
 
@@ -23,9 +24,13 @@ const Header = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
 
                 <ul className="navbar-nav mr-auto">
-                    <li>
-                        <h1>Aquí ira a busqueda de empresas</h1>
-                    </li>
+                    <Link className="navbar-brand" to="/search/find-enterprises">Lista de Empresas</Link>
+			            <button className="navbar-toggler" type="button" 
+			                data-toggle="collapse" data-target="#navbarSupportedContent" 
+			                aria-controls="navbarSupportedContent" aria-expanded="false" 
+			                aria-label="Toggle navigation">
+			                <span className="navbar-toggler-icon"></span>
+			            </button>
                 </ul>
 
                 {userName ? 

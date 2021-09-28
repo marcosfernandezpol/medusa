@@ -46,3 +46,7 @@ CREATE TABLE Transfer_history (
     CONSTRAINT SenderFK FOREIGN KEY (sender) REFERENCES User(id),
     CONSTRAINT ReceiverFK FOREIGN KEY (receiver) REFERENCES User(id)
 );
+
+
+INSERT INTO Enterprise (id, enterpriseName, acronim, fundation, incomes, annualBenefits) values (1, 'jose', 'jose', '2020-09-09', 20, 20);
+INSERT INTO Enterprise (id, enterpriseName, acronim, fundation, incomes, annualBenefits) values (2, 'jose2', 'jose2', '2020-08-08', 21, 21);
