@@ -5,5 +5,7 @@ import * as selectors from './selectors';
 
 
 
-export {default as CreateEnterprise} from './components/CreateEnterprise'
+export {default as EnterpriseCreated} from './components/EnterpriseCreated';
+export {default as CreateEnterprise} from './components/CreateEnterprise';
+export {default as CreateEnterpriseAccessButton} from './components/CreateEnterpriseAccessButton';
 export default {actions, actionTypes, reducer, selectors};

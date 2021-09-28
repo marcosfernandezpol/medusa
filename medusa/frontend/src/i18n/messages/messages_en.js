@@ -55,6 +55,17 @@ export default {
     'project.users.Login.title': 'Login',
     'project.users.SignUp.fields.confirmPassword': 'Confirm password',
     'project.users.SignUp.title': 'Sign up',
-    'project.users.UpdateProfile.title': 'Update profile'
+    'project.users.UpdateProfile.title': 'Update profile',
+
+
+	'project.global.buttons.AccessCreateEnterprise': 'Create new enterprise',
+
+	'project.enterprise.CreateEnterprise.title': 'Create Enterprise',
+	'project.global.fields.enterpriseName': 'Enterprise name',
+	'project.global.fields.acronim': 'Acronim',
+	'project.global.fields.fundation': 'Fundation',
+	'project.global.fields.incomes': 'Incomes',
+	'project.global.fields.annualBenefits': 'Annual benefits',
+	'project.global.buttons.CreateEnterpriseButton': 'Create enterprise'
 
 }

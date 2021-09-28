@@ -20,5 +20,5 @@ export const transfer = (userId, money, operation, onSuccess,
 							onErrors) =>
 	appFetch('/transfer',fetchConfig('POST', {userId, money, operation}), onSuccess, onErrors);
 	
-export const createEnterprise = (enterpriseParams, onSuccess, onErrors) =>
-	appFetch('/market/create_enterprise', config('POST', enterpriseParams), onSuccess, onErrors)
+export const createEnterprise = (enterprise, onSuccess, onErrors) =>
+	appFetch('/market/create_enterprise', fetchConfig('POST', enterprise), onSuccess, onErrors)
