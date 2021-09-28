@@ -5,6 +5,7 @@ import {Route, Switch} from 'react-router-dom';
 import AppGlobalComponents from './AppGlobalComponents';
 import Home from './Home';
 import {Login, SignUp, UpdateProfile, ChangePassword, Logout} from '../../users';
+import {CreateEnterprise} from '../../stockmarket'
 import users from '../../users';
 
 const Body = () => {
@@ -17,7 +18,8 @@ const Body = () => {
             <br/>
             <AppGlobalComponents/>
             <Switch>
-                <Route exact path="/"><Home/></Route>
+                <Route exact path="/"><Home/></Route>				
+				{loggedIn && <Route exact path="/market/create_enterprise"><CreateEnterprise/></Route>}
                 {loggedIn && <Route exact path="/users/update-profile"><UpdateProfile/></Route>}
                 {loggedIn && <Route exact path="/users/change-password"><ChangePassword/></Route>}
                 {loggedIn && <Route exact path="/users/logout"><Logout/></Route>}
