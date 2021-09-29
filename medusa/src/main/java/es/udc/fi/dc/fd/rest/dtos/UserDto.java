@@ -46,6 +46,8 @@ public class UserDto {
 	/** The region. */
 	private String city;
 	
+	private Float balance;
+	
 	
 
 	/**
@@ -63,7 +65,7 @@ public class UserDto {
 	 * @param email the email
 	 * @param role the role
 	 */
-	public UserDto(Long id, String login, String firstName, String lastName, String email, String role, String country, String city) {
+	public UserDto(Long id, String login, String firstName, String lastName, String email, String role, String country, String city, Float balance) {
 
 		this.id = id;
 		this.login = login != null ? login.trim() : null;
@@ -73,6 +75,7 @@ public class UserDto {
 		this.role = role;
 		this.country = country;
 		this.city= city;
+		this.balance = balance;
 		
 	}
 
@@ -248,6 +251,16 @@ public class UserDto {
 	public void setCity(String city) {
 		this.city = city;
 	}
+
+	public Float getBalance() {
+		return balance;
+	}
+
+	public void setBalance(Float balance) {
+		this.balance = balance;
+	}
+	
+	
 	
 	
 

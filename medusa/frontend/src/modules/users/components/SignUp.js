@@ -34,13 +34,13 @@ const SignUp = () => {
             
             dispatch(actions.signUp(
                 {login: userName.trim(),
-                password: password,
                 firstName: firstName.trim(),
-                lastName: lastName.trim(),
+				lastName: lastName.trim(),
+				password: password,
                 email: email.trim(),
-				role: role.trim(),
+				city: city.trim(),
 				country: country.trim(),
-				city: city.trim()},
+				role: role.trim()},
                 () => history.push('/'),
                 errors => setBackendErrors(errors),
                 () => {

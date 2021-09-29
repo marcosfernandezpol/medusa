@@ -36,6 +36,8 @@ export default {
 	'project.global.fields.role': 'Role',
 	'project.global.fields.enterprisesList': 'Enterprises list',
 	'project.global.fields.enterprises': 'Enterprises',
+	'project.app.Management':'Management',
+	'project.app.Transfer':'Transfer',
 	
 	'project.global.fields.homeTitle': 'Welcome to Medusa',
 	'project.global.fields.homeSubTitle': 'Enjoy working with us', 

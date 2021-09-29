@@ -16,9 +16,9 @@ export const login = (userName, password, onSuccess, onErrors, reauthenticationC
         }, 
         onErrors);
 
-export const transfer = (userId, money, operation, onSuccess, 
+export const transfer = (money, operation, onSuccess, 
 							onErrors) =>
-	appFetch('/transfer',fetchConfig('POST', {userId, money, operation}), onSuccess, onErrors);
+	appFetch('/market/transfer',fetchConfig('POST', {money, operation}), onSuccess, onErrors);
 	
 export const createEnterprise = (enterprise, onSuccess, onErrors) =>
 	appFetch('/market/create_enterprise', fetchConfig('POST', enterprise), onSuccess, onErrors);
