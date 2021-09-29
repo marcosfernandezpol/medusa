@@ -35,6 +35,7 @@ export default {
     'project.global.validator.required': 'Required field',
 	'project.global.fields.role': 'Role',
 	'project.global.fields.enterprisesList': 'Enterprises list',
+	'project.global.fields.enterprises': 'Enterprises',
 	
 	'project.global.fields.homeTitle': 'Welcome to Medusa',
 	'project.global.fields.homeSubTitle': 'Enjoy working with us', 

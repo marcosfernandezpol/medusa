@@ -25,7 +25,7 @@ const Login = () => {
             dispatch(actions.login(
                 userName.trim(),
                 password,
-                () => history.push('/search/find-enterprises'),
+                () => history.push('/search/enterprises'),
                 errors => setBackendErrors(errors),
                 () => {
                     history.push('/users/login');

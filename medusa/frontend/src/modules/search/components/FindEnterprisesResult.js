@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import {useHistory} from 'react-router-dom';
 
-
+import {useEffect} from 'react';
 import * as selectors from '../selectors';
 import {Errors} from '../../common';
 import * as actions from '../actions';
@@ -16,6 +16,15 @@ const FindEnterprisesResult = () => {
 
     const EnterpriseSearch = useSelector(selectors.getEnterprises);
     const dispatch = useDispatch();
+
+    const history = useHistory();
+
+    useEffect(() => {
+
+        dispatch(actions.searchAllEnterprises());
+        history.push('/search/enterprises');
+
+    });
 
     if (!EnterpriseSearch) {
 		

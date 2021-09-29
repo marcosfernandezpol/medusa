@@ -29,7 +29,6 @@ const Body = () => {
                 {!loggedIn && <Route exact path="/users/login"><Login/></Route>}
                 {!loggedIn && <Route exact path="/users/signup"><SignUp/></Route>}
 				{loggedIn && <Route exact path="/search/enterprises"><FindEnterprisesResult/></Route>}
-				{loggedIn && <Route exact path="/search/find-enterprises"><FindEnterprises/></Route>}
 				{loggedIn && /*role == 'ADMIN'*/<Route exact path="/market/createEnterpriseCompleted"><EnterpriseCreated/></Route>}
                 <Route><Home/></Route>
             </Switch>
