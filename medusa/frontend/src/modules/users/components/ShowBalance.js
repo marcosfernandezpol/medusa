@@ -6,8 +6,6 @@ import * as selectors from '../selectors';
 const ShowBalance = () => {
 
     const user = useSelector(selectors.getUser);
-	console.log(user);
-    
     return (
         <div>
 			Saldo: {user.balance}&nbsp;

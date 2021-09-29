@@ -75,6 +75,8 @@ public class User {
 	 * @param balance 	the balance
 	 */
 	
+	
+	
 	public User(String login, String firstName, String lastName, String password, String city, String country, Float balance) {
 
 		this.login = login;
@@ -102,6 +104,7 @@ public class User {
 		
 
 	}
+
 	
 	
 	public User(String login, String firstName, String lastName, String password, String email, RoleType role) {
@@ -124,10 +127,11 @@ public class User {
 	 * @param country
 	 * @param role
 	 */
-	public User(String firstName, String login, String lastName, String password, String email, RoleType role, float balance, String country, String city
-			 ) {
-		this.firstName = firstName;
+	public User(String firstName, String login, String lastName, String password, String email, String city,
+			String country, RoleType role) {
+		
 		this.login = login;
+		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
 		this.email = email;

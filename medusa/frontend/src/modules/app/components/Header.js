@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import {FindEnterprises} from '../../search';
-import {CreateEnterpriseAccessButton} from '../../stockmarket';
+import {CreateEnterpriseAccessButton,TransferPage} from '../../stockmarket';
 import {ShowBalance} from '../../users';
 
 import users from '../../users';
@@ -12,7 +12,7 @@ const Header = () => {
 
     const userName = useSelector(users.selectors.getUserName);
 	const loggedIn = useSelector(users.selectors.isLoggedIn);
-	const role = useSelector(users.selectors.isAdmin);
+	const isAdmin = useSelector(users.selectors.isAdmin);
     
     return (
 
@@ -42,11 +42,38 @@ const Header = () => {
                 {userName ? 
 
                 <ul className="navbar-nav">
-					<ul className="navbar-nav mr-auto">
-                    	<li>
-                        	<ShowBalance/>
-                    	</li>
-                	</ul>
+
+					{isAdmin==false && <Link className="navbar-brand" to="/market/transfer"> <FormattedMessage id="project.app.Transfer"/></Link>}
+            			<button className="navbar-toggler" type="button" 
+                			data-toggle="collapse" data-target="#navbarSupportedContent" 
+                			aria-controls="navbarSupportedContent" aria-expanded="false" 
+                			aria-label="Toggle navigation">
+                			<span className="navbar-toggler-icon"></span>
+            			</button>
+
+					{isAdmin==false && <Link className="navbar-brand" to="/"><ShowBalance/></Link>}
+            			 <button className="navbar-toggler" type="button" 
+                			data-toggle="collapse" data-target="#navbarSupportedContent" 
+                			aria-controls="navbarSupportedContent" aria-expanded="false" 
+                			aria-label="Toggle navigation">
+                			<span className="navbar-toggler-icon"></span>
+            			</button>
+
+					{isAdmin && <li className="nav-item dropdown">
+
+                        <a className="dropdown-toggle nav-link" href="/"
+                            data-toggle="dropdown">
+                            <span className="fas fa-hammer"></span>&nbsp;
+                            <FormattedMessage id="project.app.Management"/>
+                        </a>
+						
+                        <div className="dropdown-menu dropdown-menu-right">
+                           	{isAdmin && <Link className="dropdown-item" to="/market/create_enterprise">
+                                <FormattedMessage id="project.app.Header.createEnterprise"/>
+                            </Link>
+							}
+                        </div>
+                    </li>}
                     
                     <li className="nav-item dropdown">
 
@@ -67,11 +94,6 @@ const Header = () => {
                             <Link className="dropdown-item" to="/users/logout">
                                 <FormattedMessage id="project.app.Header.logout"/>
                             </Link>
-							{role && <div className="dropdown-divider"></div>}
-                           	{role && <Link className="dropdown-item" to="/market/create_enterprise">
-                                <FormattedMessage id="project.app.Header.createEnterprise"/>
-                            </Link>
-							}
 							
                         </div>
 

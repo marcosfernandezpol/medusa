@@ -5,13 +5,14 @@ import {Route, Switch} from 'react-router-dom';
 import AppGlobalComponents from './AppGlobalComponents';
 import Home from './Home';
 import {Login, SignUp, UpdateProfile, ChangePassword, Logout} from '../../users';
-import {CreateEnterprise, EnterpriseCreated} from '../../stockmarket';
+import {CreateEnterprise, EnterpriseCreated,TransferPage} from '../../stockmarket';
 import {FindEnterprises, FindEnterprisesResult} from './../../search';
 import users from '../../users';
 
 const Body = () => {
 
     const loggedIn = useSelector(users.selectors.isLoggedIn);
+	const isAdmin = useSelector(users.selectors.isAdmin);
 	/*const user = useSelector(users.selectors.getUser);
 	const role = user.role;*/
     
@@ -30,6 +31,7 @@ const Body = () => {
                 {!loggedIn && <Route exact path="/users/signup"><SignUp/></Route>}
 				{loggedIn && <Route exact path="/search/enterprises"><FindEnterprisesResult/></Route>}
 				{loggedIn && /*role == 'ADMIN'*/<Route exact path="/market/createEnterpriseCompleted"><EnterpriseCreated/></Route>}
+				{(loggedIn && !isAdmin) && <Route exact path="/market/transfer"><TransferPage/></Route>}
                 <Route><Home/></Route>
             </Switch>
         </div>
