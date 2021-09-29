@@ -27,12 +27,12 @@ export const createEnterpriseCompleted = result => ({
   result
 })
 
-export const createEnterprise = (enterprise, onSuccess, onErrors) => dispatch => {
+export const createEnterprise = (enterprise, onSuccess, onErrors) => dispatch => {	
 	backend.stockMarketService.createEnterprise(
 		enterprise,
 		result => {
 			dispatch(createEnterpriseCompleted(result))
-			onSucces()
+			onSuccess()
 		},
 		onErrors
 	)

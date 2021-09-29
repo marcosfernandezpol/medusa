@@ -16,6 +16,7 @@ const SignUp = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail]  = useState('');
+	const [role, setRole]  = useState('');
     const [backendErrors, setBackendErrors] = useState(null);
     const [passwordsDoNotMatch, setPasswordsDoNotMatch] = useState(false);
     let form;
@@ -32,7 +33,8 @@ const SignUp = () => {
                 password: password,
                 firstName: firstName.trim(),
                 lastName: lastName.trim(),
-                email: email.trim()},
+                email: email.trim(),
+				role: role.trim()},
                 () => history.push('/'),
                 errors => setBackendErrors(errors),
                 () => {
@@ -170,6 +172,20 @@ const SignUp = () => {
                                     required/>
                                 <div className="invalid-feedback">
                                     <FormattedMessage id='project.global.validator.email'/>
+                                </div>
+                            </div>
+                        </div>
+						<div className="form-group row">
+                            <label htmlFor="role" className="col-md-3 col-form-label">
+                                <FormattedMessage id="project.global.fields.role"/>
+                            </label>
+                            <div className="col-md-4">
+                                <input type="text" id="role" className="form-control"
+                                    value={role}
+                                    onChange={e => setRole(e.target.value)}
+                                    required/>
+                                <div className="invalid-feedback">
+                                    <FormattedMessage id='project.global.validator.required'/>
                                 </div>
                             </div>
                         </div>

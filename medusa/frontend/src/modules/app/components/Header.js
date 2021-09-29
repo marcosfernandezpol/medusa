@@ -2,13 +2,16 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
-import {FindEnterprises} from '../../search'
+import {FindEnterprises} from '../../search';
+import {CreateEnterpriseAccessButton} from '../../stockmarket';
 
 import users from '../../users';
 
 const Header = () => {
 
     const userName = useSelector(users.selectors.getUserName);
+	const loggedIn = useSelector(users.selectors.isLoggedIn);
+	const role = useSelector(users.selectors.isAdmin);
     
     return (
 
@@ -44,6 +47,7 @@ const Header = () => {
                             <span className="fas fa-user"></span>&nbsp;
                             {userName}
                         </a>
+						
                         <div className="dropdown-menu dropdown-menu-right">
                             <Link className="dropdown-item" to="/users/update-profile">
                                 <FormattedMessage id="project.users.UpdateProfile.title"/>
@@ -55,6 +59,12 @@ const Header = () => {
                             <Link className="dropdown-item" to="/users/logout">
                                 <FormattedMessage id="project.app.Header.logout"/>
                             </Link>
+							{role && <div className="dropdown-divider"></div>}
+                           	{role && <Link className="dropdown-item" to="/market/create_enterprise">
+                                <FormattedMessage id="project.app.Header.createEnterprise"/>
+                            </Link>
+							}
+							
                         </div>
 
                     </li>

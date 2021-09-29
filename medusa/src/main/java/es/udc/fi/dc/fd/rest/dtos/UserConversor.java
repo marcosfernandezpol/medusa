@@ -12,6 +12,7 @@ public class UserConversor {
 	 */
 	private UserConversor() {
 	}
+	
 
 	/**
 	 * To user dto.
@@ -20,6 +21,7 @@ public class UserConversor {
 	 * @return the user dto
 	 */
 	public static final UserDto toUserDto(User user) {
+		System.out.println(user.getRole());
 		return new UserDto(user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(), user.getEmail(),
 				user.getRole().toString());
 	}
@@ -31,9 +33,15 @@ public class UserConversor {
 	 * @return the user
 	 */
 	public static final User toUser(UserDto userDto) {
+		
+		User.RoleType role = null;
+		
+		if (userDto.getRole().toUpperCase().equals("ADMIN")){
+			role = User.RoleType.ADMIN;
+		}else role = User.RoleType.CLIENT;
 
 		return new User(userDto.getLogin(), userDto.getFirstName(), userDto.getLastName(),userDto.getPassword(),
-				userDto.getEmail());
+				userDto.getEmail(),role);
 	}
 
 	/**

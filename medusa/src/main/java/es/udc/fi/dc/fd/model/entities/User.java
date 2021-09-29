@@ -85,22 +85,15 @@ public class User {
 	}
 	
 	
-
-	/**
-	 * @param login
-	 * @param firstName
-	 * @param lastName
-	 * @param password
-	 */
-	public User(String login, String firstName, String lastName, String password, String email) {
+	public User(String login, String firstName, String lastName, String password, String email, RoleType role) {
 		this.login = login;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
+		this.role = role;
 		this.balance = 0F;
 	}
-	
 
 	/**
 	 * @param firstName

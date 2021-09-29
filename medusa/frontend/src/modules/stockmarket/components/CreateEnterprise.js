@@ -12,7 +12,7 @@ const CreateEnterprise = ({}) => {
 	    const dispatch = useDispatch();
 	    const history = useHistory();
 		const [backendErrors, setBackendErrors] = useState(null);
-		const [name, setName] = useState("");
+		const [enterpriseName, setEnterpriseName] = useState("");
 		const [acronim, setAcronim] = useState("");
 		const [fundation, setFundation] = useState("");
 		const [incomes, setIncomes] = useState("");
@@ -27,7 +27,7 @@ const CreateEnterprise = ({}) => {
 	        if (form.checkValidity()) {
 	            
 	            dispatch(actions.createEnterprise(
-					{name, acronim, fundation, incomes, annualBenefits},
+					{enterpriseName, acronim, fundation, incomes, annualBenefits},
 	                () => history.push('/market/createEnterpriseCompleted'),
 	                errors => setBackendErrors(errors)
 	            ));
@@ -60,8 +60,8 @@ return (
                             </label>
                             <div className="col-md-4">
                                 <input type="text" id="name" className="form-control"  maxLength='64'
-                                       value={name}
-                                       onChange={e => setName(e.target.value)}
+                                       value={enterpriseName}
+                                       onChange={e => setEnterpriseName(e.target.value)}
                                        required/>
                                 <div className="invalid-feedback">
                                      <FormattedMessage id='project.global.validator.required'/>

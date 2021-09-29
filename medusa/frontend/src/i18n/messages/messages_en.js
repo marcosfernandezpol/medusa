@@ -5,9 +5,7 @@ export default {
     'project.app.Header.logout': 'Logout',
     'project.shopping.header.orders': 'Orders',
     'project.app.Home.welcome': 'Browse our catalog of products.',
-
-    'project.catalog.CategorySelector.allDepartments': 'All departments',
-    'project.catalog.FindProductsResult.noProductsFound': 'No products found',
+	'project.app.Header.createEnterprise':'Create Enterprise',
 
     'project.common.ErrorDialog.title': 'Error',
 
@@ -27,26 +25,16 @@ export default {
 	'project.global.fields.incomes': 'Incomes',
     'project.global.fields.email': 'Email address',
     'project.global.fields.firstName': 'First name',
-    'project.global.fields.purchaseOrder': 'Purchase order',
     'project.global.fields.lastName': 'Last name',
     'project.global.fields.name': 'Name',
     'project.global.fields.password': 'Password',
     'project.global.fields.postalAddress': 'Postal address',
-    'project.global.fields.postalCode': 'Postal code',
-    'project.global.fields.price': 'Price',
-    'project.global.fields.quantity': 'Quantity',
-    'project.global.fields.totalPrice': 'Total price',
     'project.global.fields.userName': 'Username',
     'project.global.validator.email': 'Provide a correct e-mail address',
-    'project.global.validator.incorrectQuantity': 'Incorrect quantity',
     'project.global.validator.passwordsDoNotMatch': 'Passwords do not match',
     'project.global.validator.required': 'Required field',
+	'project.global.fields.role': 'Role',
 
-    'project.shopping.AddToCart.add': 'Add to cart',
-    'project.shopping.BuyForm.title': 'Buy',
-    'project.shopping.FindOrdersResult.noOrders': 'No orders found',
-    'project.shopping.PurchaseCompleted.purchaseOrderGenerated': 'Purchase order generated',
-    'project.shopping.ShoppingCart.empty': 'Cart is empty',
 
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirm new password',
     'project.users.ChangePassword.fields.newPassword': 'New password',
