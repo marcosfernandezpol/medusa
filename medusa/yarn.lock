@@ -173,6 +173,11 @@ prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
+react-country-region-selector@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/react-country-region-selector/-/react-country-region-selector-3.3.0.tgz#256a92476bb05ed502dc199684ec1824e8c46850"
+  integrity sha512-Z2JdYu5XNl638g/jic4lUJgFyPpEX9xvUW3c0Ih9dKYAg30Cygp6cMBPA+3w/QEc67Zy/RQAvlvVoFeM5rB2Vg==
+
 react-intl@^5.20.12:
   version "5.20.12"
   resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.20.12.tgz#1a4969d15c381378cae35912fa2ec7010e27b4f7"

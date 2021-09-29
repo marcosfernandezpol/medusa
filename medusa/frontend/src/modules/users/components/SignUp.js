@@ -3,6 +3,8 @@ import {useDispatch} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {useHistory} from 'react-router-dom';
 
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+
 import {Errors} from '../../common';
 import * as actions from '../actions';
 
@@ -19,6 +21,8 @@ const SignUp = () => {
 	const [role, setRole]  = useState('');
     const [backendErrors, setBackendErrors] = useState(null);
     const [passwordsDoNotMatch, setPasswordsDoNotMatch] = useState(false);
+	const [country, setCountry] = useState('');
+	const [city,setCity] = useState('');
     let form;
     let confirmPasswordInput;
 
@@ -34,7 +38,9 @@ const SignUp = () => {
                 firstName: firstName.trim(),
                 lastName: lastName.trim(),
                 email: email.trim(),
-				role: role.trim()},
+				role: role.trim(),
+				country: country.trim(),
+				city: city.trim()},
                 () => history.push('/'),
                 errors => setBackendErrors(errors),
                 () => {
@@ -189,6 +195,26 @@ const SignUp = () => {
                                 </div>
                             </div>
                         </div>
+						  <div className="form-group row">
+					        <span>&nbsp;&nbsp;&nbsp;Country&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+							<CountryDropdown
+					          value={country}
+					          onChange={(val) => setCountry(val)} />
+						  </div>
+						  <div className="form-group row">
+					        <span>&nbsp;&nbsp;&nbsp;City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;</span>
+							<RegionDropdown
+					          country={country}
+					          value={city}
+					          onChange={(val) => setCity(val)} />
+					      </div>
                         <div className="form-group row">
                             <div className="offset-md-3 col-md-2">
                                 <button type="submit" className="btn btn-primary">
