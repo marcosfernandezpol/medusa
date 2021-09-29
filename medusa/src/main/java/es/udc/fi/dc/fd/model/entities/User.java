@@ -60,10 +60,12 @@ public class User {
 	private Float balance;
 
 
-
+	public User() {
+		
+	}
 	/**
 	 * Instantiates a new user.
-	 *
+	 
 	 * @param login     the user login
 	 * @param firstName the first name
 	 * @param lastName  the last name
@@ -85,7 +87,7 @@ public class User {
 
 	}
 	
-	public User(String login, String firstName, String lastName, String password, String email, RoleType role, String city, String country) {
+	public User(String login, String firstName, String lastName, String password, String email, RoleType role, String country, String city) {
 
 		this.login = login;
 		this.firstName = firstName;
@@ -93,9 +95,11 @@ public class User {
 		this.password = password;
 		this.email = email;
 		this.role = role;
-		this.city = city;
-		this.country = country;
 		this.balance = 0F;
+		this.country = country;
+		this.city = city;
+
+		
 
 	}
 	
@@ -120,8 +124,8 @@ public class User {
 	 * @param country
 	 * @param role
 	 */
-	public User(String firstName, String login, String lastName, String password, String email, String city,
-			String country, RoleType role, float balance) {
+	public User(String firstName, String login, String lastName, String password, String email, RoleType role, float balance, String country, String city
+			 ) {
 		this.firstName = firstName;
 		this.login = login;
 		this.lastName = lastName;
@@ -130,7 +134,7 @@ public class User {
 		this.city = city;
 		this.country = country;
 		this.role = role;
-		this.balance = 0F;
+		this.balance = balance;
 	}
 
 	/**

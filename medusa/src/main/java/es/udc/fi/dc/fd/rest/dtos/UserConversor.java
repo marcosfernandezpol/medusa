@@ -22,8 +22,8 @@ public class UserConversor {
 	 */
 	public static final UserDto toUserDto(User user) {
 		System.out.println(user.getRole());
-		return new UserDto(user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(), user.getEmail(),
-				user.getRole().toString(), user.getCountry(), user.getCity());
+		return new UserDto (user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(), user.getEmail(), 
+				user.getRole().toString(), user.getBalance(), user.getCountry(), user.getCity());
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class UserConversor {
 		}else role = User.RoleType.CLIENT;
 
 		return new User(userDto.getLogin(), userDto.getFirstName(), userDto.getLastName(), userDto.getPassword(), userDto.getEmail(), role,
-			 userDto.getCity(), userDto.getCountry());
+			  userDto.getCountry(), userDto.getCity());
 	}
 
 	/**

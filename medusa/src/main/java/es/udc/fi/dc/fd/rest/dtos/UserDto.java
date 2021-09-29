@@ -40,6 +40,9 @@ public class UserDto {
 	/** The role. */
 	private String role;
 	
+	/**The balance**/
+	private Float balance;
+	
 	/** The country. */
 	private String country;
 	
@@ -63,7 +66,7 @@ public class UserDto {
 	 * @param email the email
 	 * @param role the role
 	 */
-	public UserDto(Long id, String login, String firstName, String lastName, String email, String role, String country, String city) {
+	public UserDto(Long id, String login, String firstName, String lastName, String email, String role, Float balance, String country, String city) {
 
 		this.id = id;
 		this.login = login != null ? login.trim() : null;
@@ -71,8 +74,9 @@ public class UserDto {
 		this.lastName = lastName.trim();
 		this.email = email.trim();
 		this.role = role;
-		this.country = country;
-		this.city= city;
+		this.balance = balance;
+		this.country = country != null ? country.trim() : null;
+		this.city= city != null ? city.trim() : null;
 		
 	}
 
@@ -213,13 +217,23 @@ public class UserDto {
 		this.role = role;
 	}
 	
+	
+	
+	public Float getBalance() {
+		return balance;
+	}
+
+	public void setBalance(Float balance) {
+		this.balance = balance;
+	}
+
 	/**
 	 * Gets the country.
 	 *
 	 * @return the country
 	 */
 	public String getCountry() {
-		return role;
+		return country;
 	}
 
 	/**
@@ -228,7 +242,7 @@ public class UserDto {
 	 * @param country the new country
 	 */
 	public void setCountry(String country) {
-		this.role = country;
+		this.country = country;
 	}
 	
 	/**
