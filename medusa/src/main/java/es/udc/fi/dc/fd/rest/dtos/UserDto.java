@@ -49,7 +49,6 @@ public class UserDto {
 	/** The region. */
 	private String city;
 	
-	private Float balance;
 	
 	
 
@@ -265,13 +264,6 @@ public class UserDto {
 		this.city = city;
 	}
 
-	public Float getBalance() {
-		return balance;
-	}
-
-	public void setBalance(Float balance) {
-		this.balance = balance;
-	}
 	
 	
 	
