@@ -18,7 +18,7 @@ export default {
     'project.global.buttons.save': 'Save',
     'project.global.buttons.search': 'Search',
     'project.global.exceptions.NetworkError': 'Network error',
-    'project.global.fields.fundationDate': 'Date of fundation',
+    'project.global.fields.fundationDate': 'Fundaion date',
     'project.global.fields.enterpriseName': 'Enterprise Name',
 	'project.global.fields.acronim' : 'Acronim',
 	'project.global.fields.anualBenefits': 'Anual Benefits',
@@ -34,6 +34,10 @@ export default {
     'project.global.validator.passwordsDoNotMatch': 'Passwords do not match',
     'project.global.validator.required': 'Required field',
 	'project.global.fields.role': 'Role',
+	'project.global.fields.enterprisesList': 'Enterprises list',
+	
+	'project.global.fields.homeTitle': 'Welcome to Medusa',
+	'project.global.fields.homeSubTitle': 'Enjoy working with us', 
 
 
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirm new password',
