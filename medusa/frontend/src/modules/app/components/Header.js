@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import {FindEnterprises} from '../../search';
 import {CreateEnterpriseAccessButton} from '../../stockmarket';
+import {ShowBalance} from '../../users';
 
 import users from '../../users';
 
@@ -41,6 +42,11 @@ const Header = () => {
                 {userName ? 
 
                 <ul className="navbar-nav">
+					<ul className="navbar-nav mr-auto">
+                    	<li>
+                        	<ShowBalance/>
+                    	</li>
+                	</ul>
                     
                     <li className="nav-item dropdown">
 

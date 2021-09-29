@@ -39,6 +39,8 @@ public class UserDto {
 	
 	/** The role. */
 	private String role;
+	
+	private Float balance;
 
 	/**
 	 * Instantiates a new user dto.
@@ -55,7 +57,7 @@ public class UserDto {
 	 * @param email the email
 	 * @param role the role
 	 */
-	public UserDto(Long id, String login, String firstName, String lastName, String email, String role) {
+	public UserDto(Long id, String login, String firstName, String lastName, String email, String role, Float balance) {
 
 		this.id = id;
 		this.login = login != null ? login.trim() : null;
@@ -63,6 +65,7 @@ public class UserDto {
 		this.lastName = lastName.trim();
 		this.email = email.trim();
 		this.role = role;
+		this.balance=balance;
 		
 	}
 
@@ -203,5 +206,15 @@ public class UserDto {
 		this.role = role;
 	}
 
+	public Float getBalance() {
+		return balance;
+	}
+
+	public void setBalance(Float balance) {
+		this.balance = balance;
+	}
+
+	
+	
 }
 
