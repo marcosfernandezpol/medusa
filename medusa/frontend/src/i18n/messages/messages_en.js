@@ -18,7 +18,7 @@ export default {
     'project.global.buttons.save': 'Save',
     'project.global.buttons.search': 'Search',
     'project.global.exceptions.NetworkError': 'Network error',
-    'project.global.fields.fundationDate': 'Fundaion date',
+    'project.global.fields.fundationDate': 'Fundation date',
     'project.global.fields.enterpriseName': 'Enterprise Name',
 	'project.global.fields.acronim' : 'Acronim',
 	'project.global.fields.anualBenefits': 'Anual Benefits',
