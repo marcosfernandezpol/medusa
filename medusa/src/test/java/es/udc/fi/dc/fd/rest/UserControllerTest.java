@@ -65,7 +65,7 @@ public class UserControllerTest {
 	private AuthenticatedUserDto createAuthenticatedUser(String userName, RoleType roleType)
 			throws IncorrectLoginException {
 
-		User user = new User(userName, PASSWORD, "newUser", "user", "user@test.com",roleType);
+		User user = new User(userName,  "newUser", "user", PASSWORD, "user@test.com",roleType);
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -95,7 +95,7 @@ public class UserControllerTest {
 
 		ObjectMapper mapper = new ObjectMapper();
 
-		mockMvc.perform(post("/api/users/login").header("Authorization", "Bearer " + user.getServiceToken())
+		mockMvc.perform(post("/users/login").header("Authorization", "Bearer " + user.getServiceToken())
 				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsBytes(loginParams)))
 				.andExpect(status().isOk());
 
