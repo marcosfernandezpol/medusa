@@ -15,16 +15,12 @@ export const clearSearchEnterprises = () => ({
 
 export const searchAllEnterprises = () => (dispatch, getState) => {
 
-    const enterprises = selectors.getEnterprises(getState());
-
-    if (!enterprises) {
-
+ 		dispatch(clearSearchEnterprises());
+	
         backend.searchService.findAllEnterprises(
             enterprises => dispatch(searchAllEnterprisesCompleted(enterprises))
         );
         
-    }
-
 }
 							
 							

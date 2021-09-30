@@ -22,9 +22,8 @@ const FindEnterprisesResult = () => {
     useEffect(() => {
 
         dispatch(actions.searchAllEnterprises());
-        history.push('/search/enterprises');
 
-    });
+    }, []);
 
     if (!EnterpriseSearch) {
 		
