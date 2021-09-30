@@ -21,18 +21,24 @@ const Transfer = () => {
 
 		event.preventDefault();
 
-		dispatch(actions.transfer(
-			money,
-			operation,
-			() => history.push('/'),
-			errors => setBackendErrors(errors),
-
-		));
-
+		if (form.checkValidity()) {
+			dispatch(actions.transfer(
+				money,
+				operation,
+				() => history.push('/'),
+				errors => setBackendErrors(errors)));
+			
+		} else {
+            setBackendErrors(null);
+			form.classList.add('was-validated');
+		}
 	}
 
 	return (
+		
 		<div>
+			<Errors errors={backendErrors} 
+				onClose={() => setBackendErrors(null)}/>
 			<div className="card bg-light border-dark">
 				<h5 className="card-header">
 					<FormattedMessage id="project.users.Transfer.title" />
@@ -73,7 +79,7 @@ const Transfer = () => {
 						<div className="form-group row">
 							<div className="offset-md-3 col-md-1">
 								<button type="submit" className="btn btn-primary">
-									<FormattedMessage id="project.users.Transfer.title" />
+									<FormattedMessage id="project.users.Transfer.button" />
 								</button>
 							</div>
 						</div>

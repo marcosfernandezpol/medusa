@@ -1,5 +1,6 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import {FormattedMessage} from 'react-intl';
 
 
 
@@ -14,7 +15,9 @@ const TransferPage = () => {
     return (
 
         <div>
-			<h1>Transfers</h1>
+			<h1>
+				<FormattedMessage id="project.global.fields.transfers"/>
+			</h1>
 			
             <Transfer/>
         </div>

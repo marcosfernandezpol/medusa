@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import { useHistory } from 'react-router-dom';
-import { Errors } from '../../common'
+import { Errors, Success } from '../../common'
 
 import * as actions from '../actions';
 import * as selectors from '../selectors';
@@ -12,6 +12,7 @@ const CreateEnterprise = ({}) => {
 	    const dispatch = useDispatch();
 	    const history = useHistory();
 		const [backendErrors, setBackendErrors] = useState(null);
+		const [success, setSuccess] = useState(null);
 		const [enterpriseName, setEnterpriseName] = useState("");
 		const [acronim, setAcronim] = useState("");
 		const [fundation, setFundation] = useState("");
@@ -28,7 +29,7 @@ const CreateEnterprise = ({}) => {
 	            
 	            dispatch(actions.createEnterprise(
 					{enterpriseName, acronim, fundation, incomes, annualBenefits},
-	                () => history.push('/market/createEnterpriseCompleted'),
+	                () => setSuccess(<FormattedMessage id='project.global.validator.successCreateEnterprise'/>),
 	                errors => setBackendErrors(errors)
 	            ));
 	            
@@ -45,6 +46,8 @@ return (
 	<div>
             <Errors errors={backendErrors}
                     onClose={() => setBackendErrors(null)}/>
+			<Success message={success}
+                     onClose={() => setSuccess(null)}/>
             <div className="card bg-light border-dark">
                 <h5 className="card-header">
                     <FormattedMessage id="project.enterprise.CreateEnterprise.title"/>

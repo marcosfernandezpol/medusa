@@ -51,6 +51,7 @@ export default {
     'project.users.SignUp.fields.confirmPassword': 'Confirm password',
     'project.users.SignUp.title': 'Sign up',
     'project.users.UpdateProfile.title': 'Update profile',
+	'project.users.ShowBalance.balance': 'Balance',
 
 
 	'project.global.buttons.AccessCreateEnterprise': 'Create new enterprise',
@@ -61,6 +62,16 @@ export default {
 	'project.global.fields.fundation': 'Fundation',
 	'project.global.fields.incomes': 'Incomes',
 	'project.global.fields.annualBenefits': 'Annual benefits',
-	'project.global.buttons.CreateEnterpriseButton': 'Create enterprise'
-
+	'project.global.buttons.CreateEnterpriseButton': 'Create enterprise',
+	'project.global.fields.enterpriseCreated': 'Enterprise created',
+	
+	'project.shopping.BuyForm.title':'Balance',
+	'project.global.fields.transfers': 'Transfer',
+	'project.global.fields.Money': 'Money',
+	'project.global.fields.operation':'Operation',
+	'project.users.Transfer.button':'Complete',
+	'project.users.Transfer.title':'Enter the required data',
+	'project.global.validator.successCreateEnterprise':'Enterprise created successfully',
+	
+	
 }
