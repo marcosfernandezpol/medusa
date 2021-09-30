@@ -30,12 +30,7 @@ const Header = () => {
                 <ul className="navbar-nav mr-auto">
 				
                   {loggedIn &&  <Link className="navbar-brand" to="/search/enterprises"><FormattedMessage id='project.global.fields.enterprises'/></Link>}
-			            <button className="navbar-toggler" type="button" 
-			                data-toggle="collapse" data-target="#navbarSupportedContent" 
-			                aria-controls="navbarSupportedContent" aria-expanded="false" 
-			                aria-label="Toggle navigation">
-			                <span className="navbar-toggler-icon"></span>
-			            </button>
+			            
                 </ul>
 				
 				
@@ -44,20 +39,10 @@ const Header = () => {
                 <ul className="navbar-nav">
 
 					{isAdmin==false && <Link className="navbar-brand" to="/market/transfer"> <FormattedMessage id="project.app.Transfer"/></Link>}
-            			<button className="navbar-toggler" type="button" 
-                			data-toggle="collapse" data-target="#navbarSupportedContent" 
-                			aria-controls="navbarSupportedContent" aria-expanded="false" 
-                			aria-label="Toggle navigation">
-                			<span className="navbar-toggler-icon"></span>
-            			</button>
+            			
 
 					{isAdmin==false && <Link className="navbar-brand" to="/"><ShowBalance/></Link>}
-            			 <button className="navbar-toggler" type="button" 
-                			data-toggle="collapse" data-target="#navbarSupportedContent" 
-                			aria-controls="navbarSupportedContent" aria-expanded="false" 
-                			aria-label="Toggle navigation">
-                			<span className="navbar-toggler-icon"></span>
-            			</button>
+            			 
 
 					{isAdmin && <li className="nav-item dropdown">
 
