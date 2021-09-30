@@ -58,11 +58,11 @@ public class User {
 	
 	/** The balance. */
 	private Float balance;
-
-
+	
 	public User() {
 		
 	}
+	
 	/**
 	 * Instantiates a new user.
 	 

@@ -22,16 +22,18 @@ export const transfer = (userId, money, operation, onSuccess,
 		onErrors)
 };
 
-export const createEnterpriseCompleted = result => ({
+export const createEnterpriseCompleted = enterprise => ({
   type: actionTypes.CREATE_ENTERPRISE_COMPLETED,
-  result
+  enterprise
 })
 
 export const createEnterprise = (enterprise, onSuccess, onErrors) => dispatch => {	
+	
+
 	backend.stockMarketService.createEnterprise(
 		enterprise,
-		result => {
-			dispatch(createEnterpriseCompleted(result))
+		enterpriseReturned => {
+			dispatch(createEnterpriseCompleted(enterpriseReturned))
 			onSuccess()
 		},
 		onErrors

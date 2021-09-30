@@ -43,8 +43,8 @@ public class MarketController {
 			throws DuplicateInstanceException, PermissionException{
 
 		Enterprise enterprise = EnterpriseConversor.toEnterprise(enterpriseDto);
-		marketService.createEnterprise(userId, enterprise);
-		return null;	
+		Enterprise e = marketService.createEnterprise(userId, enterprise);
+		return EnterpriseConversor.toEnterpriseDto(e);	
 	}
 	
 	/**
