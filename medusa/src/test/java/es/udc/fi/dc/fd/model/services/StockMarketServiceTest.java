@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static Assertions.assertThrows;
+//import static Assertions.assertThrows;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
