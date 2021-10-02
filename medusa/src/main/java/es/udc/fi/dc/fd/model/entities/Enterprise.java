@@ -28,18 +28,22 @@ public class Enterprise {
 
 	private Float annualBenefits;
 
+	private int stock;
+
+	private Float stockPrice;
+
 	// End atributes
 
-	
-	
 	public Enterprise(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
-			Float annualBenefits) {
+			Float annualBenefits, int stock, Float stockPrice) {
 		super();
 		this.enterpriseName = enterpriseName;
 		this.acronim = acronim;
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
+		this.stock = stock;
+		this.stockPrice = stockPrice;
 	}
 
 	/**
@@ -48,13 +52,16 @@ public class Enterprise {
 	public Enterprise() {
 	}
 
-	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, Float annualBenefits) {
+	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, Float annualBenefits,
+			int stock, Float stockPrice) {
 		super();
 		this.enterpriseName = enterpriseName;
 		this.acronim = acronim;
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
+		this.stock = stock;
+		this.stockPrice = stockPrice;
 	}
 
 	@Id
@@ -105,6 +112,22 @@ public class Enterprise {
 
 	public void setAnnualBenefits(Float annualBenefits) {
 		this.annualBenefits = annualBenefits;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public Float getStockPrice() {
+		return stockPrice;
+	}
+
+	public void setStockPrice(Float stockPrice) {
+		this.stockPrice = stockPrice;
 	}
 
 	@Override
