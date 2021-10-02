@@ -61,6 +61,8 @@ export default {
 	'project.global.fields.acronim': 'Acronim',
 	'project.global.fields.fundation': 'Fundation',
 	'project.global.fields.incomes': 'Incomes',
+	'project.global.fields.stock': 'Stock',
+	'project.global.fields.price': 'Price',
 	'project.global.fields.annualBenefits': 'Annual benefits',
 	'project.global.buttons.CreateEnterpriseButton': 'Create enterprise',
 	'project.global.fields.enterpriseCreated': 'Enterprise created',
