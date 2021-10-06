@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS Order_line;
 DROP TABLE IF EXISTS Enterprise;
 DROP TABLE IF EXISTS Bank_account;
 DROP TABLE IF EXISTS Transfer_history;
@@ -47,4 +48,18 @@ CREATE TABLE Transfer_history (
     CONSTRAINT TransferPK PRIMARY KEY (id),
     CONSTRAINT SenderFK FOREIGN KEY (sender) REFERENCES User(id),
     CONSTRAINT ReceiverFK FOREIGN KEY (receiver) REFERENCES User(id)
+);
+
+CREATE TABLE Order_line (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	date DATETIME NOT NULL,
+	type TINYINT NOT NULL,
+	owner BIGINT NOT NULL,
+	price FLOAT NOT NULL,
+	number INT  NOT NULL,
+	enterprise BIGINT NOT NULL,
+	avaliable BIT NOT NULL,
+	CONSTRAINT OrderPK PRIMARY KEY (id),
+	CONSTRAINT OwnerFK FOREIGN KEY (owner) REFERENCES User(id),
+	CONSTRAINT enterpriseFK FOREIGN KEY (enterprise) REFERENCES Enterprise(id)
 );
