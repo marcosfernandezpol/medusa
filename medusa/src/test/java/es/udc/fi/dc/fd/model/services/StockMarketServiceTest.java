@@ -33,9 +33,13 @@ import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
 @ActiveProfiles("test")
 @Transactional
 public class StockMarketServiceTest {
+<<<<<<< Updated upstream
 
 	private final Long NON_EXISTENT_ID = Long.valueOf(-1);
 
+=======
+	
+>>>>>>> Stashed changes
 	@Autowired
 	private StockMarketService stockMarketService;
 
@@ -59,7 +63,11 @@ public class StockMarketServiceTest {
 	// Creamos una empresa
 	private Enterprise createEnterprise() {
 		return new Enterprise("MedusaEnterprises", "ME", Date.valueOf("1999-01-17"), Float.valueOf(1000),
+<<<<<<< Updated upstream
 				Float.valueOf(10000), 5, Float.valueOf(5));
+=======
+				Float.valueOf(10000), 28, Float.valueOf(18));
+>>>>>>> Stashed changes
 	}
 
 	@Test

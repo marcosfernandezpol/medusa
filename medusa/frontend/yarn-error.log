@@ -1,8 +1,8 @@
 Arguments: 
-  C:\software\Ferramentas\medusa\medusa\target\node\node.exe C:\software\Ferramentas\medusa\medusa\target\node\yarn\dist\bin\yarn.js install
+  C:\Users\ritac\Desktop\METODOLOGIAS DE DESARROLLO\medusa\medusa\target\node\node.exe C:\Users\ritac\Desktop\METODOLOGIAS DE DESARROLLO\medusa\medusa\target\node\yarn\dist\bin\yarn.js install
 
 PATH: 
-  C:\software\Ferramentas\medusa\medusa\target\node;C:\software\Ferramentas\medusa\medusa\target\node\yarn\dist\bin;C:/Users/siroc/Desktop/Eclipse/eclipse-jee-2021-06-R-win32-x86_64/eclipse//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_16.0.1.v20210528-1205/jre/bin/server;C:/Users/siroc/Desktop/Eclipse/eclipse-jee-2021-06-R-win32-x86_64/eclipse//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_16.0.1.v20210528-1205/jre/bin;C:\Program Files (x86)\VMware\VMware Player\bin\;C:\Program Files\AdoptOpenJDK\jdk-11.0.9.101-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Git\cmd;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X64\;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X86\;C:\Program Files\nodejs\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files\dotnet\;C:\Program Files\AdoptOpenJDK\jdk-11.0.9.101-hotspot\bin;C:\Program Files\Java\apache-maven-3.6.3\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Users\siroc\AppData\Local\Microsoft\WindowsApps;D:\src\flutter\bin;C:\Users\siroc\AppData\Roaming\npm;C:\Users\siroc\AppData\Local\gitkraken\bin;C:\Users\siroc\.dotnet\tools;C:\Users\siroc\Desktop\Eclipse\eclipse-jee-2021-06-R-win32-x86_64\eclipse;;
+  C:\Users\ritac\Desktop\METODOLOGIAS DE DESARROLLO\medusa\medusa\target\node;C:\Users\ritac\Desktop\METODOLOGIAS DE DESARROLLO\medusa\medusa\target\node\yarn\dist\bin;C:\Users\ritac\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\ritac\bin;C:\Program Files\AdoptOpenJDK\jdk-11.0.10.9-hotspot\bin;C:\Program Files (x86)\VMware\VMware Player\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\PuTTY;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X64;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X86;C:\Program Files\nodejs;C:\Program Files\erl10.3\bin;C:\Program Files (x86)\Elixir\bin;C:\WINDOWS\system32\config\systemprofile\.mix\escripts;C:\Program Files\AutoFirma\AutoFirma;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn;C:\Program Files\dotnet;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn;C:\Program Files (x86)\Yarn\bin;C:\Program Files\Microsoft SQL Server\110\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio;C:\Program Files\Microsoft SQL Server\110\DTS\Binn;C:\Program Files\AdoptOpenJDK\jdk-11.0.10.9-hotspot\bin;C:\Program Files\Java\apache-maven-3.6.3\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Users\ritac\AppData\Local\Microsoft\WindowsApps;C:\nrn\bin;C:\nrn\mingw\usr\bin;C:\Users\ritac\AppData\Roaming\npm;C:\Users\ritac\AppData\Local\GitHubDesktop\bin;C:\Users\ritac\.dotnet\tools;C:\Users\ritac\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl;
 
 Yarn version: 
   1.22.10
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EBUSY: resource busy or locked, copyfile 'C:\Users\siroc\AppData\Local\Yarn\Cache\v6\npm-@material-ui-core-4.12.3-80d665caf0f1f034e52355c5450c0e38b099d3ca-integrity\node_modules\@material-ui\core\esm\test-utils\createShallow.js' -> 'C:\software\Ferramentas\medusa\medusa\frontend\node_modules\@material-ui\core\esm\test-utils\createShallow.js'
+  Error: EBUSY: resource busy or locked, copyfile 'C:\Users\ritac\AppData\Local\Yarn\Cache\v6\npm-mime-2.5.2-6e3dc6cc2b9510643830e5f19d5cb753da5eeabe-integrity\node_modules\mime\CHANGELOG.md' -> 'C:\Users\ritac\Desktop\METODOLOGIAS DE DESARROLLO\medusa\medusa\frontend\node_modules\mime\CHANGELOG.md'
 
 npm manifest: 
   {
@@ -23,10 +23,13 @@ npm manifest:
     "homepage": "/medusa/",
     "private": true,
     "dependencies": {
+      "@fortawesome/fontawesome-free": "^5.15.4",
       "@material-ui/core": "^4.12.1",
       "@material-ui/icons": "^4.11.2",
+      "bootstrap": "4.5.3",
       "react": "17.0.2",
       "react-dom": "17.0.2",
+      "react-intl": "^5.20.12",
       "react-router-dom": "^5.2.0",
       "react-scripts": "4.0.3",
       "react-test-renderer": "^17.0.2"
@@ -1288,6 +1291,81 @@ Lockfile:
       minimatch "^3.0.4"
       strip-json-comments "^3.1.1"
   
+  "@formatjs/ecma402-abstract@1.9.9":
+    version "1.9.9"
+    resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.9.9.tgz#f556782fc12398af283ae2f8be64e938f969d240"
+    integrity sha512-w2HpUW17Ev8UN8G1fSvl0skCLP+HkhGZii0ALaBXYc7rd3osD2s8EF2ihSNkeEeC6aySX1IAkRm0f4lnE8Jeaw==
+    dependencies:
+      "@formatjs/intl-localematcher" "0.2.21"
+      tslib "^2.1.0"
+  
+  "@formatjs/fast-memoize@1.2.0":
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/@formatjs/fast-memoize/-/fast-memoize-1.2.0.tgz#1123bfcc5d21d761f15d8b1c32d10e1b6530355d"
+    integrity sha512-fObitP9Tlc31SKrPHgkPgQpGo4+4yXfQQITTCNH8AZdEqB7Mq4nPrjpUL/tNGN3lEeJcFxDbi0haX8HM7QvQ8w==
+    dependencies:
+      tslib "^2.1.0"
+  
+  "@formatjs/icu-messageformat-parser@2.0.12":
+    version "2.0.12"
+    resolved "https://registry.yarnpkg.com/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.0.12.tgz#0e03b2c83c03d4f95debb51a727934cb8d8fdbea"
+    integrity sha512-X/tdbKLfVBc2yJRX+xC3uqYxXkp9336FhSS1Hb6kU6pSOU+EseylS3a/vjFOKjol1qQ5BSIQd8YPWtOOt3KcWA==
+    dependencies:
+      "@formatjs/ecma402-abstract" "1.9.9"
+      "@formatjs/icu-skeleton-parser" "1.2.13"
+      tslib "^2.1.0"
+  
+  "@formatjs/icu-skeleton-parser@1.2.13":
+    version "1.2.13"
+    resolved "https://registry.yarnpkg.com/@formatjs/icu-skeleton-parser/-/icu-skeleton-parser-1.2.13.tgz#8360fd8b24f70e1894a891aa63566a19c8e9cffa"
+    integrity sha512-PHK4kdIcNTI15ASyn6dCA2cxzUPHE+UK/FsBkPULNpKgPWEZIYAFO9PgG0a9SDcIIr7Ta3SPPbUZGKRXT3d+ng==
+    dependencies:
+      "@formatjs/ecma402-abstract" "1.9.9"
+      tslib "^2.1.0"
+  
+  "@formatjs/intl-displaynames@5.2.4":
+    version "5.2.4"
+    resolved "https://registry.yarnpkg.com/@formatjs/intl-displaynames/-/intl-displaynames-5.2.4.tgz#3e076eb2c35f04c2acdd5526464f7ef9355d414c"
+    integrity sha512-04ePaKLSuM8hHYiFEtpauYBCJzALktgwDo2T9CAyffO4ULYVjQbjcqIpKV2Ik5I7CZLbKVbMfWHis+VhNENNgQ==
+    dependencies:
+      "@formatjs/ecma402-abstract" "1.9.9"
+      "@formatjs/intl-localematcher" "0.2.21"
+      tslib "^2.1.0"
+  
+  "@formatjs/intl-listformat@6.3.4":
+    version "6.3.4"
+    resolved "https://registry.yarnpkg.com/@formatjs/intl-listformat/-/intl-listformat-6.3.4.tgz#aec02df277627fce416d15bf0c455406fd312d89"
+    integrity sha512-CofbXe8IXIniUX12jpnPNwnLtx/qLzpTvOcNeilqerwPTe/br0qdlpMorcTDS0CM40ourSb5WbkHftZNbytWSA==
+    dependencies:
+      "@formatjs/ecma402-abstract" "1.9.9"
+      "@formatjs/intl-localematcher" "0.2.21"
+      tslib "^2.1.0"
+  
+  "@formatjs/intl-localematcher@0.2.21":
+    version "0.2.21"
+    resolved "https://registry.yarnpkg.com/@formatjs/intl-localematcher/-/intl-localematcher-0.2.21.tgz#39ef33d701fe8084f3d693cd3ff7cbe03cdd3a49"
+    integrity sha512-JTJeLiNwexN4Gy0cMxoUPvJbKhXdnSuo5jPrDafEZpnDWlJ5VDYta8zUVVozO/pwzEmFVHEUpgiEDj+39L4oMg==
+    dependencies:
+      tslib "^2.1.0"
+  
+  "@formatjs/intl@1.14.2":
+    version "1.14.2"
+    resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-1.14.2.tgz#86584bc2802437eb4f1cddda8c4171b1578048c5"
+    integrity sha512-bZhKS7STrxR1DOU0zudYKn3wsMsZN+PbJLbZ1JU+cQkjs7l8CzQmjZ+wlzQU1jvjvsypZbJeLnwz2yY7DvktUg==
+    dependencies:
+      "@formatjs/ecma402-abstract" "1.9.9"
+      "@formatjs/fast-memoize" "1.2.0"
+      "@formatjs/icu-messageformat-parser" "2.0.12"
+      "@formatjs/intl-displaynames" "5.2.4"
+      "@formatjs/intl-listformat" "6.3.4"
+      intl-messageformat "9.9.2"
+      tslib "^2.1.0"
+  
+  "@fortawesome/fontawesome-free@^5.15.4":
+    version "5.15.4"
+    resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.4.tgz#ecda5712b61ac852c760d8b3c79c96adca5554e5"
+    integrity sha512-eYm8vijH/hpzr/6/1CJ/V/Eb1xQFW2nnUKArb3z+yUWv7HTwj6M7SP957oMjfZjAHU6qpoNc2wQvIxBLWYa/Jg==
+  
   "@gar/promisify@^1.0.1":
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
@@ -1870,6 +1948,14 @@ Lockfile:
     dependencies:
       "@types/node" "*"
   
+  "@types/hoist-non-react-statics@^3.3.1":
+    version "3.3.1"
+    resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
+    integrity sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
+    dependencies:
+      "@types/react" "*"
+      hoist-non-react-statics "^3.3.0"
+  
   "@types/html-minifier-terser@^5.0.0":
     version "5.1.2"
     resolved "https://registry.yarnpkg.com/@types/html-minifier-terser/-/html-minifier-terser-5.1.2.tgz#693b316ad323ea97eed6b38ed1a3cc02b1672b57"
@@ -1950,6 +2036,15 @@ Lockfile:
     version "17.0.21"
     resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.21.tgz#069c43177cd419afaab5ce26bb4e9056549f7ea6"
     integrity sha512-GzzXCpOthOjXvrAUFQwU/svyxu658cwu00Q9ugujS4qc1zXgLFaO0kS2SLOaMWLt2Jik781yuHCWB7UcYdGAeQ==
+    dependencies:
+      "@types/prop-types" "*"
+      "@types/scheduler" "*"
+      csstype "^3.0.2"
+  
+  "@types/react@16 || 17":
+    version "17.0.26"
+    resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.26.tgz#960ea4b3518cc154ed7df3b35656c508df653331"
+    integrity sha512-MXxuXrH2xOcv5cp/su4oz69dNQnSA90JjFw5HBd5wifw6Ihi94j7dRJm7qNsB30tnruXSCPc9qmlhGop4nh9Hw==
     dependencies:
       "@types/prop-types" "*"
       "@types/scheduler" "*"
@@ -2954,6 +3049,11 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
     integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
+  
+  bootstrap@4.5.3:
+    version "4.5.3"
+    resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.5.3.tgz#c6a72b355aaf323920be800246a6e4ef30997fe6"
+    integrity sha512-o9ppKQioXGqhw8Z7mah6KdTYpNQY//tipnkxppWhPbiSWdD+1raYsnhwEZjkTHYbGee4cVQ0Rx65EhOY/HNLcQ==
   
   brace-expansion@^1.1.7:
     version "1.1.11"
@@ -5577,7 +5677,7 @@ Lockfile:
       minimalistic-assert "^1.0.0"
       minimalistic-crypto-utils "^1.0.1"
   
-  hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.2:
+  hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
     version "3.3.2"
     resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
     integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -5918,6 +6018,15 @@ Lockfile:
       get-intrinsic "^1.1.0"
       has "^1.0.3"
       side-channel "^1.0.4"
+  
+  intl-messageformat@9.9.2:
+    version "9.9.2"
+    resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-9.9.2.tgz#59a364ffbfc882660c9584a6198998c3d06e4eea"
+    integrity sha512-IR/bOP7XUrCxrlgFlZeHXixIT29BNd/1bOS8leElk5sQfvGvsDVoTGI+wLpvWG4INIBQNj8vjxgxlbquB12vog==
+    dependencies:
+      "@formatjs/fast-memoize" "1.2.0"
+      "@formatjs/icu-messageformat-parser" "2.0.12"
+      tslib "^2.1.0"
   
   ip-regex@^2.1.0:
     version "2.1.0"
@@ -9237,6 +9346,22 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
     integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
   
+  react-intl@^5.20.12:
+    version "5.20.12"
+    resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.20.12.tgz#1a4969d15c381378cae35912fa2ec7010e27b4f7"
+    integrity sha512-5Vcjcz/1WRiLMft6daLZpH2To66GV9YYSTJOCSAKaiOox9mAciLJTtHB+3l4zMTVPt0JVHEXEWkILDdSQaSbZw==
+    dependencies:
+      "@formatjs/ecma402-abstract" "1.9.9"
+      "@formatjs/icu-messageformat-parser" "2.0.12"
+      "@formatjs/intl" "1.14.2"
+      "@formatjs/intl-displaynames" "5.2.4"
+      "@formatjs/intl-listformat" "6.3.4"
+      "@types/hoist-non-react-statics" "^3.3.1"
+      "@types/react" "16 || 17"
+      hoist-non-react-statics "^3.3.2"
+      intl-messageformat "9.9.2"
+      tslib "^2.1.0"
+  
   "react-is@^16.12.0 || ^17.0.0", "react-is@^16.8.0 || ^17.0.0", react-is@^17.0.1, react-is@^17.0.2:
     version "17.0.2"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
@@ -10808,7 +10933,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
     integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
   
-  tslib@^2.0.3:
+  tslib@^2.0.3, tslib@^2.1.0:
     version "2.3.1"
     resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
     integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==

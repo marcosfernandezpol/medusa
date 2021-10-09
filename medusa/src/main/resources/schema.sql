@@ -25,8 +25,13 @@ CREATE TABLE Enterprise (
     fundation DATE,
     incomes FLOAT NOT NULL,
     annualBenefits FLOAT NOT NULL,
+<<<<<<< Updated upstream
     stock NUMERIC(3) NOT NULL,
     stockPrice FLOAT NOT NULL,
+=======
+    actions INT NOT NULL,
+    actionsPrice FLOAT NOT NULL,
+>>>>>>> Stashed changes
     CONSTRAINT EnterprisePK PRIMARY KEY (id),
     CONSTRAINT enterpriseNameUnique UNIQUE (enterpriseName)
 );

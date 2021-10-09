@@ -3,7 +3,6 @@ package es.udc.fi.dc.fd.model.services;
 import static org.junit.Assert.assertNotNull;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -17,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
-import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
 import es.udc.fi.dc.fd.model.entities.UserDao;
 import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
@@ -34,10 +32,10 @@ public class SearchServiceTest {
 
 	@Autowired
 	private SearchService searchService;
-	@Autowired
-	private EnterpriseDao enterpriseDao;
+	
 	@Autowired
 	private UserDao userDao;
+	
 	@Autowired
 	private StockMarketService marketService;
 
@@ -60,8 +58,12 @@ public class SearchServiceTest {
 	}
 
 	private Enterprise createEnterprise(String name, String acronim) {
+<<<<<<< Updated upstream
 		return new Enterprise(name, acronim, Date.valueOf("1999-01-17"), Float.valueOf(1000), Float.valueOf(10000), 5,
 				Float.valueOf(5));
+=======
+		return new Enterprise(name, acronim, Date.valueOf("1999-01-17"), Float.valueOf(1000), Float.valueOf(10000), 12, Float.valueOf(18));
+>>>>>>> Stashed changes
 	}
 
 	@Test

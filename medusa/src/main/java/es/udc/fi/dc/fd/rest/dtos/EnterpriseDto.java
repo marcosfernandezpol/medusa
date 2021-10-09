@@ -27,6 +27,11 @@ public class EnterpriseDto {
 	private Float incomes;
 
 	private Float annualBenefits;
+	
+	private int actions;
+	
+	private Float actionsPrice;
+	
 
 	private int stock;
 
@@ -36,7 +41,11 @@ public class EnterpriseDto {
 	}
 
 	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
+<<<<<<< Updated upstream
 			Float annualBenefits, int stock, Float stockPrice) {
+=======
+			Float annualBenefits, int actions, Float actionsPrice) {
+>>>>>>> Stashed changes
 		super();
 		this.id = id;
 		this.enterpriseName = enterpriseName;
@@ -44,8 +53,13 @@ public class EnterpriseDto {
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
+<<<<<<< Updated upstream
 		this.stock = stock;
 		this.stockPrice = stockPrice;
+=======
+		this.actions = actions;
+		this.actionsPrice = actionsPrice;
+>>>>>>> Stashed changes
 	}
 
 	public Long getId() {
@@ -95,6 +109,28 @@ public class EnterpriseDto {
 	public void setAnnualBenefits(Float annualBenefits) {
 		this.annualBenefits = annualBenefits;
 	}
+<<<<<<< Updated upstream
+=======
+
+	public int getActions() {
+		return actions;
+	}
+
+	public void setActions(int actions) {
+		this.actions = actions;
+	}
+
+	public Float getActionsPrice() {
+		return actionsPrice;
+	}
+
+	public void setActionsPrice(Float actionsPrice) {
+		this.actionsPrice = actionsPrice;
+	}
+	
+	
+	
+>>>>>>> Stashed changes
 
 	public int getStock() {
 		return stock;
