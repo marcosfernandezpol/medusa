@@ -34,8 +34,6 @@ import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
 @Transactional
 public class StockMarketServiceTest {
 
-	private final Long NON_EXISTENT_ID = Long.valueOf(-1);
-
 	@Autowired
 	private StockMarketService stockMarketService;
 
@@ -59,7 +57,7 @@ public class StockMarketServiceTest {
 	// Creamos una empresa
 	private Enterprise createEnterprise() {
 		return new Enterprise("MedusaEnterprises", "ME", Date.valueOf("1999-01-17"), Float.valueOf(1000),
-				Float.valueOf(10000), 5, Float.valueOf(5));
+				Float.valueOf(10000), 28, Float.valueOf(18));
 	}
 
 	@Test

@@ -27,23 +27,25 @@ public class Enterprise {
 	private Float incomes;
 
 	private Float annualBenefits;
+	
+	private int actions;
 
-	private int stock;
-
-	private Float stockPrice;
+	private Float actionsPrice;
 
 	// End atributes
 
 	public Enterprise(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
-			Float annualBenefits, int stock, Float stockPrice) {
+			Float annualBenefits, int actions, Float actionsPrice) {
+
 		super();
 		this.enterpriseName = enterpriseName;
 		this.acronim = acronim;
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
-		this.stock = stock;
-		this.stockPrice = stockPrice;
+		this.actions = actions;
+		this.actionsPrice = actionsPrice; 
+
 	}
 
 	/**
@@ -52,16 +54,15 @@ public class Enterprise {
 	public Enterprise() {
 	}
 
-	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, Float annualBenefits,
-			int stock, Float stockPrice) {
+	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, Float annualBenefits, int actions, Float actionsPrice) {
 		super();
 		this.enterpriseName = enterpriseName;
 		this.acronim = acronim;
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
-		this.stock = stock;
-		this.stockPrice = stockPrice;
+		this.actions = actions;
+		this.actionsPrice = actionsPrice; 
 	}
 
 	@Id
@@ -113,32 +114,33 @@ public class Enterprise {
 	public void setAnnualBenefits(Float annualBenefits) {
 		this.annualBenefits = annualBenefits;
 	}
-
-	public int getStock() {
-		return stock;
+	
+	public int getActions() {
+		return actions;
 	}
 
-	public void setStock(int stock) {
-		this.stock = stock;
+	public void setActions(int actions) {
+		this.actions = actions;
+	}
+	
+	public Float getActionsPrice() {
+		return actionsPrice;
 	}
 
-	public Float getStockPrice() {
-		return stockPrice;
+	public void setActionsPrice(Float actionsPrice) {
+		this.actionsPrice = actionsPrice;
 	}
-
-	public void setStockPrice(Float stockPrice) {
-		this.stockPrice = stockPrice;
-	}
-
+	
 	@Override
 	public String toString() {
 		return "Enterprise [id=" + id + ", enterpriseName=" + enterpriseName + ", acronim=" + acronim + ", fundation="
-				+ fundation + ", incomes=" + incomes + ", annualBenefits=" + annualBenefits + "]";
+				+ fundation + ", incomes=" + incomes + ", annualBenefits=" + annualBenefits + ", actions=" + actions
+				+ ", actionsPrice=" + actionsPrice + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(acronim, annualBenefits, enterpriseName, fundation, id, incomes);
+		return Objects.hash(acronim, actions, actionsPrice, annualBenefits, enterpriseName, fundation, id, incomes);
 	}
 
 	@Override
@@ -150,7 +152,9 @@ public class Enterprise {
 		if (getClass() != obj.getClass())
 			return false;
 		Enterprise other = (Enterprise) obj;
-		return Objects.equals(acronim, other.acronim) && Objects.equals(annualBenefits, other.annualBenefits)
+		return Objects.equals(acronim, other.acronim) && actions == other.actions
+				&& Objects.equals(actionsPrice, other.actionsPrice)
+				&& Objects.equals(annualBenefits, other.annualBenefits)
 				&& Objects.equals(enterpriseName, other.enterpriseName) && Objects.equals(fundation, other.fundation)
 				&& Objects.equals(id, other.id) && Objects.equals(incomes, other.incomes);
 	}
