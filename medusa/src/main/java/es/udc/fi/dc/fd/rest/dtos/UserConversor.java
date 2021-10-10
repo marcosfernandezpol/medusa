@@ -21,7 +21,6 @@ public class UserConversor {
 	 * @return the user dto
 	 */
 	public static final UserDto toUserDto(User user) {
-		System.out.println(user.getRole());
 		return new UserDto (user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(), user.getEmail(), 
 				user.getRole().toString(), user.getBalance(), user.getCountry(), user.getCity());
 	}

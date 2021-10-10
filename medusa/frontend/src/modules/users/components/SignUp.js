@@ -186,10 +186,10 @@ const SignUp = () => {
                                 <FormattedMessage id="project.global.fields.role"/>
                             </label>
                             <div className="col-md-4">
-                                <input type="text" id="role" className="form-control"
-                                    value={role}
-                                    onChange={e => setRole(e.target.value)}
-                                    required/>
+                                <select onChange={e => setRole(e.target.value)} class="form-select" type="text" id="role" className="form-control"> 
+                                  	<option value="CLIENT">CLIENT</option>
+									<option value="ADMIN">ADMIN</option>                                                 
+                                </select>
                                 <div className="invalid-feedback">
                                     <FormattedMessage id='project.global.validator.required'/>
                                 </div>
@@ -200,7 +200,7 @@ const SignUp = () => {
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<CountryDropdown
+							<CountryDropdown className="form-select"
 					          value={country}
 					          onChange={(val) => setCountry(val)} />
 						  </div>
@@ -210,7 +210,7 @@ const SignUp = () => {
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								&nbsp;</span>
-							<RegionDropdown
+							<RegionDropdown className="form-select"
 					          country={country}
 					          value={city}
 					          onChange={(val) => setCity(val)} />

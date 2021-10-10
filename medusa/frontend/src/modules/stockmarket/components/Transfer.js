@@ -67,14 +67,15 @@ const Transfer = () => {
 								<FormattedMessage id="project.global.fields.operation" />
 							</label>
 							<div className="col-md-4">
-								<input type="text" id="operation" className="form-control"
-									value={operation}
-									onChange={e => setOperation(e.target.value)}
-									required />
-								<div className="invalid-feedback">
-									<FormattedMessage id='project.global.validator.required' />
-								</div>
-							</div>
+                                <select onChange={e => setOperation(e.target.value)} class="form-select" type="text" id="operation" className="form-control"> 
+                                  	<option selected value="Select the operation">----Select operation----</option>
+									<option value="INCOME">INCOME</option>
+									<option value="WITHDRAW">WITHDRAW</option>                                                 
+                                </select>
+                                <div className="invalid-feedback">
+                                    <FormattedMessage id='project.global.validator.required'/>
+                                </div>
+                            </div>
 						</div>
 						<div className="form-group row">
 							<div className="offset-md-3 col-md-1">
