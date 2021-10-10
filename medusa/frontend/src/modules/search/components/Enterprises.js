@@ -2,9 +2,6 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import * as selectors from '../selectors';
-import { enterpriseLink } from '../../common';
-
 const Enterprises = ({ enterprises }) => (
 
 	<table className="table table-striped table-hover text-center">
@@ -27,10 +24,10 @@ const Enterprises = ({ enterprises }) => (
 					<FormattedMessage id='project.global.fields.incomes' />
 				</th>
 				<th scope="col">
-					<FormattedMessage id='project.global.fields.stock' />
+					<FormattedMessage id='project.global.fields.actions' />
 				</th>
 				<th scope="col">
-					<FormattedMessage id='project.global.fields.price' />
+					<FormattedMessage id='project.global.fields.actionsPrice' />
 				</th>
 
 			</tr>
@@ -45,8 +42,8 @@ const Enterprises = ({ enterprises }) => (
 					<td> {enterprise.fundation} </td>
 					<td> {enterprise.annualBenefits} </td>
 					<td> {enterprise.incomes} </td>
-					<td> {enterprise.stock} </td>
-					<td> {enterprise.stockPrice} </td>
+					<td> {enterprise.actions} </td>
+					<td> {enterprise.actionsPrice} </td>
 				</tr>
 
 
