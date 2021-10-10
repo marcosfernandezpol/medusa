@@ -76,13 +76,13 @@ export const setReauthenticationCallback = (callback) =>
   (reauthenticationCallback = callback);
 
 export const setServiceToken = (serviceToken) =>
-  sessionStorage.setItem(config.SERVICE_TOKEN_NAME, serviceToken);
+  localStorage.setItem(config.SERVICE_TOKEN_NAME, serviceToken);
 
 export const getServiceToken = () =>
-  sessionStorage.getItem(config.SERVICE_TOKEN_NAME);
+  localStorage.getItem(config.SERVICE_TOKEN_NAME);
 
 export const removeServiceToken = () =>
-  sessionStorage.removeItem(config.SERVICE_TOKEN_NAME);
+  localStorage.removeItem(config.SERVICE_TOKEN_NAME);
 
 
 export const fetchConfig = (method, body) => {
