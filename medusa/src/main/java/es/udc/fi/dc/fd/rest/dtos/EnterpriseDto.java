@@ -27,16 +27,17 @@ public class EnterpriseDto {
 	private Float incomes;
 
 	private Float annualBenefits;
-
-	private int stock;
-
-	private Float stockPrice;
-
+	
+	private int actions;
+	
+	private Float actionsPrice;
+	
 	public EnterpriseDto() {
 	}
 
 	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
-			Float annualBenefits, int stock, Float stockPrice) {
+			Float annualBenefits, int actions, Float actionsPrice) {
+
 		super();
 		this.id = id;
 		this.enterpriseName = enterpriseName;
@@ -44,8 +45,9 @@ public class EnterpriseDto {
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
-		this.stock = stock;
-		this.stockPrice = stockPrice;
+		this.actions = actions;
+		this.actionsPrice = actionsPrice;
+
 	}
 
 	public Long getId() {
@@ -96,20 +98,21 @@ public class EnterpriseDto {
 		this.annualBenefits = annualBenefits;
 	}
 
-	public int getStock() {
-		return stock;
+	public int getActions() {
+		return actions;
 	}
 
-	public void setStock(int stock) {
-		this.stock = stock;
+	public void setActions(int actions) {
+		this.actions = actions;
 	}
 
-	public Float getStockPrice() {
-		return stockPrice;
+	public Float getActionsPrice() {
+		return actionsPrice;
 	}
 
-	public void setStockPrice(Float stockPrice) {
-		this.stockPrice = stockPrice;
+	public void setActionsPrice(Float actionsPrice) {
+		this.actionsPrice = actionsPrice;
 	}
-
+	
+	
 }
