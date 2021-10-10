@@ -30,36 +30,22 @@ public class Enterprise {
 	
 	private int actions;
 
-<<<<<<< Updated upstream
-	private int stock;
-
-	private Float stockPrice;
-
-=======
 	private Float actionsPrice;
-	
->>>>>>> Stashed changes
+
 	// End atributes
 
 	public Enterprise(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
-<<<<<<< Updated upstream
-			Float annualBenefits, int stock, Float stockPrice) {
-=======
 			Float annualBenefits, int actions, Float actionsPrice) {
->>>>>>> Stashed changes
+
 		super();
 		this.enterpriseName = enterpriseName;
 		this.acronim = acronim;
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
-<<<<<<< Updated upstream
-		this.stock = stock;
-		this.stockPrice = stockPrice;
-=======
 		this.actions = actions;
 		this.actionsPrice = actionsPrice; 
->>>>>>> Stashed changes
+
 	}
 
 	/**
@@ -68,25 +54,15 @@ public class Enterprise {
 	public Enterprise() {
 	}
 
-<<<<<<< Updated upstream
-	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, Float annualBenefits,
-			int stock, Float stockPrice) {
-=======
 	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, Float annualBenefits, int actions, Float actionsPrice) {
->>>>>>> Stashed changes
 		super();
 		this.enterpriseName = enterpriseName;
 		this.acronim = acronim;
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
-<<<<<<< Updated upstream
-		this.stock = stock;
-		this.stockPrice = stockPrice;
-=======
 		this.actions = actions;
 		this.actionsPrice = actionsPrice; 
->>>>>>> Stashed changes
 	}
 
 	@Id
@@ -151,29 +127,10 @@ public class Enterprise {
 		return actionsPrice;
 	}
 
-<<<<<<< Updated upstream
-	public int getStock() {
-		return stock;
-	}
-
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
-
-	public Float getStockPrice() {
-		return stockPrice;
-	}
-
-	public void setStockPrice(Float stockPrice) {
-		this.stockPrice = stockPrice;
-	}
-
-=======
 	public void setActionsPrice(Float actionsPrice) {
 		this.actionsPrice = actionsPrice;
 	}
 	
->>>>>>> Stashed changes
 	@Override
 	public String toString() {
 		return "Enterprise [id=" + id + ", enterpriseName=" + enterpriseName + ", acronim=" + acronim + ", fundation="

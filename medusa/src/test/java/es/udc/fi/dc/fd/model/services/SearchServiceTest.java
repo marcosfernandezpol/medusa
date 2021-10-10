@@ -58,12 +58,8 @@ public class SearchServiceTest {
 	}
 
 	private Enterprise createEnterprise(String name, String acronim) {
-<<<<<<< Updated upstream
-		return new Enterprise(name, acronim, Date.valueOf("1999-01-17"), Float.valueOf(1000), Float.valueOf(10000), 5,
-				Float.valueOf(5));
-=======
 		return new Enterprise(name, acronim, Date.valueOf("1999-01-17"), Float.valueOf(1000), Float.valueOf(10000), 12, Float.valueOf(18));
->>>>>>> Stashed changes
+
 	}
 
 	@Test
