@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import { Errors, Success } from '../../common'
 
-import * as actions from '../actions';
+import * as actionss from '../actions';
 import * as selectors from '../selectors';
 
 const CreateEnterprise = ({ }) => {
@@ -18,8 +18,8 @@ const CreateEnterprise = ({ }) => {
 	const [fundation, setFundation] = useState("");
 	const [incomes, setIncomes] = useState("");
 	const [annualBenefits, setAnnualBenefits] = useState("");
-	const [stock, setStock] = useState("");
-	const [stockPrice, setStockPrice] = useState("");
+	const [actions, setActions] = useState("");
+	const [actionsPrice, setActionsPrice] = useState("");
 
 	let form;
 
@@ -29,9 +29,9 @@ const CreateEnterprise = ({ }) => {
 
 		if (form.checkValidity()) {
 
-			dispatch(actions.createEnterprise(
-				{ enterpriseName, acronim, fundation, incomes, annualBenefits, stock, stockPrice },
-				() => setSuccess(<FormattedMessage id='project.global.validator.successCreateEnterprise' />),
+			dispatch(actionss.createEnterprise(
+				{ enterpriseName, acronim, fundation, incomes, annualBenefits, actions, actionsPrice },
+				() => history.push('/market/createEnterpriseCompleted'),
 				errors => setBackendErrors(errors)
 			));
 
@@ -135,13 +135,13 @@ const CreateEnterprise = ({ }) => {
 						</div>
 
 						<div className="form-group row">
-							<label htmlFor="stock" className="col-md-3 col-form-label">
-								<FormattedMessage id="project.global.fields.stock" />
+							<label htmlFor="actions" className="col-md-3 col-form-label">
+								<FormattedMessage id="project.global.fields.actions" />
 							</label>
 							<div className="col-md-4">
-								<input type="number" step="" id="stock" className="form-control"
-									value={stock}
-									onChange={e => setStock(e.target.value)}
+								<input type="number" step="" id="actions" className="form-control"
+									value={actions}
+									onChange={e => setActions(e.target.value)}
 									required />
 								<div className="invalid-feedback">
 									<FormattedMessage id='project.global.validator.required' />
@@ -150,13 +150,13 @@ const CreateEnterprise = ({ }) => {
 						</div>
 
 						<div className="form-group row">
-							<label htmlFor="stockPrice" className="col-md-3 col-form-label">
-								<FormattedMessage id="project.global.fields.price" />
+							<label htmlFor="actionsPrice" className="col-md-3 col-form-label">
+								<FormattedMessage id="project.global.fields.actionsPrice" />
 							</label>
 							<div className="col-md-4">
-								<input type="number" step="0.01" id="stockPrice" className="form-control"
-									value={stockPrice}
-									onChange={e => setStockPrice(e.target.value)}
+								<input type="number" step="0.01" id="actionsPrice" className="form-control"
+									value={actionsPrice}
+									onChange={e => setActionsPrice(e.target.value)}
 									required />
 								<div className="invalid-feedback">
 									<FormattedMessage id='project.global.validator.required' />
