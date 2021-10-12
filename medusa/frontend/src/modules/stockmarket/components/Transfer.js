@@ -15,6 +15,7 @@ const Transfer = () => {
 	const [money, setMoney] = useState('');
 	const [operation, setOperation] = useState('');
 	const [backendErrors, setBackendErrors] = useState(null);
+	const [origin, setOrigin]=useState('');
 	let form;
 
 	const handleSubmit = event => {
@@ -47,6 +48,21 @@ const Transfer = () => {
 					<form ref={node => form = node}
 						className="needs-validation" noValidate
 						onSubmit={e => handleSubmit(e)}>
+						<div className="form-group row">
+							<label htmlFor="text" className="col-md-3 col-form-label">
+								<FormattedMessage id="project.global.fields.origin" />
+							</label>
+							<div className="col-md-4">
+								<input type="text" maxlength="24" id="origin" className="form-control"
+									value={origin}
+									onChange={e => setOrigin(e.target.origin)}
+									autoFocus
+									required />
+								<div className="invalid-feedback">
+									<FormattedMessage id='project.global.validator.required' />
+								</div>
+							</div>
+						</div>
 						<div className="form-group row">
 							<label htmlFor="money" className="col-md-3 col-form-label">
 								<FormattedMessage id="project.global.fields.Money" />

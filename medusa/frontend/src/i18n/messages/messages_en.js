@@ -38,6 +38,7 @@ export default {
 	'project.global.fields.enterprises': 'Enterprises',
 	'project.app.Management':'Management',
 	'project.app.Transfer':'Transfer',
+	'project.global.fields.origin':'From / To',
 	
 	'project.global.fields.homeTitle': 'Welcome to Medusa',
 	'project.global.fields.homeSubTitle': 'Enjoy working with us', 
