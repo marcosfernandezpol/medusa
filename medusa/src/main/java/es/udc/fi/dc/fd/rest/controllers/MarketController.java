@@ -2,6 +2,7 @@ package es.udc.fi.dc.fd.rest.controllers;
 
 import java.util.Locale;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -15,10 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
-import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
-import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
-import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
+import es.udc.fi.dc.fd.model.common.exceptions.*;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.services.StockMarketService;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
@@ -34,6 +32,9 @@ public class MarketController {
 	private final static String DUPLICATE_INSTANCE_EXCEPTION_CODE = "project.exceptions.DuplicateInstanceException";
 	private final static String INVALID_OPERATION_EXCEPTION_CODE = "project.exceptions.InvalidOperationException";
 	private final static String NOT_ENOUGH_BALANCE_EXCEPTION_CODE = "project.exceptions.NotEnoughBalanceException";
+	private final static String NUMBER_EXCEPTION_CODE = "project.exceptions.NumberException";
+
+	
 	/** The user service. */
 	@Autowired
 	private StockMarketService marketService;
@@ -98,6 +99,19 @@ public class MarketController {
 		return new ErrorsDto(errorMessage);
 
 	}
+	
+	
+	@ExceptionHandler(NumberException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public ErrorsDto handleNumberException(NumberException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(NUMBER_EXCEPTION_CODE, null,
+				NUMBER_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
+	}
 
 	/**
 	 * Create an enterprise.
@@ -110,7 +124,7 @@ public class MarketController {
 	@PostMapping("/create_enterprise")
 	public EnterpriseDto createEnterprise(@RequestAttribute Long userId,
 			@Validated @RequestBody EnterpriseDto enterpriseDto)
-			throws DuplicateInstanceException, PermissionException {
+			throws DuplicateInstanceException, PermissionException, NumberException {
 
 		Enterprise enterprise = EnterpriseConversor.toEnterprise(enterpriseDto);
 		Enterprise e = marketService.createEnterprise(userId, enterprise);

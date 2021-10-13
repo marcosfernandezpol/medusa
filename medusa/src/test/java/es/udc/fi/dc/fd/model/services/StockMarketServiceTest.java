@@ -2,6 +2,7 @@ package es.udc.fi.dc.fd.model.services;
 
 import java.sql.Date;
 
+
 import javax.transaction.Transactional;
 
 import static org.junit.Assert.assertNotNull;
@@ -15,10 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
-import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
-import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
-import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
+import es.udc.fi.dc.fd.model.common.exceptions.*;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.entities.User.RoleType;
@@ -61,7 +59,7 @@ public class StockMarketServiceTest {
 	}
 
 	@Test
-	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException {
+	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException, NumberException {
 
 		User admin = null;
 		admin = createAdmin();
