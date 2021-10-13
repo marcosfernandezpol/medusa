@@ -27,12 +27,17 @@ public class EnterpriseDto {
 	private Float incomes;
 
 	private Float annualBenefits;
-
+	
+	private int actions;
+	
+	private Float actionsPrice;
+	
 	public EnterpriseDto() {
 	}
 
 	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
-			Float annualBenefits) {
+			Float annualBenefits, int actions, Float actionsPrice) {
+
 		super();
 		this.id = id;
 		this.enterpriseName = enterpriseName;
@@ -40,6 +45,9 @@ public class EnterpriseDto {
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
+		this.actions = actions;
+		this.actionsPrice = actionsPrice;
+
 	}
 
 	public Long getId() {
@@ -89,7 +97,22 @@ public class EnterpriseDto {
 	public void setAnnualBenefits(Float annualBenefits) {
 		this.annualBenefits = annualBenefits;
 	}
-	
-	
 
+	public int getActions() {
+		return actions;
+	}
+
+	public void setActions(int actions) {
+		this.actions = actions;
+	}
+
+	public Float getActionsPrice() {
+		return actionsPrice;
+	}
+
+	public void setActionsPrice(Float actionsPrice) {
+		this.actionsPrice = actionsPrice;
+	}
+	
+	
 }

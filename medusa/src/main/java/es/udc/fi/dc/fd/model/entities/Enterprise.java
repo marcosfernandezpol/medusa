@@ -27,19 +27,25 @@ public class Enterprise {
 	private Float incomes;
 
 	private Float annualBenefits;
+	
+	private int actions;
+
+	private Float actionsPrice;
 
 	// End atributes
 
-	
-	
 	public Enterprise(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
-			Float annualBenefits) {
+			Float annualBenefits, int actions, Float actionsPrice) {
+
 		super();
 		this.enterpriseName = enterpriseName;
 		this.acronim = acronim;
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
+		this.actions = actions;
+		this.actionsPrice = actionsPrice; 
+
 	}
 
 	/**
@@ -48,13 +54,15 @@ public class Enterprise {
 	public Enterprise() {
 	}
 
-	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, Float annualBenefits) {
+	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, Float annualBenefits, int actions, Float actionsPrice) {
 		super();
 		this.enterpriseName = enterpriseName;
 		this.acronim = acronim;
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.annualBenefits = annualBenefits;
+		this.actions = actions;
+		this.actionsPrice = actionsPrice; 
 	}
 
 	@Id
@@ -106,16 +114,33 @@ public class Enterprise {
 	public void setAnnualBenefits(Float annualBenefits) {
 		this.annualBenefits = annualBenefits;
 	}
+	
+	public int getActions() {
+		return actions;
+	}
 
+	public void setActions(int actions) {
+		this.actions = actions;
+	}
+	
+	public Float getActionsPrice() {
+		return actionsPrice;
+	}
+
+	public void setActionsPrice(Float actionsPrice) {
+		this.actionsPrice = actionsPrice;
+	}
+	
 	@Override
 	public String toString() {
 		return "Enterprise [id=" + id + ", enterpriseName=" + enterpriseName + ", acronim=" + acronim + ", fundation="
-				+ fundation + ", incomes=" + incomes + ", annualBenefits=" + annualBenefits + "]";
+				+ fundation + ", incomes=" + incomes + ", annualBenefits=" + annualBenefits + ", actions=" + actions
+				+ ", actionsPrice=" + actionsPrice + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(acronim, annualBenefits, enterpriseName, fundation, id, incomes);
+		return Objects.hash(acronim, actions, actionsPrice, annualBenefits, enterpriseName, fundation, id, incomes);
 	}
 
 	@Override
@@ -127,7 +152,9 @@ public class Enterprise {
 		if (getClass() != obj.getClass())
 			return false;
 		Enterprise other = (Enterprise) obj;
-		return Objects.equals(acronim, other.acronim) && Objects.equals(annualBenefits, other.annualBenefits)
+		return Objects.equals(acronim, other.acronim) && actions == other.actions
+				&& Objects.equals(actionsPrice, other.actionsPrice)
+				&& Objects.equals(annualBenefits, other.annualBenefits)
 				&& Objects.equals(enterpriseName, other.enterpriseName) && Objects.equals(fundation, other.fundation)
 				&& Objects.equals(id, other.id) && Objects.equals(incomes, other.incomes);
 	}

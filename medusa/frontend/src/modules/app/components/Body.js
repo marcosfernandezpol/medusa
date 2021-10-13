@@ -30,7 +30,7 @@ const Body = () => {
                 {!loggedIn && <Route exact path="/users/login"><Login/></Route>}
                 {!loggedIn && <Route exact path="/users/signup"><SignUp/></Route>}
 				{loggedIn && <Route exact path="/search/enterprises"><FindEnterprisesResult/></Route>}
-				{loggedIn && /*role == 'ADMIN'*/<Route exact path="/market/createEnterpriseCompleted"><EnterpriseCreated/></Route>}
+				{loggedIn && <Route exact path="/market/createEnterpriseCompleted"><EnterpriseCreated/></Route>}
 				{(loggedIn && !isAdmin) && <Route exact path="/market/transfer"><TransferPage/></Route>}
                 <Route><Home/></Route>
             </Switch>

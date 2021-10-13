@@ -38,6 +38,7 @@ export default {
 	'project.global.fields.enterprises': 'Enterprises',
 	'project.app.Management':'Management',
 	'project.app.Transfer':'Transfer',
+	'project.global.fields.origin':'From / To',
 	
 	'project.global.fields.homeTitle': 'Welcome to Medusa',
 	'project.global.fields.homeSubTitle': 'Enjoy working with us', 
@@ -61,6 +62,8 @@ export default {
 	'project.global.fields.acronim': 'Acronim',
 	'project.global.fields.fundation': 'Fundation',
 	'project.global.fields.incomes': 'Incomes',
+	'project.global.fields.actions': 'Actions',
+	'project.global.fields.actionsPrice': 'Price',
 	'project.global.fields.annualBenefits': 'Annual benefits',
 	'project.global.buttons.CreateEnterpriseButton': 'Create enterprise',
 	'project.global.fields.enterpriseCreated': 'Enterprise created',
