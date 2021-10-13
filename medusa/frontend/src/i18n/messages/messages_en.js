@@ -74,6 +74,7 @@ export default {
 	'project.users.Transfer.button':'Complete',
 	'project.users.Transfer.title':'Enter the required data',
 	'project.global.validator.successCreateEnterprise':'Enterprise created successfully',
+	'project.global.validator.required.actions':'Please, introduce a valid number'
 	
 	
 }

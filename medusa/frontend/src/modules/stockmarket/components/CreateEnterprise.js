@@ -64,10 +64,10 @@ const CreateEnterprise = ({ }) => {
 								<FormattedMessage id="project.global.fields.enterpriseName" />
 							</label>
 							<div className="col-md-4">
-								<input type="text" id="name" className="form-control" maxLength='64'
+								<input type="text" id="name" className="form-control" 
 									value={enterpriseName}
 									onChange={e => setEnterpriseName(e.target.value)}
-									required />
+									required maxLength='64' />
 								<div className="invalid-feedback">
 									<FormattedMessage id='project.global.validator.required' />
 								</div>
@@ -79,10 +79,10 @@ const CreateEnterprise = ({ }) => {
 								<FormattedMessage id="project.global.fields.acronim" />
 							</label>
 							<div className="col-md-4">
-								<input type="text" id="acronim" className="form-control" minLength='1' maxLength='8'
+								<input type="text" id="acronim" className="form-control" 
 									value={acronim}
 									onChange={e => setAcronim(e.target.value)}
-									required />
+									required minLength='1' maxLength='8'/>
 								<div className="invalid-feedback">
 									<FormattedMessage id='project.global.validator.required' />
 								</div>
@@ -112,7 +112,7 @@ const CreateEnterprise = ({ }) => {
 								<input type="number" step="0.01" id="incomes" className="form-control"
 									value={incomes}
 									onChange={e => setIncomes(e.target.value)}
-									required />
+									required minLength='1' maxLength='10'/>
 								<div className="invalid-feedback">
 									<FormattedMessage id='project.global.validator.required' />
 								</div>
@@ -127,7 +127,7 @@ const CreateEnterprise = ({ }) => {
 								<input type="number" step="0.01" id="annualBenefits" className="form-control"
 									value={annualBenefits}
 									onChange={e => setAnnualBenefits(e.target.value)}
-									required />
+									required minLength='1' maxLength='10' />
 								<div className="invalid-feedback">
 									<FormattedMessage id='project.global.validator.required' />
 								</div>
@@ -142,9 +142,9 @@ const CreateEnterprise = ({ }) => {
 								<input type="number" step="" id="actions" className="form-control"
 									value={actions}
 									onChange={e => setActions(e.target.value)}
-									required />
+									required minLength='1' maxLength='10'/>
 								<div className="invalid-feedback">
-									<FormattedMessage id='project.global.validator.required' />
+									<FormattedMessage id='project.global.validator.required.actions' />
 								</div>
 							</div>
 						</div>
@@ -157,7 +157,7 @@ const CreateEnterprise = ({ }) => {
 								<input type="number" step="0.01" id="actionsPrice" className="form-control"
 									value={actionsPrice}
 									onChange={e => setActionsPrice(e.target.value)}
-									required />
+									required minLength='1' maxLength='10'/>
 								<div className="invalid-feedback">
 									<FormattedMessage id='project.global.validator.required' />
 								</div>

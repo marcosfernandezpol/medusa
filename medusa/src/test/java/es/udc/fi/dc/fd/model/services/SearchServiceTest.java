@@ -2,6 +2,7 @@ package es.udc.fi.dc.fd.model.services;
 
 import static org.junit.Assert.assertNotNull;
 
+
 import java.sql.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
+import es.udc.fi.dc.fd.model.common.exceptions.*;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.UserDao;
 import es.udc.fi.dc.fd.model.entities.User;
@@ -63,7 +64,7 @@ public class SearchServiceTest {
 	}
 
 	@Test
-	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException {
+	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException, NumberException {
 
 		User user = createUser("Manolo");
 		Long id = adminId(user);

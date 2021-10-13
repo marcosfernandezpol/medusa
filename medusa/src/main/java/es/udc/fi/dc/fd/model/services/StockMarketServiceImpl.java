@@ -3,14 +3,12 @@ package es.udc.fi.dc.fd.model.services;
 import java.util.Optional;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
-import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
-import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
-import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
+import es.udc.fi.dc.fd.model.common.exceptions.*;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
 import es.udc.fi.dc.fd.model.entities.User;
@@ -34,7 +32,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 	@Override
 	public Enterprise createEnterprise(Long userId, Enterprise enterprise) 
-			throws DuplicateInstanceException, PermissionException {
+			throws DuplicateInstanceException, PermissionException, NumberException{
 		
 		Optional<User> userOp = null;
 		User user = null;
@@ -44,6 +42,10 @@ public class StockMarketServiceImpl implements StockMarketService {
 					enterprise.getEnterpriseName());
 		}
 		
+		if (enterprise.getActions() < 0 || enterprise.getActionsPrice() < 0) {
+			throw new NumberException();
+		}
+			
 		userOp = userDao.findById(userId);
 		if (userOp.isPresent()) { //Aqui habría que añadir algo para cuando el user no exista
 			user = userOp.get();
