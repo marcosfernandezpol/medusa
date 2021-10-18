@@ -54,8 +54,8 @@ public class StockMarketServiceTest {
 
 	// Creamos una empresa
 	private Enterprise createEnterprise() {
-		return new Enterprise("MedusaEnterprises", "ME", Date.valueOf("1999-01-17"), Float.valueOf(1000),
-				Float.valueOf(10000), 28, Float.valueOf(18));
+		return new Enterprise("MedusaEnterprises", "ME", Date.valueOf("1999-01-17"), Float.valueOf(1000), 28,
+				Float.valueOf(18));
 	}
 
 	@Test

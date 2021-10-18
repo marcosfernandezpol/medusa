@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Order_line;
+DROP TABLE IF EXISTS AnnualBenefits;
 DROP TABLE IF EXISTS Enterprise;
 DROP TABLE IF EXISTS Bank_account;
 DROP TABLE IF EXISTS Transfer_history;
@@ -25,11 +25,20 @@ CREATE TABLE Enterprise (
     acronim VARCHAR(10) NOT NULL,
     fundation DATE,
     incomes FLOAT NOT NULL,
-    annualBenefits FLOAT NOT NULL,
     actions INT NOT NULL,
     actionsPrice FLOAT NOT NULL,
     CONSTRAINT EnterprisePK PRIMARY KEY (id),
     CONSTRAINT enterpriseNameUnique UNIQUE (enterpriseName)
+);
+
+
+CREATE TABLE AnnualBenefits(
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	enterpriseId BIGINT NOT NULL,
+	year int NOT NULL,
+	benefits float not NULL,
+	CONSTRAINT AnnualBenefitsPK PRIMARY KEY (id),
+	CONSTRAINT AnnualEnterpriseFK FOREIGN KEY (enterpriseId) REFERENCES Enterprise(id)
 );
 
 CREATE TABLE  Bank_account (

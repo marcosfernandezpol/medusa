@@ -8,7 +8,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +22,13 @@ import es.udc.fi.dc.fd.model.common.exceptions.*;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.services.StockMarketService;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
-import es.udc.fi.dc.fd.rest.dtos.EnterpriseDto;
-import es.udc.fi.dc.fd.rest.dtos.TransferParamsDto;
 import es.udc.fi.dc.fd.rest.common.ErrorsDto;
+import es.udc.fi.dc.fd.rest.dtos.AnnualBenefitsListDto;
 import es.udc.fi.dc.fd.rest.dtos.EnterpriseConversor;
+import es.udc.fi.dc.fd.rest.dtos.EnterpriseDto;
+import es.udc.fi.dc.fd.rest.dtos.EnterpriseSummaryConversor;
+import es.udc.fi.dc.fd.rest.dtos.EnterpriseSummaryDto;
+import es.udc.fi.dc.fd.rest.dtos.TransferParamsDto;
 
 @RestController
 @RequestMapping("/market")
@@ -122,13 +127,31 @@ public class MarketController {
 	 * @throws PermissionException
 	 */
 	@PostMapping("/create_enterprise")
-	public EnterpriseDto createEnterprise(@RequestAttribute Long userId,
-			@Validated @RequestBody EnterpriseDto enterpriseDto)
-			throws DuplicateInstanceException, PermissionException, NumberException {
+	public EnterpriseSummaryDto createEnterprise(@RequestAttribute Long userId,
+			@Validated @RequestBody EnterpriseSummaryDto enterpriseDto)
+			throws DuplicateInstanceException, PermissionException {
 
-		Enterprise enterprise = EnterpriseConversor.toEnterprise(enterpriseDto);
+		Enterprise enterprise = EnterpriseSummaryConversor.toEnterpriseSummary(enterpriseDto);
 		Enterprise e = marketService.createEnterprise(userId, enterprise);
-		return EnterpriseConversor.toEnterpriseDto(e);
+		return EnterpriseSummaryConversor.toEnterpriseSummaryDto(e);
+	}
+
+	/**
+	 * 
+	 * @param enterprise the dto
+	 * @return enterprise modified
+	 * @throws DuplicateInstanceException
+	 * 
+	 */
+	@PutMapping("/update_enterprise/{id}")
+	public EnterpriseDto updateEnterprise(@RequestAttribute Long userId, @PathVariable("id") Long id,
+			@Validated({ EnterpriseDto.UpdateValidations.class }) @RequestBody AnnualBenefitsListDto params)
+			throws InstanceNotFoundException, PermissionException, DuplicateInstanceException {
+		
+		
+		Enterprise enterprise = marketService.createAnnualBenefits(userId, id, params);
+
+		return EnterpriseConversor.toEnterpriseDto(enterprise);
 	}
 
 	/**
