@@ -5,9 +5,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 /**
  * The Interface EnterpriseDao.
  */
-public interface EnterpriseDao extends 
-	PagingAndSortingRepository<Enterprise, Long> {
-	
+public interface EnterpriseDao extends
+
+		PagingAndSortingRepository<Enterprise, Long> {
+
 	boolean existsByEnterpriseName(String enterpriseName);
-	
+
 }

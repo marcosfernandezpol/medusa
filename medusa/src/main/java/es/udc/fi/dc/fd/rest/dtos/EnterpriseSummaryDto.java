@@ -1,10 +1,8 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
 import java.sql.Date;
-import java.util.List;
 
-
-public class EnterpriseDto {
+public class EnterpriseSummaryDto {
 
 	/**
 	 * The Interface AllValidations.
@@ -32,12 +30,10 @@ public class EnterpriseDto {
 
 	private Float actionsPrice;
 
-	private List<AnnualBenefitsDto> anualBenefitsDto;
-
-	public EnterpriseDto() {
+	public EnterpriseSummaryDto() {
 	}
 
-	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
+	public EnterpriseSummaryDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
 			Float actionsPrice) {
 
 		super();
@@ -49,19 +45,6 @@ public class EnterpriseDto {
 		this.actions = actions;
 		this.actionsPrice = actionsPrice;
 
-	}
-
-	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
-			Float actionsPrice, List<AnnualBenefitsDto> anualBenefitsDto) {
-		super();
-		this.id = id;
-		this.enterpriseName = enterpriseName;
-		this.acronim = acronim;
-		this.fundation = fundation;
-		this.incomes = incomes;
-		this.actions = actions;
-		this.actionsPrice = actionsPrice;
-		this.anualBenefitsDto = anualBenefitsDto;
 	}
 
 	public Long getId() {
@@ -118,14 +101,6 @@ public class EnterpriseDto {
 
 	public void setActionsPrice(Float actionsPrice) {
 		this.actionsPrice = actionsPrice;
-	}
-
-	public List<AnnualBenefitsDto> getanualBenefitsDto() {
-		return anualBenefitsDto;
-	}
-
-	public void setanualBenefitsDto(List<AnnualBenefitsDto> anualBenefitsDto) {
-		this.anualBenefitsDto = anualBenefitsDto;
 	}
 
 }

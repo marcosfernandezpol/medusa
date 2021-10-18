@@ -1,12 +1,17 @@
 package es.udc.fi.dc.fd.model.entities;
 
+import java.beans.Transient;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * The Class Enterprise.
@@ -26,27 +31,13 @@ public class Enterprise {
 
 	private Float incomes;
 
-	private Float annualBenefits;
-	
 	private int actions;
 
 	private Float actionsPrice;
 
+	private Set<AnnualBenefits> annualBenefits = new HashSet<>();
+
 	// End atributes
-
-	public Enterprise(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
-			Float annualBenefits, int actions, Float actionsPrice) {
-
-		super();
-		this.enterpriseName = enterpriseName;
-		this.acronim = acronim;
-		this.fundation = fundation;
-		this.incomes = incomes;
-		this.annualBenefits = annualBenefits;
-		this.actions = actions;
-		this.actionsPrice = actionsPrice; 
-
-	}
 
 	/**
 	 * 
@@ -54,15 +45,15 @@ public class Enterprise {
 	public Enterprise() {
 	}
 
-	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, Float annualBenefits, int actions, Float actionsPrice) {
+	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
+			Float actionsPrice) {
 		super();
 		this.enterpriseName = enterpriseName;
 		this.acronim = acronim;
 		this.fundation = fundation;
 		this.incomes = incomes;
-		this.annualBenefits = annualBenefits;
 		this.actions = actions;
-		this.actionsPrice = actionsPrice; 
+		this.actionsPrice = actionsPrice;
 	}
 
 	@Id
@@ -107,14 +98,15 @@ public class Enterprise {
 		this.incomes = incomes;
 	}
 
-	public Float getAnnualBenefits() {
+	@OneToMany(mappedBy = "enterprise")
+	public Set<AnnualBenefits> getAnnualBenefits() {
 		return annualBenefits;
 	}
 
-	public void setAnnualBenefits(Float annualBenefits) {
+	public void setAnnualBenefits(Set<AnnualBenefits> annualBenefits) {
 		this.annualBenefits = annualBenefits;
 	}
-	
+
 	public int getActions() {
 		return actions;
 	}
@@ -122,7 +114,7 @@ public class Enterprise {
 	public void setActions(int actions) {
 		this.actions = actions;
 	}
-	
+
 	public Float getActionsPrice() {
 		return actionsPrice;
 	}
@@ -131,11 +123,23 @@ public class Enterprise {
 		this.actionsPrice = actionsPrice;
 	}
 	
+	@Transient
+	public Optional<AnnualBenefits> getAnnualBenefits(Long id) {
+		return annualBenefits.stream().filter(annualBenefits -> annualBenefits.getEnterprise().getId().equals(id)).findFirst();
+	}
+
+	public void addAnnualBenefits(AnnualBenefits annualBenefit) {
+		
+		annualBenefits.add(annualBenefit);
+		annualBenefit.setEnterprise(this);
+		
+	}
+
 	@Override
 	public String toString() {
 		return "Enterprise [id=" + id + ", enterpriseName=" + enterpriseName + ", acronim=" + acronim + ", fundation="
-				+ fundation + ", incomes=" + incomes + ", annualBenefits=" + annualBenefits + ", actions=" + actions
-				+ ", actionsPrice=" + actionsPrice + "]";
+				+ fundation + ", incomes=" + incomes + ", actions=" + actions + ", actionsPrice=" + actionsPrice
+				+ ", annualBenefits=" + annualBenefits + "]";
 	}
 
 	@Override
