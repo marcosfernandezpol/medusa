@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS Order_Line;
 DROP TABLE IF EXISTS AnnualBenefits;
 DROP TABLE IF EXISTS Enterprise;
 DROP TABLE IF EXISTS Bank_account;

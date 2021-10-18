@@ -1,7 +1,10 @@
 {
   "dependencies": {
+    "3": "^2.1.0",
+    "-": "^0.0.1",
     "@popperjs/core": "^2.10.1",
     "jquery": "^3.6.0",
+    "popper.js": "^1.16.1",
     "react-country-region-selector": "^3.3.0",
     "react-intl": "^5.20.12",
     "react-redux": "^7.2.5",
