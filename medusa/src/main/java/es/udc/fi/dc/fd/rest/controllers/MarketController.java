@@ -17,12 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
-import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
-import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
-import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
-import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
-
 import es.udc.fi.dc.fd.model.common.exceptions.*;
 
 import es.udc.fi.dc.fd.model.entities.Enterprise;
@@ -149,11 +143,12 @@ public class MarketController {
 	 * @return the response entity
 	 * @throws DuplicateInstanceException the duplicate instance exception
 	 * @throws PermissionException
+	 * @throws NumberException 
 	 */
 	@PostMapping("/create_enterprise")
 	public EnterpriseSummaryDto createEnterprise(@RequestAttribute Long userId,
 			@Validated @RequestBody EnterpriseSummaryDto enterpriseDto)
-			throws DuplicateInstanceException, PermissionException {
+			throws DuplicateInstanceException, PermissionException, NumberException {
 
 		Enterprise enterprise = EnterpriseSummaryConversor.toEnterpriseSummary(enterpriseDto);
 		Enterprise e = marketService.createEnterprise(userId, enterprise);

@@ -12,7 +12,6 @@ public interface SearchService {
 
 	public List<OrderLine> findOrders(Long userId, Boolean option, Boolean avaliable);
 
-}
 	public Enterprise findEnterprise(Long id) throws InstanceNotFoundException;
 
 }
