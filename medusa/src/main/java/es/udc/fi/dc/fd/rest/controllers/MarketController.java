@@ -2,7 +2,6 @@ package es.udc.fi.dc.fd.rest.controllers;
 
 import java.util.Locale;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
+import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
+import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
+
 import es.udc.fi.dc.fd.model.common.exceptions.*;
+
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.services.StockMarketService;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
@@ -26,6 +32,7 @@ import es.udc.fi.dc.fd.rest.common.ErrorsDto;
 import es.udc.fi.dc.fd.rest.dtos.AnnualBenefitsListDto;
 import es.udc.fi.dc.fd.rest.dtos.EnterpriseConversor;
 import es.udc.fi.dc.fd.rest.dtos.EnterpriseDto;
+import es.udc.fi.dc.fd.rest.dtos.OrderParamsDto;
 import es.udc.fi.dc.fd.rest.dtos.EnterpriseSummaryConversor;
 import es.udc.fi.dc.fd.rest.dtos.EnterpriseSummaryDto;
 import es.udc.fi.dc.fd.rest.dtos.TransferParamsDto;
@@ -37,9 +44,9 @@ public class MarketController {
 	private final static String DUPLICATE_INSTANCE_EXCEPTION_CODE = "project.exceptions.DuplicateInstanceException";
 	private final static String INVALID_OPERATION_EXCEPTION_CODE = "project.exceptions.InvalidOperationException";
 	private final static String NOT_ENOUGH_BALANCE_EXCEPTION_CODE = "project.exceptions.NotEnoughBalanceException";
+	private final static String NOT_OWNED_EXCEPTION_CODE = "project.exceptions.NotOwnedException";
 	private final static String NUMBER_EXCEPTION_CODE = "project.exceptions.NumberException";
 
-	
 	/** The user service. */
 	@Autowired
 	private StockMarketService marketService;
@@ -62,6 +69,25 @@ public class MarketController {
 
 		String errorMessage = messageSource.getMessage(DUPLICATE_INSTANCE_EXCEPTION_CODE, null,
 				DUPLICATE_INSTANCE_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
+	}
+
+	/**
+	 * Handle Stock Not Owned exception.
+	 *
+	 * @param exception the exception
+	 * @param locale    the locale
+	 * @return the errors dto
+	 */
+	@ExceptionHandler(NotOwnedException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ErrorsDto handleNotOwnedException(NotOwnedException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(NOT_OWNED_EXCEPTION_CODE, null, NOT_OWNED_EXCEPTION_CODE,
+				locale);
 
 		return new ErrorsDto(errorMessage);
 
@@ -104,15 +130,13 @@ public class MarketController {
 		return new ErrorsDto(errorMessage);
 
 	}
-	
-	
+
 	@ExceptionHandler(NumberException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public ErrorsDto handleNumberException(NumberException exception, Locale locale) {
 
-		String errorMessage = messageSource.getMessage(NUMBER_EXCEPTION_CODE, null,
-				NUMBER_EXCEPTION_CODE, locale);
+		String errorMessage = messageSource.getMessage(NUMBER_EXCEPTION_CODE, null, NUMBER_EXCEPTION_CODE, locale);
 
 		return new ErrorsDto(errorMessage);
 
@@ -161,6 +185,15 @@ public class MarketController {
 	public void transfer(@RequestAttribute Long userId, @Validated @RequestBody TransferParamsDto params)
 			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException {
 		marketService.transfer(userId, params.getMoney(), params.getOperation());
+	}
+
+	/**
+	 * Order a stock transference.
+	 */
+	@PostMapping("/order")
+	public void order(@RequestAttribute Long userId, @Validated @RequestBody OrderParamsDto params)
+			throws NotEnoughBalanceException, NotOwnedException {
+		marketService.order(userId, params.getType(), params.getPrice(), params.getNumber(), params.getEnterpriseId());
 	}
 
 }

@@ -3,7 +3,10 @@ package es.udc.fi.dc.fd.rest.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +15,9 @@ import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.services.SearchService;
 import es.udc.fi.dc.fd.rest.dtos.EnterpriseConversor;
 import es.udc.fi.dc.fd.rest.dtos.EnterpriseDto;
+import es.udc.fi.dc.fd.rest.dtos.GetOrdersParamsDto;
+import es.udc.fi.dc.fd.rest.dtos.OrderLineConversor;
+import es.udc.fi.dc.fd.rest.dtos.OrderLineDto;
 import es.udc.fi.dc.fd.rest.dtos.EnterpriseSummaryConversor;
 import es.udc.fi.dc.fd.rest.dtos.EnterpriseSummaryDto;
 
@@ -29,6 +35,13 @@ public class SearchController {
 	@GetMapping("/enterprises")
 	public List<EnterpriseSummaryDto> findAllEnterpirses() {
 		return  EnterpriseSummaryConversor.toEnterprisesDtos(searchService.findAllEnterprises());
+	}
+
+	@GetMapping("/orders")
+	public List<OrderLineDto> findOrders(@RequestAttribute Long userId,
+			@Validated @RequestBody GetOrdersParamsDto params) {
+		return OrderLineConversor
+				.toOrderLineDtos(searchService.findOrders(userId, params.getOption(), params.getAvaliable()));
 	}
 	
 	@GetMapping("/enterprise/{id}")
