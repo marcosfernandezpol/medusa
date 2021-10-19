@@ -64,6 +64,7 @@ public class SearchServiceImpl implements SearchService {
 		ordersReturned.forEach(orders::add);
 
 		return orders;
+	}
 
 
 	public Enterprise findEnterprise(Long id) throws InstanceNotFoundException {

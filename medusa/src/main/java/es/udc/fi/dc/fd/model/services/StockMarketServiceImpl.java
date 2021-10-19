@@ -258,6 +258,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 		orderLineDao.save(order);
 
 		this.match();
+	}
 
 
 	@Override
