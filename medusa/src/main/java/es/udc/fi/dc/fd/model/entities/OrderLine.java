@@ -3,15 +3,16 @@ package es.udc.fi.dc.fd.model.entities;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.springframework.data.annotation.Id;
-
-public class Order_line {
+@Entity
+public class OrderLine {
 
 	public enum OrderType {
 		/** The user. */
@@ -20,9 +21,9 @@ public class Order_line {
 
 	private Long id;
 
-	private LocalDateTime date;
+	private LocalDateTime requestDate;
 
-	private OrderType type;
+	private OrderType orderType;
 
 	private User owner;
 
@@ -34,14 +35,14 @@ public class Order_line {
 
 	private Boolean avaliable;
 
-	public Order_line() {
+	public OrderLine() {
 		super();
 	}
 
-	public Order_line(LocalDateTime date, OrderType type, User owner, Float price, int number, Enterprise enterprise) {
+	public OrderLine(OrderType type, User owner, Float price, int number, Enterprise enterprise) {
 		super();
-		this.date = date;
-		this.type = type;
+		this.requestDate = LocalDateTime.now();
+		this.orderType = type;
 		this.owner = owner;
 		this.price = price;
 		this.number = number;
@@ -59,24 +60,24 @@ public class Order_line {
 		this.id = id;
 	}
 
-	public LocalDateTime getDate() {
-		return date;
+	public LocalDateTime getRequestDate() {
+		return requestDate;
 	}
 
-	public void setDate(LocalDateTime date) {
-		this.date = date;
+	public void setRequestDate(LocalDateTime date) {
+		this.requestDate = date;
 	}
 
-	public OrderType getType() {
-		return type;
+	public OrderType getOrderType() {
+		return orderType;
 	}
 
-	public void setType(OrderType type) {
-		this.type = type;
+	public void setOrderType(OrderType type) {
+		this.orderType = type;
 	}
 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "userId")
 	public User getOwner() {
 		return owner;
 	}
@@ -110,7 +111,7 @@ public class Order_line {
 	}
 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "enterpriseId")
 	public Enterprise getEnterprise() {
 		return enterprise;
 	}
@@ -121,7 +122,7 @@ public class Order_line {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(avaliable, date, enterprise, id, number, owner, price, type);
+		return Objects.hash(avaliable, requestDate, enterprise, id, number, owner, price, orderType);
 	}
 
 	@Override
@@ -132,16 +133,16 @@ public class Order_line {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order_line other = (Order_line) obj;
-		return Objects.equals(avaliable, other.avaliable) && Objects.equals(date, other.date)
+		OrderLine other = (OrderLine) obj;
+		return Objects.equals(avaliable, other.avaliable) && Objects.equals(requestDate, other.requestDate)
 				&& Objects.equals(enterprise, other.enterprise) && Objects.equals(id, other.id)
 				&& number == other.number && Objects.equals(owner, other.owner) && Objects.equals(price, other.price)
-				&& type == other.type;
+				&& orderType == other.orderType;
 	}
 
 	@Override
 	public String toString() {
-		return "Order_line [id=" + id + ", date=" + date + ", type=" + type + ", owner=" + owner + ", price=" + price
+		return "Order_line [id=" + id + ", date=" + requestDate + ", type=" + orderType + ", owner=" + owner + ", price=" + price
 				+ ", number=" + number + ", enterprise=" + enterprise + ", avaliable=" + avaliable + "]";
 	}
 
