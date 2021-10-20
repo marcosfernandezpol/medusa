@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import { Errors, Success } from '../../common'
 
-import * as actions from '../actions';
+import * as actionss from '../actions';
 
 
 const CreateEnterprise = ({ }) => {
@@ -18,7 +18,7 @@ const CreateEnterprise = ({ }) => {
 	const [fundation, setFundation] = useState("");
 	const [incomes, setIncomes] = useState("");
 	const [annualBenefits, setAnnualBenefits] = useState("");
-	const [actionss, setActions] = useState("");
+	const [actions, setActions] = useState("");
 	const [actionsPrice, setActionsPrice] = useState("");
 
 	let form;
@@ -29,8 +29,8 @@ const CreateEnterprise = ({ }) => {
 
 		if (form.checkValidity()) {
 
-			dispatch(actions.createEnterprise(
-				{ enterpriseName, acronim, fundation, incomes, annualBenefits, actionss, actionsPrice },
+			dispatch(actionss.createEnterprise(
+				{ enterpriseName, acronim, fundation, incomes, annualBenefits, actions, actionsPrice },
 				() => history.push('/market/updateEnterprise'),
 				errors => setBackendErrors(errors)
 			));
@@ -125,7 +125,7 @@ const CreateEnterprise = ({ }) => {
 							</label>
 							<div className="col-md-4">
 								<input type="number" step="" id="actions" className="form-control"
-									value={actionss}
+									value={actions}
 									onChange={e => setActions(e.target.value)}
 									required minLength='1' maxLength='10'/>
 								<div className="invalid-feedback">
