@@ -57,9 +57,6 @@ public class StockMarketServiceImpl implements StockMarketService {
 			throw new DuplicateInstanceException("project.entities.enterprise", enterprise.getEnterpriseName());
 		}
 
-		if (enterprise.getActions() < 0 || enterprise.getActionsPrice() < 0) {
-			throw new NumberException();
-		}
 
 		userOp = userDao.findById(userId);
 		if (userOp.isPresent()) { // Aqui habría que añadir algo para cuando el user no exista

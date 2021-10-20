@@ -22,6 +22,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
+import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.services.StockMarketService;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;

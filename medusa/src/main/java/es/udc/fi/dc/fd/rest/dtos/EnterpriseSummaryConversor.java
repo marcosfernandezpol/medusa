@@ -12,7 +12,7 @@ public class EnterpriseSummaryConversor {
 
 	public final static EnterpriseSummaryDto toEnterpriseSummaryDto(Enterprise t) {
 		return new EnterpriseSummaryDto(t.getId(), t.getEnterpriseName(), t.getAcronim(), t.getFundation(), t.getIncomes(),
-				t.getActions(), t.getActionsPrice());
+				t.getStock(), t.getStockPrice());
 	}
 
 	public final static List<EnterpriseSummaryDto> toEnterprisesDtos(List<Enterprise> list) {
