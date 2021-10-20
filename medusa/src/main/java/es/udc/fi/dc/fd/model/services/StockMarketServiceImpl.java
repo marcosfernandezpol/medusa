@@ -69,7 +69,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 				enterpriseDao.save(enterprise);
 
-				OrderLine order = new OrderLine(OrderType.SELL, null, enterprise.getActionsPrice(), enterprise.getActions(), enterprise);
+				OrderLine order = new OrderLine(OrderType.SELL, null, enterprise.getStockPrice(), enterprise.getStock(),
+						enterprise);
+
 				orderLineDao.save(order);
 
 			} else {
@@ -113,7 +115,6 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 	}
 
-
 	private void match() {
 
 		for (Enterprise enterprise : enterpriseDao.findAll()) { // Por cada empresa se matchean sus orders
@@ -139,10 +140,12 @@ public class StockMarketServiceImpl implements StockMarketService {
 							if (sellOrder.getNumber() > buyOrder.getNumber()) {
 								buyOwner.setBalance(
 										buyOwner.getBalance() - (sellOrder.getPrice() * buyOrder.getNumber()));
-								sellOwner.setBalance(
-										sellOwner.getBalance() + (sellOrder.getPrice() * buyOrder.getNumber()));
+								if (sellOwner != null) {
+									sellOwner.setBalance(
+											sellOwner.getBalance() + (sellOrder.getPrice() * buyOrder.getNumber()));
+								}
 
-								int numSold = sellOrder.getNumber() - buyOrder.getNumber();
+								int numSold = buyOrder.getNumber();
 								int numRemain = sellOrder.getNumber() - numSold;
 								OrderLine sold = new OrderLine(OrderType.SELL, sellOwner, sellOrder.getPrice(), numSold,
 										enterprise);
@@ -155,60 +158,53 @@ public class StockMarketServiceImpl implements StockMarketService {
 								orderLineDao.save(sold);
 								orderLineDao.save(remain);
 
-								buyOrder.setNumber(0);
 								buyOrder.setAvaliable(false);
-
-								orderLineDao.save(buyOrder);
-
-								enterprise.setActionsPrice(sold.getPrice());
+								buyOrder.setPrice(sold.getPrice());
+								
+								enterprise.setStockPrice(sold.getPrice());
+								
 							} else if (sellOrder.getNumber() < buyOrder.getNumber()) {
 								buyOwner.setBalance(
 										buyOwner.getBalance() - (sellOrder.getPrice() * sellOrder.getNumber()));
-								sellOwner.setBalance(
-										sellOwner.getBalance() + (sellOrder.getPrice() * sellOrder.getNumber()));
-								buyOrder.setNumber(buyOrder.getNumber() - sellOrder.getNumber());
-								sellOrder.setNumber(0);
-								sellOrder.setAvaliable(false);
-
-								int numSold = buyOrder.getNumber() - sellOrder.getNumber();
-								int numRemain = buyOrder.getNumber() - numSold;
-								OrderLine sold = new OrderLine(OrderType.BUY, buyOwner, sellOrder.getPrice(), numSold,
-										enterprise);
-								sold.setAvaliable(false);
-								sold.setRequestDate(buyOrder.getRequestDate());
+								if (sellOwner != null) {
+									sellOwner.setBalance(
+											sellOwner.getBalance() + (sellOrder.getPrice() * sellOrder.getNumber()));
+								}
+								
+								int numBought = sellOrder.getNumber();
+								int numRemain = buyOrder.getNumber() - numBought;
 								OrderLine remain = new OrderLine(OrderType.BUY, buyOwner, buyOrder.getPrice(),
 										numRemain, enterprise);
 								remain.setRequestDate(buyOrder.getRequestDate());
-								orderLineDao.delete(buyOrder);
-								orderLineDao.save(sold);
 								orderLineDao.save(remain);
+								
+								buyOrder.setNumber(sellOrder.getNumber());
+								buyOrder.setAvaliable(false);
+								buyOrder.setPrice(sellOrder.getPrice());
+								sellOrder.setAvaliable(false);
 
-								orderLineDao.save(sellOrder);
 
-								enterprise.setActionsPrice(sellOrder.getPrice());
+								enterprise.setStockPrice(sellOrder.getPrice());
 							} else {
 								buyOwner.setBalance(
 										buyOwner.getBalance() - (sellOrder.getPrice() * buyOrder.getNumber()));
-								sellOwner.setBalance(
-										sellOwner.getBalance() + (sellOrder.getPrice() * buyOrder.getNumber()));
-								buyOrder.setNumber(0);
+								if (sellOwner != null) {
+									sellOwner.setBalance(
+											sellOwner.getBalance() + (sellOrder.getPrice() * buyOrder.getNumber()));
+								}
+								
 								buyOrder.setPrice(sellOrder.getPrice());
-								sellOrder.setNumber(0);
-
+								
 								buyOrder.setAvaliable(false);
 								sellOrder.setAvaliable(false);
 
-								orderLineDao.save(sellOrder);
-								orderLineDao.save(buyOrder);
-
-								enterprise.setActionsPrice(sellOrder.getPrice());
+								enterprise.setStockPrice(sellOrder.getPrice());
 							}
 						}
 
 					}
 				}
 			}
-
 		}
 
 	}
@@ -245,19 +241,36 @@ public class StockMarketServiceImpl implements StockMarketService {
 			Optional<List<OrderLine>> soldStockOp = orderLineDao
 					.findByOrderTypeAndOwnerAndEnterpriseOrderByRequestDateDesc(OrderType.SELL, user, enterprise);
 
-			if (boughtStockOp.isPresent() && soldStockOp.isPresent()) {
+			int bs = 0;
+			int ss = 0;
+
+			if (boughtStockOp.isPresent()) {
 				boughtStock = boughtStockOp.get();
-				soldStock = soldStockOp.get();
+				for (OrderLine orderLine : boughtStock) {
+					bs = +orderLine.getNumber();
+				}
+
+			} else {
+				throw new NotOwnedException();
 			}
 
-			if ((boughtStock.size() - soldStock.size()) < number)
-				throw new NotOwnedException();
+			if (soldStockOp.isPresent()) {
+				soldStock = soldStockOp.get();
+				for (OrderLine orderLine : soldStock) {
+					ss = +orderLine.getNumber();
+				}
+
+				if ((bs - ss) < number) {
+					throw new NotOwnedException();
+				}
+
+			}
 
 		}
-
 		orderLineDao.save(order);
 
 		this.match();
+
 	}
 
 
