@@ -1,6 +1,7 @@
 package es.udc.fi.dc.fd.model.services;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -206,6 +207,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 		}
 
 	}
+
 
 	@Override
 	public void order(Long owner, OrderType orderType, Float price, int number, Long enterpriseId)
