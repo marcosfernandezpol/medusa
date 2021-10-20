@@ -3,7 +3,8 @@ import {combineReducers} from 'redux';
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-	enterprises: null
+	enterprises: null,
+	enterprise: null
 }
 
 
@@ -22,8 +23,25 @@ const enterprises = (state = initialState.enterprises, action) => {
 	}
 }
 
+const enterprise = (state = initialState.enterprise, action) => {
+	
+	switch(action.type){
+		
+		case actionTypes.SEARCH_ENTERPRISE_BY_ID_COMPLETED:
+			return action.enterprise;
+			
+		case actionTypes.CLEAR_ENTERPRISE:
+			return initialState.enterprise;
+			
+		default:
+			return state; 
+	}
+}
+
+
 const reducer = combineReducers({
-	enterprises
+	enterprises,
+	enterprise
 });
 
 export default reducer;

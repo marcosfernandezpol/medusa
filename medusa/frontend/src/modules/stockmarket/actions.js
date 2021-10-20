@@ -27,13 +27,31 @@ export const createEnterpriseCompleted = enterprise => ({
   enterprise
 })
 
+
 export const createEnterprise = (enterprise, onSuccess, onErrors) => dispatch => {	
 	
-
 	backend.stockMarketService.createEnterprise(
 		enterprise,
 		enterpriseReturned => {
 			dispatch(createEnterpriseCompleted(enterpriseReturned))
+			onSuccess()
+		},
+		onErrors
+	)
+}
+
+export const updateEnterpriseCompleted = enterprise => ({
+  type: actionTypes.UPDATE_ENTERPRISE_COMPLETED,
+  enterprise
+})
+
+export const updateEnterprise = (id,annualBenefits, onSuccess, onErrors) => dispatch => {	
+	
+	backend.stockMarketService.updateEnterprise(
+		id,
+		annualBenefits,
+		enterpriseReturned => {
+			dispatch(updateEnterpriseCompleted(enterpriseReturned))
 			onSuccess()
 		},
 		onErrors

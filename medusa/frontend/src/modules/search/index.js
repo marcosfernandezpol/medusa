@@ -6,5 +6,8 @@ import * as selectors from './selectors';
 export {default as Enterprises} from './components/Enterprises';
 export {default as FindEnterprisesResult} from './components/FindEnterprisesResult';
 export {default as FindEnterprises} from './components/FindEnterprises';
+export {default as FindEnterpriseResult} from './components/FindEnterpriseResult'
+
+
 
 export default {actions, actionTypes, reducer, selectors};

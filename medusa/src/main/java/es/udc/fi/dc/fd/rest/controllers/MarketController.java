@@ -25,6 +25,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.services.StockMarketService;
+import es.udc.fi.dc.fd.model.services.exceptions.InvalidArgumentException;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
 import es.udc.fi.dc.fd.rest.common.ErrorsDto;
 import es.udc.fi.dc.fd.rest.dtos.AnnualBenefitsListDto;
@@ -44,6 +45,7 @@ public class MarketController {
 	private final static String NOT_ENOUGH_BALANCE_EXCEPTION_CODE = "project.exceptions.NotEnoughBalanceException";
 	private final static String NOT_OWNED_EXCEPTION_CODE = "project.exceptions.NotOwnedException";
 	private final static String NUMBER_EXCEPTION_CODE = "project.exceptions.NumberException";
+	private final static String INVALID_ARGUMENT_EXCEPTION_CODE = "project.exceptions.InvalidArgumentException";
 
 	/** The user service. */
 	@Autowired
@@ -139,6 +141,18 @@ public class MarketController {
 		return new ErrorsDto(errorMessage);
 
 	}
+	
+	@ExceptionHandler(InvalidArgumentException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public ErrorsDto InvalidArgumentException(InvalidArgumentException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(INVALID_ARGUMENT_EXCEPTION_CODE, null,
+				INVALID_ARGUMENT_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
+	}
 
 	/**
 	 * Create an enterprise.
@@ -169,7 +183,7 @@ public class MarketController {
 	@PutMapping("/update_enterprise/{id}")
 	public EnterpriseDto updateEnterprise(@RequestAttribute Long userId, @PathVariable("id") Long id,
 			@Validated({ EnterpriseDto.UpdateValidations.class }) @RequestBody AnnualBenefitsListDto params)
-			throws InstanceNotFoundException, PermissionException, DuplicateInstanceException {
+			throws InstanceNotFoundException, PermissionException, DuplicateInstanceException, InvalidArgumentException {
 		
 		
 		Enterprise enterprise = marketService.createAnnualBenefits(userId, id, params);

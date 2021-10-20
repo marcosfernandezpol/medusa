@@ -64,7 +64,7 @@ public class SearchServiceTest {
 	}
 
 	@Test
-	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException, NumberException {
+	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException {
 
 		User user = createUser("Manolo");
 		Long id = adminId(user);

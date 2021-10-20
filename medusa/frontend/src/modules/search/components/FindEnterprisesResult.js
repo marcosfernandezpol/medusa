@@ -31,7 +31,6 @@ const FindEnterprisesResult = () => {
     }
 	   
     return (
-
         <div>
 			<h1 className="table table-striped table-hover text-center"> <FormattedMessage id='project.global.fields.enterprisesList'/> </h1>
 			

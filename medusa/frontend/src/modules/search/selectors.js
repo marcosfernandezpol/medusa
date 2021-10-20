@@ -3,13 +3,14 @@ const getModuleState = state => state.enterprises;
 
 export const getEnterprises = state => getModuleState(state).enterprises;
 
+
 export const getEnterpriseName = (enterprises, id) => {
 	
 	if (!enterprises){
 		return '';
 	}
 	
-	const enterprise = enterprises.find(enteprise => enteprise.id ===id);
+	const enterprise = enterprises.find(enteprise => enteprise.id === id);
 	
 	if (!enterprise){
 		return '';
@@ -19,6 +20,5 @@ export const getEnterpriseName = (enterprises, id) => {
 	
 }
 
-
-export const getEnterpriseSearch = state =>
-    getModuleState(state).enterprisesSearch;
+export const getEnterprise = state =>
+	getModuleState(state).enterprise;
