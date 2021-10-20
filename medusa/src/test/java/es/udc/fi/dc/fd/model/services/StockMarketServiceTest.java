@@ -59,7 +59,7 @@ public class StockMarketServiceTest {
 	}
 
 	@Test
-	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException, NumberException {
+	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException {
 
 		User admin = null;
 		admin = createAdmin();

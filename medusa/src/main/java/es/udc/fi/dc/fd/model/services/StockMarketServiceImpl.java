@@ -1,6 +1,6 @@
 package es.udc.fi.dc.fd.model.services;
 
-import java.util.List;
+import java.util.Calendar;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,7 @@ import es.udc.fi.dc.fd.model.entities.OrderLineDao;
 import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.entities.User.RoleType;
 import es.udc.fi.dc.fd.model.entities.UserDao;
+import es.udc.fi.dc.fd.model.services.exceptions.InvalidArgumentException;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
 import es.udc.fi.dc.fd.rest.dtos.AnnualBenefitsListDto;
 import es.udc.fi.dc.fd.rest.dtos.AnnualBenefitsParamsDto;
@@ -273,7 +274,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 	@Override
 	public Enterprise createAnnualBenefits(Long userId, Long enterpriseId, AnnualBenefitsListDto benefitsList)
-			throws DuplicateInstanceException, PermissionException, InstanceNotFoundException {
+			throws DuplicateInstanceException, PermissionException, InstanceNotFoundException, InvalidArgumentException {
 
 		Optional<User> userOp = null;
 		User user = null;
@@ -295,9 +296,15 @@ public class StockMarketServiceImpl implements StockMarketService {
 			} else {
 
 				for (AnnualBenefitsParamsDto params : benefitsList.getBenefitsList()) {
-					AnnualBenefits annualParms = new AnnualBenefits(enter, params.getYear(), params.getBenefits());
-					enter.addAnnualBenefits(annualParms);
-					annualBennefitsDao.save(annualParms);
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(enter.getFundation());
+					if (params.getYear() < cal.get(Calendar.YEAR) || params==null) {
+						throw new InvalidArgumentException();
+					}else {
+						AnnualBenefits annualParms = new AnnualBenefits(enter, params.getYear(), params.getBenefits());
+						enter.addAnnualBenefits(annualParms);
+						annualBennefitsDao.save(annualParms);
+					}
 				}
 
 			}

@@ -4,8 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import { Errors, Success } from '../../common'
 
-import * as actionss from '../actions';
-import * as selectors from '../selectors';
+import * as actions from '../actions';
+
 
 const CreateEnterprise = ({ }) => {
 
@@ -18,7 +18,7 @@ const CreateEnterprise = ({ }) => {
 	const [fundation, setFundation] = useState("");
 	const [incomes, setIncomes] = useState("");
 	const [annualBenefits, setAnnualBenefits] = useState("");
-	const [actions, setActions] = useState("");
+	const [actionss, setActions] = useState("");
 	const [actionsPrice, setActionsPrice] = useState("");
 
 	let form;
@@ -29,9 +29,9 @@ const CreateEnterprise = ({ }) => {
 
 		if (form.checkValidity()) {
 
-			dispatch(actionss.createEnterprise(
-				{ enterpriseName, acronim, fundation, incomes, annualBenefits, actions, actionsPrice },
-				() => history.push('/market/createEnterpriseCompleted'),
+			dispatch(actions.createEnterprise(
+				{ enterpriseName, acronim, fundation, incomes, annualBenefits, actionss, actionsPrice },
+				() => history.push('/market/updateEnterprise'),
 				errors => setBackendErrors(errors)
 			));
 
@@ -120,27 +120,12 @@ const CreateEnterprise = ({ }) => {
 						</div>
 
 						<div className="form-group row">
-							<label htmlFor="annualBenefits" className="col-md-3 col-form-label">
-								<FormattedMessage id="project.global.fields.annualBenefits" />
-							</label>
-							<div className="col-md-4">
-								<input type="number" step="0.01" id="annualBenefits" className="form-control"
-									value={annualBenefits}
-									onChange={e => setAnnualBenefits(e.target.value)}
-									required minLength='1' maxLength='10' />
-								<div className="invalid-feedback">
-									<FormattedMessage id='project.global.validator.required' />
-								</div>
-							</div>
-						</div>
-
-						<div className="form-group row">
 							<label htmlFor="actions" className="col-md-3 col-form-label">
 								<FormattedMessage id="project.global.fields.actions" />
 							</label>
 							<div className="col-md-4">
 								<input type="number" step="" id="actions" className="form-control"
-									value={actions}
+									value={actionss}
 									onChange={e => setActions(e.target.value)}
 									required minLength='1' maxLength='10'/>
 								<div className="invalid-feedback">

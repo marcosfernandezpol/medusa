@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-
+import FindEnterpriseLink from './FindEnterpriseLink'
 const Enterprises = ({ enterprises }) => (
 
 	<table className="table table-striped table-hover text-center">
@@ -16,9 +16,6 @@ const Enterprises = ({ enterprises }) => (
 				</th>
 				<th scope="col">
 					<FormattedMessage id='project.global.fields.fundationDate' />
-				</th>
-				<th scope="col">
-					<FormattedMessage id='project.global.fields.anualBenefits' />
 				</th>
 				<th scope="col">
 					<FormattedMessage id='project.global.fields.incomes' />
@@ -36,11 +33,10 @@ const Enterprises = ({ enterprises }) => (
 		<tbody>
 
 			{enterprises.map(enterprise =>
-				<tr>
-					<td> {enterprise.enterpriseName} </td>
+				<tr key = {enterprise.id}>
+					<td><FindEnterpriseLink id={enterprise.id} name = {enterprise.enterpriseName}/></td>
 					<td> {enterprise.acronim} </td>
 					<td> {enterprise.fundation} </td>
-					<td> {enterprise.annualBenefits} </td>
 					<td> {enterprise.incomes} </td>
 					<td> {enterprise.actions} </td>
 					<td> {enterprise.actionsPrice} </td>

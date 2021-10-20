@@ -22,6 +22,8 @@ export default {
     'project.global.fields.enterpriseName': 'Enterprise Name',
 	'project.global.fields.acronim' : 'Acronim',
 	'project.global.fields.anualBenefits': 'Anual Benefits',
+	'project.global.fields.year': 'Year',
+	'project.global.fields.benefits': 'Benefits',
 	'project.global.fields.incomes': 'Incomes',
     'project.global.fields.email': 'Email address',
     'project.global.fields.firstName': 'First name',
@@ -58,6 +60,7 @@ export default {
 	'project.global.buttons.AccessCreateEnterprise': 'Create new enterprise',
 
 	'project.enterprise.CreateEnterprise.title': 'Create Enterprise',
+	'project.enterprise.UpdateEnterprise.title':'Update Enterprise',
 	'project.global.fields.enterpriseName': 'Enterprise name',
 	'project.global.fields.acronim': 'Acronim',
 	'project.global.fields.fundation': 'Fundation',

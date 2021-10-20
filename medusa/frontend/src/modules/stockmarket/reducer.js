@@ -20,7 +20,7 @@ const addEnterprise = (state = initialState.enterprises, action) => {
 }
 
 const reducer = combineReducers({
-    addEnterprise
+	addEnterprise
 });
 
 export default reducer;
