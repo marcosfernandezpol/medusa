@@ -107,19 +107,19 @@ public class Enterprise {
 		this.annualBenefits = annualBenefits;
 	}
 
-	public int getActions() {
+	public int getStock() {
 		return actions;
 	}
 
-	public void setActions(int actions) {
+	public void setStock(int actions) {
 		this.actions = actions;
 	}
 
-	public Float getActionsPrice() {
+	public Float getStockPrice() {
 		return actionsPrice;
 	}
 
-	public void setActionsPrice(Float actionsPrice) {
+	public void setStockPrice(Float actionsPrice) {
 		this.actionsPrice = actionsPrice;
 	}
 	

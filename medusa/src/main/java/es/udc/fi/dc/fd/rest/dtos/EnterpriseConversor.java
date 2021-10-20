@@ -20,7 +20,7 @@ public class EnterpriseConversor {
 		}
 
 		return new EnterpriseDto(t.getId(), t.getEnterpriseName(), t.getAcronim(), t.getFundation(), t.getIncomes(),
-				t.getActions(), t.getActionsPrice(), annualBenefit);
+				t.getStock(), t.getStockPrice(), annualBenefit);
 	}
 
 	public final static List<EnterpriseDto> toEnterprisesDtos(List<Enterprise> list) {
