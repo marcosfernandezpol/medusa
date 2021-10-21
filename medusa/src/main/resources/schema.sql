@@ -36,7 +36,7 @@ CREATE TABLE Enterprise (
 CREATE TABLE AnnualBenefits(
 	id BIGINT NOT NULL AUTO_INCREMENT,
 	enterpriseId BIGINT NOT NULL,
-	year int NOT NULL,
+	year int NOT NULL UNIQUE,
 	benefits float not NULL,
 	CONSTRAINT AnnualBenefitsPK PRIMARY KEY (id),
 	CONSTRAINT AnnualEnterpriseFK FOREIGN KEY (enterpriseId) REFERENCES Enterprise(id)

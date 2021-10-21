@@ -1,8 +1,12 @@
 package es.udc.fi.dc.fd.model.services;
 
+import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,9 +52,10 @@ public class StockMarketServiceImpl implements StockMarketService {
 	@Autowired
 	private AnnualBenefitsDao annualBennefitsDao;
 
+
 	@Override
 	public Enterprise createEnterprise(Long userId, Enterprise enterprise)
-			throws DuplicateInstanceException, PermissionException, NumberException {
+			throws DuplicateInstanceException, PermissionException, NumberException{
 
 		Optional<User> userOp = null;
 		User user = null;
@@ -63,8 +68,19 @@ public class StockMarketServiceImpl implements StockMarketService {
 		userOp = userDao.findById(userId);
 		if (userOp.isPresent()) { // Aqui habría que añadir algo para cuando el user no exista
 			user = userOp.get();
+			
 
 			if (user.getRole() == RoleType.ADMIN) {
+				
+				Calendar cal = Calendar.getInstance();
+				Calendar cal2 = Calendar.getInstance();
+				cal.setTime(enterprise.getFundation());
+				LocalDate now= LocalDate.now();
+				cal2.set(now.getYear(),now.getMonthValue()-1,now.getDayOfMonth());
+				
+				if(cal.after(cal2)) {
+					throw new PermissionException();
+				}
 
 				enterpriseDao.save(enterprise);
 
@@ -259,11 +275,10 @@ public class StockMarketServiceImpl implements StockMarketService {
 				for (OrderLine orderLine : soldStock) {
 					ss = +orderLine.getNumber();
 				}
-
-				if ((bs - ss) < number) {
-					throw new NotOwnedException();
-				}
-
+			}
+			
+			if ((bs - ss) < number) {
+				throw new NotOwnedException();
 			}
 
 		}
@@ -300,7 +315,17 @@ public class StockMarketServiceImpl implements StockMarketService {
 				for (AnnualBenefitsParamsDto params : benefitsList.getBenefitsList()) {
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(enter.getFundation());
-					if (params.getYear() < cal.get(Calendar.YEAR) || params==null) {
+					int year = LocalDate.now().getYear();
+					Set<AnnualBenefits> benefits = enter.getAnnualBenefits();
+					if(!benefits.isEmpty()) {
+						Iterator <AnnualBenefits> iter = benefits.iterator();
+						while (iter.hasNext()) {
+							if (iter.next().getYear() == params.getYear())
+								throw new InvalidArgumentException();
+						}
+					}
+					
+					if (params.getYear() < cal.get(Calendar.YEAR) || params==null || params.getYear()>=year) {
 						throw new InvalidArgumentException();
 					}else {
 						AnnualBenefits annualParms = new AnnualBenefits(enter, params.getYear(), params.getBenefits());
