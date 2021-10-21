@@ -9,7 +9,6 @@ import { useSelector} from 'react-redux';
 const FindOrdersResult = ({ orders }) =>{
 
 	const enterprises = useSelector(selectors.getEnterprises);
-	console.log(enterprises);
 
 
 	return(

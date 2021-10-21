@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { Field, FieldArray, reduxForm } from 'redux-form'
 import validate from '../../common/components/validate'
+import { FormattedMessage } from 'react-intl';
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
   <div>
@@ -14,18 +15,15 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
 );
 
 const renderYears = ({ fields }) => (
-  <ul>
-    <ul>
-      <button type="button" onClick={() => fields.push({})}>
-        Add Element
+  <div className="text-center">
+    <div class="mx-auto ">
+      <button type="button" class="btn btn-primary mt-2 mb-4" onClick={() => fields.push({})}>
+        <FormattedMessage id="project.global.button.addElement" />
       </button>
-    </ul>
+    </div>
     {fields.map((year, index) => (
-      <ul key={index}>
-        <button type="button" title="Remove Year" onClick={() => fields.remove(index)}>
-		  Delete Element
-        </button>
-        <h4>Year #{index + 1}</h4>
+      <div key={index}>
+        <h4>Input {index + 1}</h4>
         <Field
           name={`${year}.year`}
           type="number"
@@ -39,9 +37,12 @@ const renderYears = ({ fields }) => (
           component={renderField}
           label="Benefits"
         />
-      </ul>
+		<button type="button" title="Remove Year" class="btn btn-secondary mx-5 my-4" onClick={() => fields.remove(index)}>
+			<FormattedMessage id="project.global.button.deleteElement" />
+        </button>
+      </div>
     ))}
-  </ul>
+  </div>
 );
 
 let FieldArraysForm = (props) => {
@@ -49,12 +50,12 @@ let FieldArraysForm = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <FieldArray name="benefitsList" component={renderYears} />
-      <div>
-        <button type="submit" disabled={submitting}>
-          Submit
+      <div className="d-flex justify-content-around">
+        <button class="btn btn-secondary" type="submit" disabled={submitting}>
+          <FormattedMessage id="project.global.button.submit" />
         </button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>
-          Clear Values
+        <button class="btn btn-secondary mx-5" type="button" disabled={pristine || submitting} onClick={reset}>
+          <FormattedMessage id="project.global.button.clearValues" />
         </button>
       </div>
     </form>

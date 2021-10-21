@@ -57,6 +57,11 @@ export const updateEnterprise = (id,annualBenefits, onSuccess, onErrors) => disp
 		onErrors
 	)
 }
-							
+
+export const createOrder = (order, onSuccess, onErrors) => dispatch => {
+	backend.stockMarketService.createOrder(
+		order,
+		onSuccess(), onErrors)
+}
 							
 							
