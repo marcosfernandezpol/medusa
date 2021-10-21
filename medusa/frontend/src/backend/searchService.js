@@ -6,3 +6,13 @@ export const findAllEnterprises = (onSuccess) =>
 
 export const findEnterprise = (id, onSuccess) =>
 	appFetch(`/search/enterprise/${id}`, fetchConfig('GET'), onSuccess);
+
+export const findOrders = (option, avaliable, onSuccess) =>{
+	
+	let path=`/search/orders?option=${option}&avaliable=${avaliable}`;
+	
+	console.log(path);
+	
+	appFetch(path, fetchConfig('GET'), onSuccess);
+	}
+

@@ -5,8 +5,9 @@ import {Route, Switch} from 'react-router-dom';
 import AppGlobalComponents from './AppGlobalComponents';
 import Home from './Home';
 import {Login, SignUp, UpdateProfile, ChangePassword, Logout} from '../../users';
-import {CreateEnterprise, UpdateEnterprise,TransferPage} from '../../stockmarket';
-import {FindEnterprisesResult, FindEnterpriseResult} from './../../search';
+import {CreateEnterprise, UpdateEnterprise, TransferPage} from '../../stockmarket';
+import {FindEnterprises, FindEnterprisesResult, FindEnterpriseResult, FindOrders} from '../../search';
+
 import users from '../../users';
 
 const Body = () => {
@@ -17,7 +18,7 @@ const Body = () => {
 	const role = user.role;*/
 	/*{(loggedIn && isAdmin) && <Route exact path="/market/update_enterprise/:id"><UpdateEnterprise/></Route>}*/    
    return (
-
+	
         <div className="container">
             <br/>
             <AppGlobalComponents/>
@@ -33,6 +34,8 @@ const Body = () => {
 				{loggedIn && <Route exact path="/search/enterprises"><FindEnterprisesResult/></Route>}
 				{loggedIn && <Route exact path="/search/enterprise/:id"><FindEnterpriseResult/></Route>}
 				{(loggedIn && isAdmin) && <Route exact path="/market/update_enterprise/:id"><UpdateEnterprise/></Route>}
+				{loggedIn && <Route exact path="/search/orders"><FindOrders/></Route>}
+				{loggedIn && <Route exact path="/market/createEnterpriseCompleted"><CreateEnterprise/></Route>}
 				{(loggedIn && !isAdmin) && <Route exact path="/market/transfer"><TransferPage/></Route>}
                 <Route><Home/></Route>
             </Switch>

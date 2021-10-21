@@ -11,8 +11,15 @@ public class OrderLineConversor {
 	}
 
 	public final static OrderLineDto toOrderLineDto(OrderLine order) {
-		return new OrderLineDto(order.getId(), order.getRequestDate(), order.getOrderType(), order.getOwner().getId(),
-				order.getPrice(), order.getNumber(), order.getEnterprise().getId());
+		if(order.getOwner()==null) {
+			return new OrderLineDto(order.getId(), order.getRequestDate(), order.getOrderType(), null,
+					order.getPrice(), order.getNumber(), order.getEnterprise().getId());
+		}
+		else {
+			return new OrderLineDto(order.getId(), order.getRequestDate(), order.getOrderType(), order.getOwner().getId(),
+					order.getPrice(), order.getNumber(), order.getEnterprise().getId());
+		}
+		
 	}
 
 	public final static List<OrderLineDto> toOrderLineDtos(List<OrderLine> orders) {
