@@ -1,6 +1,5 @@
 import { useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import FindOrdersResult from './FindOrdersResult'
 
@@ -62,9 +61,9 @@ const FindOrders = () => {
 	return (
 		<div>
 			<h1 className="table table-striped table-hover text-center"> <FormattedMessage id='project.global.fields.orderList'/> </h1>
-			<h2 className="table table-striped table-hover text-center"> <FormattedMessage id='project.global.fields.executedList'/> </h2>
-			{executed && <FindOrdersResult orders={executed}/>}
 			<h2 className="table table-striped table-hover text-center"> <FormattedMessage id='project.global.fields.notExecutedList'/> </h2>
+			{executed && <FindOrdersResult orders={executed}/>}
+			<h2 className="table table-striped table-hover text-center"> <FormattedMessage id='project.global.fields.executedList'/> </h2>
 			{notExecuted && <FindOrdersResult orders={notExecuted}/>}
 			
 			

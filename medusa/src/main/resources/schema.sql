@@ -26,7 +26,7 @@ CREATE TABLE Enterprise (
     acronim VARCHAR(10) NOT NULL,
     fundation DATE,
     incomes FLOAT NOT NULL,
-    stock int NOT NULL,
+    stock BIGINT NOT NULL,
     stockPrice FLOAT NOT NULL,
     CONSTRAINT EnterprisePK PRIMARY KEY (id),
     CONSTRAINT enterpriseNameUnique UNIQUE (enterpriseName)

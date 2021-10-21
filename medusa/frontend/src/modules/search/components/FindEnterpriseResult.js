@@ -5,6 +5,7 @@ import { FormattedMessage, FormattedNumber } from 'react-intl';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { useEffect } from 'react';
+import users from '../../users';
 import * as selectors from '../selectors';
 import { Errors, BackLink } from '../../common';
 import * as actions from '../actions';
@@ -14,14 +15,21 @@ import { Pager } from '../../common';
 const FindEnterpriseResult = () => {
 
 	const enterprise = useSelector(selectors.getEnterprise);
+	const isAdmin = useSelector(users.selectors.isAdmin);
 	const dispatch = useDispatch();
 
 	const history = useHistory();
 	const { id } = useParams();
-	
-	const handleClick=() => {
+	const buy = 1;
+	const sell = 0;
+
+	const handleClick = () => {
 		const enterpriseId = Number(id);
 		history.push(`/market/update_enterprise/${id}`)
+	}
+	const handleClick1 = ({ id, type }) => {
+		const enterpriseId = Number(id);
+		history.push(`/market/create_order/${id}`)
 	}
 
 	useEffect(() => {
@@ -30,13 +38,13 @@ const FindEnterpriseResult = () => {
 			dispatch(actions.searchEnterpriseById(enterpriseId));
 		}
 
-		return () => dispatch(actions.clearSearchEnterprise());
+		return () => null;
 
 	}, [id, dispatch]);
 
 	if (!enterprise) {
 
-		return <p>{"hola"}</p>;
+		return null;
 	}
 
 	return (
@@ -71,15 +79,30 @@ const FindEnterpriseResult = () => {
                 </h5>
 				</div>
 			</div>
-			
-			<div className="card text-center">&nbsp;
-				<h4>	
-					<FormattedMessage id='project.global.fields.anualBenefits'/> &nbsp; 
+			{isAdmin &&
+				<div className="card text-center">&nbsp;
+				<h4>
+						<FormattedMessage id='project.global.fields.anualBenefits' /> &nbsp;
 					<button onClick={handleClick} class="fas fa-plus"></button>
+					</h4>
+
+
+				</div>
+			}
+
+			{!isAdmin &&
+				<div className="card text-center">&nbsp;
+				<h4>
+						<Link to={`/market/create_order/${id}/enterpriseName=${enterprise.enterpriseName}/${buy}`} className="btn btn-secondary mx-5">buy </Link>
+
+
+
+						<Link to={`/market/create_order/${id}/enterpriseName=${enterprise.enterpriseName}/${sell}`} className="btn btn-secondary mx-5">sell </Link> &nbsp;
+
 				</h4>
-				
-					
-			</div>
+
+				</div>
+			}
 			<table className="table table-striped table-hover text-center">
 				<th scope="col">
 					<FormattedMessage id='project.global.fields.year' />

@@ -13,5 +13,7 @@ export const createEnterprise = (enterprise, onSuccess, onErrors) =>
 
 export const updateEnterprise = (id,annualBenefits,onSuccess, onErrors) =>
 	appFetch(`/market/update_enterprise/${id}`, fetchConfig('PUT', annualBenefits), onSuccess, onErrors);
-
+	
+export const createOrder = (order, onSuccess, onErrors) =>
+	appFetch(`/market/order`, fetchConfig('POST', order), onSuccess, onErrors);
 
