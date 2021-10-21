@@ -47,23 +47,28 @@ public class SearchServiceImpl implements SearchService {
 
 		Optional<User> userOp = userDao.findById(userId);
 		User user = null;
+		List<OrderLine> returned = new ArrayList<>();
 		if (userOp.isPresent())
 			user = userOp.get();
 
-		List<OrderLine> orders = new ArrayList<OrderLine>();
+		
 
 		OrderType type = null;
 		if (option)
 			type = OrderType.BUY;
 		else
 			type = OrderType.SELL;
-			
 		
-		Iterable<OrderLine> ordersReturned = orderLineDao
-				.findByOwnerAndOrderTypeAndAvaliableOrderByRequestDateDesc(user, type, avaliable);
-		ordersReturned.forEach(orders::add);
+		Optional<List<OrderLine>> orders = orderLineDao.findByOwnerAndOrderTypeAndAvaliableOrderByRequestDateDesc(user, type,avaliable);
+		
+		if(orders.isPresent()) {
+			return orders.get();
+		} else {
+			return returned;
+		}
 
-		return orders;
+
+		
 	}
 
 

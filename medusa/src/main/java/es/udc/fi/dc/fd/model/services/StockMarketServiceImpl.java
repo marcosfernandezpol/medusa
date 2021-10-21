@@ -227,7 +227,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 		OrderLine order = new OrderLine(orderType, user, price, number, enterprise);
 
 		if (order.getOrderType() == OrderType.BUY) {
-			if (order.getOwner().getBalance() < (order.getPrice() * order.getNumber()))
+			if (user.getBalance() < (price * number))
 				throw new NotEnoughBalanceException("Offering more money than owned");
 
 		} else {

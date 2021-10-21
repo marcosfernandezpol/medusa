@@ -30,8 +30,10 @@ const Header = () => {
                 <ul className="navbar-nav mr-auto">
 				
                   {loggedIn &&  <Link className="navbar-brand" to="/search/enterprises"><FormattedMessage id='project.global.fields.enterprises'/></Link>}
-			            
-                </ul>
+			       
+				  {loggedIn && <Link className="navbar-brand" to="/search/orders"><FormattedMessage id='project.global.fields.orders' /></Link>}	     
+                
+				</ul>
 				
 				
                 {userName ? 
