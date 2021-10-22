@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS OrderLine;
+DROP TABLE IF EXISTS AnnualBenefits;
 DROP TABLE IF EXISTS Enterprise;
 DROP TABLE IF EXISTS Bank_account;
 DROP TABLE IF EXISTS Transfer_history;
@@ -24,9 +26,20 @@ CREATE TABLE Enterprise (
     acronim VARCHAR(10) NOT NULL,
     fundation DATE,
     incomes FLOAT NOT NULL,
-    annualBenefits FLOAT NOT NULL,
+    stock BIGINT NOT NULL,
+    stockPrice FLOAT NOT NULL,
     CONSTRAINT EnterprisePK PRIMARY KEY (id),
     CONSTRAINT enterpriseNameUnique UNIQUE (enterpriseName)
+);
+
+
+CREATE TABLE AnnualBenefits(
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	enterpriseId BIGINT NOT NULL,
+	year int NOT NULL UNIQUE,
+	benefits float not NULL,
+	CONSTRAINT AnnualBenefitsPK PRIMARY KEY (id),
+	CONSTRAINT AnnualEnterpriseFK FOREIGN KEY (enterpriseId) REFERENCES Enterprise(id)
 );
 
 CREATE TABLE  Bank_account (
@@ -45,4 +58,18 @@ CREATE TABLE Transfer_history (
     CONSTRAINT TransferPK PRIMARY KEY (id),
     CONSTRAINT SenderFK FOREIGN KEY (sender) REFERENCES User(id),
     CONSTRAINT ReceiverFK FOREIGN KEY (receiver) REFERENCES User(id)
+);
+
+CREATE TABLE OrderLine (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	requestDate DATETIME NOT NULL,
+	orderType TINYINT NOT NULL,
+	userId BIGINT,
+	price FLOAT NOT NULL,
+	number INT  NOT NULL,
+	enterpriseId BIGINT NOT NULL,
+	avaliable BIT NOT NULL,
+	CONSTRAINT Order_linePK PRIMARY KEY (id),
+	CONSTRAINT OwnerFK FOREIGN KEY (userId) REFERENCES User(id),
+	CONSTRAINT enterpriseFK FOREIGN KEY (enterpriseId) REFERENCES Enterprise(id)
 );

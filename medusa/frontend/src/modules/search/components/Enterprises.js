@@ -1,57 +1,58 @@
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+import FindEnterpriseLink from './FindEnterpriseLink'
+const Enterprises = ({ enterprises }) => (
 
-import * as selectors from '../selectors';
-import {enterpriseLink} from '../../common';
+	<table className="table table-striped table-hover text-center">
 
-const  Enterprises = ({enterprises}) => (
-
-    <table className="table table-striped table-hover text-center">
-
-        <thead>
-            <tr>
-                <th scope="col">
-                    <FormattedMessage id='project.global.fields.enterpriseName'/>
-                </th>
-                <th scope="col">
-                    <FormattedMessage id='project.global.fields.acronim'/>
-                </th>
+		<thead>
+			<tr>
 				<th scope="col">
-                    <FormattedMessage id='project.global.fields.fundationDate'/>
-                </th>
+					<FormattedMessage id='project.global.fields.enterpriseName' />
+				</th>
 				<th scope="col">
-                    <FormattedMessage id='project.global.fields.anualBenefits'/>
-                </th>
+					<FormattedMessage id='project.global.fields.acronim' />
+				</th>
 				<th scope="col">
-                    <FormattedMessage id='project.global.fields.incomes'/>
-                </th>
+					<FormattedMessage id='project.global.fields.fundationDate' />
+				</th>
+				<th scope="col">
+					<FormattedMessage id='project.global.fields.incomes' />
+				</th>
+				<th scope="col">
+					<FormattedMessage id='project.global.fields.actions' />
+				</th>
+				<th scope="col">
+					<FormattedMessage id='project.global.fields.actionsPrice' />
+				</th>
 
-            </tr>
-        </thead>
+			</tr>
+		</thead>
 
-        <tbody>
+		<tbody>
 
 			{enterprises.map(enterprise =>
-                    <tr>
-						<td> {enterprise.enterpriseName} </td>
-						<td> {enterprise.acronim} </td>
-						<td> {enterprise.fundation} </td>
-						<td> {enterprise.annualBenefits} </td>
-						<td> {enterprise.incomes} </td>
-					</tr>
-					
-					
-			)}       
-            
-        </tbody>
+				<tr key = {enterprise.id}>
+					<td><FindEnterpriseLink id={enterprise.id} name = {enterprise.enterpriseName}/></td>
+					<td> {enterprise.acronim} </td>
+					<td> {enterprise.fundation} </td>
+					<td> {enterprise.incomes} </td>
+					<td> {enterprise.actions} </td>
+					<td> {enterprise.actionsPrice} </td>
+				</tr>
 
-    </table>
+
+			)}
+
+		</tbody>
+
+	</table>
 
 );
 
 Enterprises.propTypes = {
-    Enterprises: PropTypes.array.isRequired,
+	Enterprises: PropTypes.array.isRequired,
 };
 
 export default Enterprises;

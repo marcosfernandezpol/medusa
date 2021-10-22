@@ -8,7 +8,7 @@ const Home = () => {
 		    <div>
 				<h1 > <FormattedMessage id="project.global.fields.homeTitle"/> </h1>
 		    </div>
-	
+				
 			<div>
 				<FormattedMessage id="project.global.fields.homeSubTitle"/>
 			</div>

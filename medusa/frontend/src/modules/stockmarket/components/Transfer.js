@@ -15,6 +15,7 @@ const Transfer = () => {
 	const [money, setMoney] = useState('');
 	const [operation, setOperation] = useState('');
 	const [backendErrors, setBackendErrors] = useState(null);
+	const [origin, setOrigin]=useState('');
 	let form;
 
 	const handleSubmit = event => {
@@ -48,6 +49,21 @@ const Transfer = () => {
 						className="needs-validation" noValidate
 						onSubmit={e => handleSubmit(e)}>
 						<div className="form-group row">
+							<label htmlFor="text" className="col-md-3 col-form-label">
+								<FormattedMessage id="project.global.fields.origin" />
+							</label>
+							<div className="col-md-4">
+								<input type="text" maxlength="24" id="origin" className="form-control"
+									value={origin}
+									onChange={e => setOrigin(e.target.origin)}
+									autoFocus
+									required />
+								<div className="invalid-feedback">
+									<FormattedMessage id='project.global.validator.required' />
+								</div>
+							</div>
+						</div>
+						<div className="form-group row">
 							<label htmlFor="money" className="col-md-3 col-form-label">
 								<FormattedMessage id="project.global.fields.Money" />
 							</label>
@@ -67,14 +83,15 @@ const Transfer = () => {
 								<FormattedMessage id="project.global.fields.operation" />
 							</label>
 							<div className="col-md-4">
-								<input type="text" id="operation" className="form-control"
-									value={operation}
-									onChange={e => setOperation(e.target.value)}
-									required />
-								<div className="invalid-feedback">
-									<FormattedMessage id='project.global.validator.required' />
-								</div>
-							</div>
+                                <select onChange={e => setOperation(e.target.value)} class="form-select" type="text" id="operation" className="form-control"> 
+                                  	<option selected value="Select the operation">----Select operation----</option>
+									<option value="INCOME">INCOME</option>
+									<option value="WITHDRAW">WITHDRAW</option>                                                 
+                                </select>
+                                <div className="invalid-feedback">
+                                    <FormattedMessage id='project.global.validator.required'/>
+                                </div>
+                            </div>
 						</div>
 						<div className="form-group row">
 							<div className="offset-md-3 col-md-1">

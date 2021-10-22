@@ -5,9 +5,10 @@ import * as selectors from './selectors';
 
 
 
-export {default as EnterpriseCreated} from './components/EnterpriseCreated';
+export {default as UpdateEnterprise} from './components/UpdateEnterprise';
 export {default as CreateEnterprise} from './components/CreateEnterprise';
 export {default as CreateEnterpriseAccessButton} from './components/CreateEnterpriseAccessButton';
 export {default as Transfer} from './components/Transfer';
 export {default as TransferPage} from './components/TransferPage';
+export {default as CreateOrders} from './components/CreateOrders'
 export default {actions, actionTypes, reducer, selectors};

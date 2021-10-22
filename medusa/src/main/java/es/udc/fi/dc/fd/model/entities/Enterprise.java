@@ -1,12 +1,17 @@
 package es.udc.fi.dc.fd.model.entities;
 
+import java.beans.Transient;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * The Class Enterprise.
@@ -26,21 +31,13 @@ public class Enterprise {
 
 	private Float incomes;
 
-	private Float annualBenefits;
+	private int actions;
+
+	private Float actionsPrice;
+
+	private Set<AnnualBenefits> annualBenefits = new HashSet<>();
 
 	// End atributes
-
-	
-	
-	public Enterprise(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
-			Float annualBenefits) {
-		super();
-		this.enterpriseName = enterpriseName;
-		this.acronim = acronim;
-		this.fundation = fundation;
-		this.incomes = incomes;
-		this.annualBenefits = annualBenefits;
-	}
 
 	/**
 	 * 
@@ -48,13 +45,15 @@ public class Enterprise {
 	public Enterprise() {
 	}
 
-	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, Float annualBenefits) {
+	public Enterprise(String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
+			Float actionsPrice) {
 		super();
 		this.enterpriseName = enterpriseName;
 		this.acronim = acronim;
 		this.fundation = fundation;
 		this.incomes = incomes;
-		this.annualBenefits = annualBenefits;
+		this.actions = actions;
+		this.actionsPrice = actionsPrice;
 	}
 
 	@Id
@@ -99,23 +98,53 @@ public class Enterprise {
 		this.incomes = incomes;
 	}
 
-	public Float getAnnualBenefits() {
+	@OneToMany(mappedBy = "enterprise")
+	public Set<AnnualBenefits> getAnnualBenefits() {
 		return annualBenefits;
 	}
 
-	public void setAnnualBenefits(Float annualBenefits) {
+	public void setAnnualBenefits(Set<AnnualBenefits> annualBenefits) {
 		this.annualBenefits = annualBenefits;
+	}
+
+	public int getStock() {
+		return actions;
+	}
+
+	public void setStock(int actions) {
+		this.actions = actions;
+	}
+
+	public Float getStockPrice() {
+		return actionsPrice;
+	}
+
+	public void setStockPrice(Float actionsPrice) {
+		this.actionsPrice = actionsPrice;
+	}
+	
+	@Transient
+	public Optional<AnnualBenefits> getAnnualBenefits(Long id) {
+		return annualBenefits.stream().filter(annualBenefits -> annualBenefits.getEnterprise().getId().equals(id)).findFirst();
+	}
+
+	public void addAnnualBenefits(AnnualBenefits annualBenefit) {
+		
+		annualBenefits.add(annualBenefit);
+		annualBenefit.setEnterprise(this);
+		
 	}
 
 	@Override
 	public String toString() {
 		return "Enterprise [id=" + id + ", enterpriseName=" + enterpriseName + ", acronim=" + acronim + ", fundation="
-				+ fundation + ", incomes=" + incomes + ", annualBenefits=" + annualBenefits + "]";
+				+ fundation + ", incomes=" + incomes + ", actions=" + actions + ", actionsPrice=" + actionsPrice
+				+ ", annualBenefits=" + annualBenefits + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(acronim, annualBenefits, enterpriseName, fundation, id, incomes);
+		return Objects.hash(acronim, actions, actionsPrice, annualBenefits, enterpriseName, fundation, id, incomes);
 	}
 
 	@Override
@@ -127,7 +156,9 @@ public class Enterprise {
 		if (getClass() != obj.getClass())
 			return false;
 		Enterprise other = (Enterprise) obj;
-		return Objects.equals(acronim, other.acronim) && Objects.equals(annualBenefits, other.annualBenefits)
+		return Objects.equals(acronim, other.acronim) && actions == other.actions
+				&& Objects.equals(actionsPrice, other.actionsPrice)
+				&& Objects.equals(annualBenefits, other.annualBenefits)
 				&& Objects.equals(enterpriseName, other.enterpriseName) && Objects.equals(fundation, other.fundation)
 				&& Objects.equals(id, other.id) && Objects.equals(incomes, other.incomes);
 	}

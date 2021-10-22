@@ -3,7 +3,6 @@ package es.udc.fi.dc.fd.model.services;
 import static org.junit.Assert.assertNotNull;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -16,10 +15,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
+import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
-import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
-import es.udc.fi.dc.fd.model.entities.UserDao;
 import es.udc.fi.dc.fd.model.entities.User;
+import es.udc.fi.dc.fd.model.entities.UserDao;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
 
 /**
@@ -34,10 +33,10 @@ public class SearchServiceTest {
 
 	@Autowired
 	private SearchService searchService;
-	@Autowired
-	private EnterpriseDao enterpriseDao;
+
 	@Autowired
 	private UserDao userDao;
+
 	@Autowired
 	private StockMarketService marketService;
 
@@ -60,11 +59,12 @@ public class SearchServiceTest {
 	}
 
 	private Enterprise createEnterprise(String name, String acronim) {
-		return new Enterprise(name, acronim, Date.valueOf("1999-01-17"), Float.valueOf(1000), Float.valueOf(10000));
+		return new Enterprise(name, acronim, Date.valueOf("1999-01-17"), Float.valueOf(1000), 12, Float.valueOf(18));
+
 	}
 
 	@Test
-	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException {
+	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException, NumberException {
 
 		User user = createUser("Manolo");
 		Long id = adminId(user);

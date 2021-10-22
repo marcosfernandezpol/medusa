@@ -7,7 +7,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +21,20 @@ import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
+import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.services.StockMarketService;
+import es.udc.fi.dc.fd.model.services.exceptions.InvalidArgumentException;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
-import es.udc.fi.dc.fd.rest.dtos.EnterpriseDto;
-import es.udc.fi.dc.fd.rest.dtos.TransferParamsDto;
 import es.udc.fi.dc.fd.rest.common.ErrorsDto;
+import es.udc.fi.dc.fd.rest.dtos.AnnualBenefitsListDto;
 import es.udc.fi.dc.fd.rest.dtos.EnterpriseConversor;
+import es.udc.fi.dc.fd.rest.dtos.EnterpriseDto;
+import es.udc.fi.dc.fd.rest.dtos.OrderParamsDto;
+import es.udc.fi.dc.fd.rest.dtos.EnterpriseSummaryConversor;
+import es.udc.fi.dc.fd.rest.dtos.EnterpriseSummaryDto;
+import es.udc.fi.dc.fd.rest.dtos.TransferParamsDto;
 
 @RestController
 @RequestMapping("/market")
@@ -34,6 +43,10 @@ public class MarketController {
 	private final static String DUPLICATE_INSTANCE_EXCEPTION_CODE = "project.exceptions.DuplicateInstanceException";
 	private final static String INVALID_OPERATION_EXCEPTION_CODE = "project.exceptions.InvalidOperationException";
 	private final static String NOT_ENOUGH_BALANCE_EXCEPTION_CODE = "project.exceptions.NotEnoughBalanceException";
+	private final static String NOT_OWNED_EXCEPTION_CODE = "project.exceptions.NotOwnedException";
+	private final static String NUMBER_EXCEPTION_CODE = "project.exceptions.NumberException";
+	private final static String INVALID_ARGUMENT_EXCEPTION_CODE = "project.exceptions.InvalidArgumentException";
+
 	/** The user service. */
 	@Autowired
 	private StockMarketService marketService;
@@ -56,6 +69,25 @@ public class MarketController {
 
 		String errorMessage = messageSource.getMessage(DUPLICATE_INSTANCE_EXCEPTION_CODE, null,
 				DUPLICATE_INSTANCE_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
+	}
+
+	/**
+	 * Handle Stock Not Owned exception.
+	 *
+	 * @param exception the exception
+	 * @param locale    the locale
+	 * @return the errors dto
+	 */
+	@ExceptionHandler(NotOwnedException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ErrorsDto handleNotOwnedException(NotOwnedException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(NOT_OWNED_EXCEPTION_CODE, null, NOT_OWNED_EXCEPTION_CODE,
+				locale);
 
 		return new ErrorsDto(errorMessage);
 
@@ -99,6 +131,29 @@ public class MarketController {
 
 	}
 
+	@ExceptionHandler(NumberException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public ErrorsDto handleNumberException(NumberException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(NUMBER_EXCEPTION_CODE, null, NUMBER_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
+	}
+	
+	@ExceptionHandler(InvalidArgumentException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public ErrorsDto InvalidArgumentException(InvalidArgumentException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(INVALID_ARGUMENT_EXCEPTION_CODE, null,
+				INVALID_ARGUMENT_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
+	}
+
 	/**
 	 * Create an enterprise.
 	 *
@@ -106,15 +161,34 @@ public class MarketController {
 	 * @return the response entity
 	 * @throws DuplicateInstanceException the duplicate instance exception
 	 * @throws PermissionException
+	 * @throws NumberException 
 	 */
 	@PostMapping("/create_enterprise")
-	public EnterpriseDto createEnterprise(@RequestAttribute Long userId,
-			@Validated @RequestBody EnterpriseDto enterpriseDto)
-			throws DuplicateInstanceException, PermissionException {
+	public EnterpriseSummaryDto createEnterprise(@RequestAttribute Long userId,
+			@Validated @RequestBody EnterpriseSummaryDto enterpriseDto)
+			throws DuplicateInstanceException, PermissionException, NumberException {
 
-		Enterprise enterprise = EnterpriseConversor.toEnterprise(enterpriseDto);
+		Enterprise enterprise = EnterpriseSummaryConversor.toEnterpriseSummary(enterpriseDto);
 		Enterprise e = marketService.createEnterprise(userId, enterprise);
-		return EnterpriseConversor.toEnterpriseDto(e);
+		return EnterpriseSummaryConversor.toEnterpriseSummaryDto(e);
+	}
+
+	/**
+	 * 
+	 * @param enterprise the dto
+	 * @return enterprise modified
+	 * @throws DuplicateInstanceException
+	 * 
+	 */
+	@PutMapping("/update_enterprise/{id}")
+	public EnterpriseDto updateEnterprise(@RequestAttribute Long userId, @PathVariable("id") Long id,
+			@Validated({ EnterpriseDto.UpdateValidations.class }) @RequestBody AnnualBenefitsListDto params)
+			throws InstanceNotFoundException, PermissionException, DuplicateInstanceException, InvalidArgumentException {
+		
+		
+		Enterprise enterprise = marketService.createAnnualBenefits(userId, id, params);
+
+		return EnterpriseConversor.toEnterpriseDto(enterprise);
 	}
 
 	/**
@@ -124,6 +198,15 @@ public class MarketController {
 	public void transfer(@RequestAttribute Long userId, @Validated @RequestBody TransferParamsDto params)
 			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException {
 		marketService.transfer(userId, params.getMoney(), params.getOperation());
+	}
+
+	/**
+	 * Order a stock transference.
+	 */
+	@PostMapping("/order")
+	public void order(@RequestAttribute Long userId, @Validated @RequestBody OrderParamsDto params)
+			throws NotEnoughBalanceException, NotOwnedException {
+		marketService.order(userId, params.getType(), params.getPrice(), params.getNumber(), params.getEnterpriseId());
 	}
 
 }

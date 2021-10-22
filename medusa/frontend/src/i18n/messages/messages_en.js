@@ -22,6 +22,8 @@ export default {
     'project.global.fields.enterpriseName': 'Enterprise Name',
 	'project.global.fields.acronim' : 'Acronim',
 	'project.global.fields.anualBenefits': 'Anual Benefits',
+	'project.global.fields.year': 'Year',
+	'project.global.fields.benefits': 'Benefits',
 	'project.global.fields.incomes': 'Incomes',
     'project.global.fields.email': 'Email address',
     'project.global.fields.firstName': 'First name',
@@ -38,6 +40,8 @@ export default {
 	'project.global.fields.enterprises': 'Enterprises',
 	'project.app.Management':'Management',
 	'project.app.Transfer':'Transfer',
+	'project.global.fields.origin':'From / To',
+	'project.global.fields.enterprisesList':'Enterprise name: ',
 	
 	'project.global.fields.homeTitle': 'Welcome to Medusa',
 	'project.global.fields.homeSubTitle': 'Enjoy working with us', 
@@ -57,13 +61,33 @@ export default {
 	'project.global.buttons.AccessCreateEnterprise': 'Create new enterprise',
 
 	'project.enterprise.CreateEnterprise.title': 'Create Enterprise',
+	'project.enterprise.UpdateEnterprise.title':'Update Enterprise',
 	'project.global.fields.enterpriseName': 'Enterprise name',
 	'project.global.fields.acronim': 'Acronim',
 	'project.global.fields.fundation': 'Fundation',
 	'project.global.fields.incomes': 'Incomes',
+	'project.global.fields.actions': 'Actions',
+	'project.global.fields.actionsPrice': 'Price',
 	'project.global.fields.annualBenefits': 'Annual benefits',
 	'project.global.buttons.CreateEnterpriseButton': 'Create enterprise',
 	'project.global.fields.enterpriseCreated': 'Enterprise created',
+	'project.global.fields.orders':'Orders',
+	'project.global.fields.requestdate':'Request Date',
+	'project.global.fields.orderType' : 'OrderType',
+	'project.global.fields.price':'Price',
+	'project.global.fields.actionPrice':'Price per Action',
+	'project.global.fields.actionsNumber':'Number of Actions',
+	'project.global.fields.enterpriseName':'Enterprise Name',
+	'project.global.fields.orderList':'Order Lists',
+	'project.global.fields.executedList':'Executed List',
+	'project.global.fields.notExecutedList':'Not Executed List',
+	'project.global.buttons.submitOperation':'Submit Operation',
+	'project.global.form.buySellForm':'Operation Formulary',
+	'project.global.button.addElement':'Add Element',
+	'project.global.button.deleteElement':'Delete Element',
+	'project.global.button.submit':'Submit',
+	'project.global.button.clearValues':'Clear Values',
+	
 	
 	'project.shopping.BuyForm.title':'Balance',
 	'project.global.fields.transfers': 'Transfer',
@@ -72,6 +96,7 @@ export default {
 	'project.users.Transfer.button':'Complete',
 	'project.users.Transfer.title':'Enter the required data',
 	'project.global.validator.successCreateEnterprise':'Enterprise created successfully',
+	'project.global.validator.required.actions':'Please, introduce a valid number'
 	
 	
 }

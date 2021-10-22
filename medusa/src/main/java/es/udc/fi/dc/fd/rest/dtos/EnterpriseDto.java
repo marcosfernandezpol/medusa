@@ -1,6 +1,8 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
 import java.sql.Date;
+import java.util.List;
+
 
 public class EnterpriseDto {
 
@@ -26,20 +28,40 @@ public class EnterpriseDto {
 
 	private Float incomes;
 
-	private Float annualBenefits;
+	private int actions;
+
+	private Float actionsPrice;
+
+	private List<AnnualBenefitsDto> anualBenefitsDto;
 
 	public EnterpriseDto() {
 	}
 
-	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
-			Float annualBenefits) {
+	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
+			Float actionsPrice) {
+
 		super();
 		this.id = id;
 		this.enterpriseName = enterpriseName;
 		this.acronim = acronim;
 		this.fundation = fundation;
 		this.incomes = incomes;
-		this.annualBenefits = annualBenefits;
+		this.actions = actions;
+		this.actionsPrice = actionsPrice;
+
+	}
+
+	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
+			Float actionsPrice, List<AnnualBenefitsDto> anualBenefitsDto) {
+		super();
+		this.id = id;
+		this.enterpriseName = enterpriseName;
+		this.acronim = acronim;
+		this.fundation = fundation;
+		this.incomes = incomes;
+		this.actions = actions;
+		this.actionsPrice = actionsPrice;
+		this.anualBenefitsDto = anualBenefitsDto;
 	}
 
 	public Long getId() {
@@ -82,14 +104,28 @@ public class EnterpriseDto {
 		this.incomes = incomes;
 	}
 
-	public Float getAnnualBenefits() {
-		return annualBenefits;
+	public int getActions() {
+		return actions;
 	}
 
-	public void setAnnualBenefits(Float annualBenefits) {
-		this.annualBenefits = annualBenefits;
+	public void setActions(int actions) {
+		this.actions = actions;
 	}
-	
-	
+
+	public Float getActionsPrice() {
+		return actionsPrice;
+	}
+
+	public void setActionsPrice(Float actionsPrice) {
+		this.actionsPrice = actionsPrice;
+	}
+
+	public List<AnnualBenefitsDto> getanualBenefitsDto() {
+		return anualBenefitsDto;
+	}
+
+	public void setanualBenefitsDto(List<AnnualBenefitsDto> anualBenefitsDto) {
+		this.anualBenefitsDto = anualBenefitsDto;
+	}
 
 }

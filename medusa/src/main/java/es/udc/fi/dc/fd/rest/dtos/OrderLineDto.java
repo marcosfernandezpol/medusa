@@ -1,0 +1,113 @@
+package es.udc.fi.dc.fd.rest.dtos;
+
+import java.time.LocalDateTime;
+
+import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
+
+public class OrderLineDto {
+
+	/**
+	 * The Interface AllValidations.
+	 */
+	public interface AllValidations {
+	}
+
+	/**
+	 * The Interface UpdateValidations.
+	 */
+	public interface UpdateValidations {
+	}
+
+	private Long id;
+
+	private LocalDateTime requestDate;
+
+	private OrderType orderType;
+
+	private Long ownerId;
+
+	private Float price;
+
+	private int number;
+
+	private Long enterpriseId;
+
+	public OrderLineDto() {
+		super();
+	}
+
+	public OrderLineDto(Long id, LocalDateTime requestDate, OrderType orderType, Long ownerId, Float price, int number,
+			Long enterpriseId) {
+		super();
+		this.id = id;
+		this.requestDate = requestDate;
+		this.orderType = orderType;
+		this.ownerId = ownerId;
+		this.price = price;
+		this.number = number;
+		this.enterpriseId = enterpriseId;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getRequestDate() {
+		return requestDate;
+	}
+
+	public void setRequestDate(LocalDateTime requestDate) {
+		this.requestDate = requestDate;
+	}
+
+	public OrderType getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(OrderType orderType) {
+		this.orderType = orderType;
+	}
+
+	public Long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public Float getPrice() {
+		return price;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public Long getEnterpriseId() {
+		return enterpriseId;
+	}
+
+	public void setEnterpriseId(Long enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderLineDto [id=" + id + ", requestDate=" + requestDate + ", orderType=" + orderType + ", ownerId="
+				+ ownerId + ", price=" + price + ", number=" + number + ", enterpriseId=" + enterpriseId + "]";
+	}
+
+}
