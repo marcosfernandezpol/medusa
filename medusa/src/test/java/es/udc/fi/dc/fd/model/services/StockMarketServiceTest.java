@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 //import static Assertions.assertThrows;
 
 import java.sql.Date;
+import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -19,8 +21,13 @@ import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
+import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
+import es.udc.fi.dc.fd.model.entities.OrderLine;
+import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
+import es.udc.fi.dc.fd.model.entities.OrderLineDao;
 import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.entities.User.RoleType;
 import es.udc.fi.dc.fd.model.entities.UserDao;
@@ -40,6 +47,12 @@ public class StockMarketServiceTest {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private EnterpriseDao enterpriseDao;
+
+	@Autowired
+	private OrderLineDao orderLineDao;
 
 	// Creamos un usuario de tipo Administrador
 	private User createAdmin() {
@@ -100,6 +113,30 @@ public class StockMarketServiceTest {
 
 		stockMarketService.transfer(client.getId(), Float.valueOf(200), "WITHDRAW");
 		assertTrue(client.getBalance() == 1000F);
+
+	}
+
+	@Test
+	public void createOrders() throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException,
+			DuplicateInstanceException, PermissionException, NumberException, NotOwnedException {
+
+		User client = createClient();
+		Enterprise enterprise = createEnterprise();
+
+		User savedClient = userDao.save(client);
+		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
+
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId());
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId());
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId());
+		Optional<List<OrderLine>> orderListOp = orderLineDao
+				.findByOwnerAndOrderTypeAndAvaliableOrderByRequestDateDesc(savedClient, OrderType.BUY, true);
+
+		List<OrderLine> orderList = null;
+		if (orderListOp.isPresent())
+			orderList = orderListOp.get();
+
+		assertTrue(orderList.size() == 3);
 
 	}
 
