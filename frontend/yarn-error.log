@@ -1,8 +1,8 @@
 Arguments: 
-  /home/braistoise/Medusa/medusa/medusa/target/node/node /home/braistoise/Medusa/medusa/medusa/target/node/yarn/dist/bin/yarn.js install
+  /home/siro/Escritorio/Ferramentas/medusa/target/node/node /home/siro/Escritorio/Ferramentas/medusa/target/node/yarn/dist/bin/yarn.js run build
 
 PATH: 
-  /home/braistoise/Medusa/medusa/medusa/target/node:/home/braistoise/Medusa/medusa/medusa/target/node/yarn/dist/bin:/home/braistoise/software/node-v14.15.5-linux-x64/bin:/home/braistoise/software/idea-IU-202.7319.50/bin:/home/braistoise/software/apache-maven-3.6.3/bin:/usr/lib/jvm/adoptopenjdk-11-hotspot-amd64/bin:/home/braistoise/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/dart/bin:
+  /home/siro/Escritorio/Ferramentas/medusa/target/node:/home/siro/Escritorio/Ferramentas/medusa/target/node/yarn/dist/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:
 
 Yarn version: 
   1.22.10
@@ -14,7 +14,12 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EEXIST: file already exists, symlink '../../../../semver/bin/semver.js' -> '/home/braistoise/Medusa/medusa/medusa/frontend/node_modules/@npmcli/fs/node_modules/.bin/semver'
+  SyntaxError: /home/siro/Escritorio/Ferramentas/medusa/frontend/package.json: Unexpected token } in JSON at position 555
+      at JSON.parse (<anonymous>)
+      at /home/siro/Escritorio/Ferramentas/medusa/target/node/yarn/dist/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/home/siro/Escritorio/Ferramentas/medusa/target/node/yarn/dist/lib/cli.js:310:30)
+      at /home/siro/Escritorio/Ferramentas/medusa/target/node/yarn/dist/lib/cli.js:321:13
 
 npm manifest: 
   {
@@ -32,8 +37,11 @@ npm manifest:
       "react-intl": "^5.20.12",
       "react-router-dom": "^5.2.0",
       "react-scripts": "4.0.3",
+  	"jquery": "^3.6.0",
       "react-test-renderer": "^17.0.2",
-  	"redux-form": "8.1.0"
+  	"react-country-region-selector": "^3.3.0",
+  	"redux-form": "8.1.0",
+  	"react-redux": "^7.2.5",
     },
     "scripts": {
       "start": "react-scripts start",
@@ -6915,6 +6923,11 @@ Lockfile:
       import-local "^3.0.2"
       jest-cli "^26.6.0"
   
+  jquery@^3.6.0:
+    version "3.6.0"
+    resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
+    integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
+  
   "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
     version "4.0.0"
     resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -9324,6 +9337,11 @@ Lockfile:
       raf "^3.4.1"
       regenerator-runtime "^0.13.7"
       whatwg-fetch "^3.4.1"
+  
+  react-country-region-selector@^3.3.0:
+    version "3.4.0"
+    resolved "https://registry.yarnpkg.com/react-country-region-selector/-/react-country-region-selector-3.4.0.tgz#e7df48c3e3e8c01d6c135fbe692679604b616ab3"
+    integrity sha512-3zUC0Uhsr6gV8Wxj/BBVJxdTl7pETHPnpDU72OT1n6WrhKVlSYcITEjV0iSyqyk+EmTPM1Fca9JmHRJ+efA2UA==
   
   react-dev-utils@^11.0.3:
     version "11.0.4"
