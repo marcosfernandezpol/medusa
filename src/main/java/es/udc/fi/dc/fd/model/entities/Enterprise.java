@@ -36,6 +36,8 @@ public class Enterprise {
 	private Float actionsPrice;
 
 	private Set<AnnualBenefits> annualBenefits = new HashSet<>();
+	
+	private boolean availiable;
 
 	// End atributes
 
@@ -54,7 +56,8 @@ public class Enterprise {
 		this.incomes = incomes;
 		this.actions = actions;
 		this.actionsPrice = actionsPrice;
-	}
+		this.availiable = true;
+		}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -123,6 +126,14 @@ public class Enterprise {
 		this.actionsPrice = actionsPrice;
 	}
 	
+	public boolean isAvailiable() {
+		return availiable;
+	}
+
+	public void setAvailiable(boolean availiable) {
+		this.availiable = availiable;
+	}
+
 	@Transient
 	public Optional<AnnualBenefits> getAnnualBenefits(Long id) {
 		return annualBenefits.stream().filter(annualBenefits -> annualBenefits.getEnterprise().getId().equals(id)).findFirst();

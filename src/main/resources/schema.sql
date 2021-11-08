@@ -28,6 +28,7 @@ CREATE TABLE Enterprise (
     incomes FLOAT NOT NULL,
     stock BIGINT NOT NULL,
     stockPrice FLOAT NOT NULL,
+    availiable BIT NOT NULL,
     CONSTRAINT EnterprisePK PRIMARY KEY (id),
     CONSTRAINT enterpriseNameUnique UNIQUE (enterpriseName)
 );
