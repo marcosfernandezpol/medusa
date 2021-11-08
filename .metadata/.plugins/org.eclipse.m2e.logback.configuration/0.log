@@ -1,0 +1,114 @@
+2021-11-08 16:20:06,664 [Worker-10: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2021-11-08 16:20:40,918 [Worker-12: Importing Maven projects] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: es.udc.fi.dc.fd:medusa:0.1-SNAPSHOT @ /home/siro/Escritorio/Ferramentas/medusa/medusa/pom.xml.
+2021-11-08 16:20:47,758 [Worker-12: Importing Maven projects] INFO  c.g.e.m.p.f.lib.NodeInstaller - Node v14.17.3 is already installed.
+2021-11-08 16:20:50,335 [Worker-12: Importing Maven projects] INFO  c.g.e.m.p.f.lib.YarnInstaller - Yarn 1.22.10 is already installed.
+2021-11-08 16:20:50,483 [Worker-12: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /medusa/src/main/java
+2021-11-08 16:20:50,484 [Worker-12: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /medusa/src/main/resources
+2021-11-08 16:20:50,488 [Worker-12: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /medusa/src/main/resources
+2021-11-08 16:20:50,489 [Worker-12: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /medusa/src/test/java
+2021-11-08 16:20:50,765 [Worker-12: Importing Maven projects] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 16 sec
+2021-11-08 16:20:58,514 [Worker-11: Building] INFO  c.g.e.m.p.f.lib.NodeInstaller - Node v14.17.3 is already installed.
+2021-11-08 16:20:58,902 [Worker-11: Building] INFO  c.g.e.m.p.f.lib.YarnInstaller - Yarn 1.22.10 is already installed.
+2021-11-08 16:20:58,917 [Worker-11: Building] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - Running 'yarn install' in /home/siro/Escritorio/Ferramentas/medusa/medusa/frontend
+2021-11-08 16:20:59,330 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - yarn install v1.22.10
+2021-11-08 16:20:59,373 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning ../package.json: No license field
+2021-11-08 16:20:59,393 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning ../../../../../package.json: No license field
+2021-11-08 16:20:59,641 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - [1/4] Resolving packages...
+2021-11-08 16:21:00,442 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - success Already up-to-date.
+2021-11-08 16:21:00,444 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - Done in 1.14s.
+2021-11-08 16:21:00,482 [Worker-11: Building] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - Running 'yarn run build' in /home/siro/Escritorio/Ferramentas/medusa/medusa/frontend
+2021-11-08 16:21:00,710 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - yarn run v1.22.10
+2021-11-08 16:21:00,773 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning ../package.json: No license field
+2021-11-08 16:21:00,780 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning ../../../../../package.json: No license field
+2021-11-08 16:21:00,804 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - $ react-scripts build
+2021-11-08 16:21:27,987 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - Creating an optimized production build...
+2021-11-08 16:21:50,907 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - Compiled successfully.
+2021-11-08 16:21:50,917 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - 
+2021-11-08 16:21:50,918 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - File sizes after gzip:
+2021-11-08 16:21:50,918 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - 
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner -   228.54 KB  build/static/js/2.e4c08eb0.chunk.js
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner -   34.86 KB   build/static/css/2.3bb9e045.chunk.css
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner -   10.46 KB   build/static/js/main.48ea0ba3.chunk.js
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner -   773 B      build/static/js/runtime-main.eed65287.js
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner -   647 B      build/static/css/main.711ac67f.chunk.css
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - 
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - The project was built assuming it is hosted at /medusa/.
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - You can control this with the homepage field in your package.json.
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - 
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - The build folder is ready to be deployed.
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - 
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - Find out more about deployment here:
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - 
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner -   https://cra.link/deployment
+2021-11-08 16:21:50,960 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - 
+2021-11-08 16:21:51,033 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - Done in 50.33s.
+2021-11-08 16:21:51,638 [Worker-11: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-11-08 16:21:51,673 [Worker-11: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2021-11-08 16:21:51,765 [Worker-11: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2021-11-08 16:21:51,892 [Worker-11: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-11-08 16:21:51,892 [Worker-11: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/siro/Escritorio/Ferramentas/medusa/medusa/src/test/resources
+2021-11-08 16:21:51,903 [Worker-11: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-11-08 16:21:51,908 [Worker-11: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2021-11-08 16:22:08,385 [Worker-6: Building] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - Running 'yarn install' in /home/siro/Escritorio/Ferramentas/medusa/medusa/frontend
+2021-11-08 16:22:08,864 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - yarn install v1.22.10
+2021-11-08 16:22:08,885 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning package.json: No license field
+2021-11-08 16:22:08,909 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning ../../../package.json: No license field
+2021-11-08 16:22:08,927 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning No license field
+2021-11-08 16:22:08,928 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - [1/4] Resolving packages...
+2021-11-08 16:22:08,968 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - [2/4] Fetching packages...
+2021-11-08 16:22:09,853 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - [3/4] Linking dependencies...
+2021-11-08 16:22:09,855 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning " > react-country-region-selector@3.3.0" has unmet peer dependency "prop-types@^15.5.4".
+2021-11-08 16:22:09,856 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning " > react-country-region-selector@3.3.0" has unmet peer dependency "react@^15.0.0 || ^16.0.0 || ^17.0.0".
+2021-11-08 16:22:09,857 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning " > react-country-region-selector@3.3.0" has unmet peer dependency "react-dom@^15.0.0 || ^16.0.0 || ^17.0.0".
+2021-11-08 16:22:09,858 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning " > react-intl@5.20.12" has unmet peer dependency "react@^16.3.0 || 17".
+2021-11-08 16:22:09,859 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning " > react-redux@7.2.5" has unmet peer dependency "react@^16.8.3 || ^17".
+2021-11-08 16:22:09,860 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning " > react-thunk@1.0.0" has unmet peer dependency "react@~0.14.0 || ^15.0.0".
+2021-11-08 16:22:09,866 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning Workspaces can only be enabled in private projects.
+2021-11-08 16:22:26,849 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - [4/4] Building fresh packages...
+2021-11-08 16:22:26,857 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - Done in 18.00s.
+2021-11-08 16:22:26,868 [Worker-6: Building] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - Running 'yarn run build' in /home/siro/Escritorio/Ferramentas/medusa/medusa/frontend
+2021-11-08 16:22:27,059 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning package.json: No license field
+2021-11-08 16:22:27,060 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - warning ../../../package.json: No license field
+2021-11-08 16:22:27,062 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - yarn run v1.22.10
+2021-11-08 16:22:27,082 [Exec Stream Pumper] ERROR c.g.e.m.p.f.lib.DefaultYarnRunner - error Command "build" not found.
+2021-11-08 16:22:27,082 [Exec Stream Pumper] INFO  c.g.e.m.p.f.lib.DefaultYarnRunner - info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+2021-11-08 16:22:27,093 [Worker-6: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-11-08 16:22:27,093 [Worker-6: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/siro/Escritorio/Ferramentas/medusa/medusa/src/main/resources
+2021-11-08 16:22:27,093 [Worker-6: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/siro/Escritorio/Ferramentas/medusa/medusa/src/main/resources
+2021-11-08 16:22:27,094 [Worker-6: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-11-08 16:22:27,094 [Worker-6: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/siro/Escritorio/Ferramentas/medusa/medusa/src/test/resources
+2021-11-08 16:22:27,096 [Worker-6: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2021-11-08 16:22:27,097 [Worker-6: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2021-11-08 16:22:27,213 [Worker-6: Building] ERROR o.e.m.c.u.i.m.MarkerLocationService - null
+org.eclipse.jface.text.BadLocationException: null
+	at org.eclipse.jface.text.ListLineTracker.getLineOffset(ListLineTracker.java:197)
+	at org.eclipse.jface.text.AbstractLineTracker.getLineOffset(AbstractLineTracker.java:161)
+	at org.eclipse.wst.sse.core.internal.text.BasicStructuredDocument.getLineOffset(BasicStructuredDocument.java:1497)
+	at org.eclipse.m2e.core.ui.internal.markers.MarkerLocationService.findLocationForMarker(MarkerLocationService.java:116)
+	at org.eclipse.m2e.core.internal.markers.MarkerUtils.decorateMarker(MarkerUtils.java:50)
+	at org.eclipse.m2e.core.internal.markers.MavenMarkerManager.addErrorMarker(MavenMarkerManager.java:333)
+	at org.eclipse.m2e.core.internal.builder.MavenBuilderImpl.processBuildResults(MavenBuilderImpl.java:316)
+	at org.eclipse.m2e.core.internal.builder.MavenBuilderImpl.build(MavenBuilderImpl.java:175)
+	at org.eclipse.m2e.core.internal.builder.MavenBuilder$1.method(MavenBuilder.java:169)
+	at org.eclipse.m2e.core.internal.builder.MavenBuilder$1.method(MavenBuilder.java:1)
+	at org.eclipse.m2e.core.internal.builder.MavenBuilder$BuildMethod.lambda$1(MavenBuilder.java:114)
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.executeBare(MavenExecutionContext.java:179)
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:114)
+	at org.eclipse.m2e.core.internal.builder.MavenBuilder$BuildMethod.lambda$0(MavenBuilder.java:105)
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.executeBare(MavenExecutionContext.java:179)
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:153)
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:101)
+	at org.eclipse.m2e.core.internal.builder.MavenBuilder$BuildMethod.execute(MavenBuilder.java:88)
+	at org.eclipse.m2e.core.internal.builder.MavenBuilder.build(MavenBuilder.java:197)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:160)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:251)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
