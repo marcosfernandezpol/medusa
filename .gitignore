@@ -1,21 +1,9 @@
-/.metadata/
+**/build/
+**/node_modules/
+**/coverage
 
-Servers/.project
-
-Servers/.settings/org.eclipse.wst.server.core.prefs
-
-Servers/Tomcat v9.0 Server at localhost-config/catalina.policy
-
-Servers/Tomcat v9.0 Server at localhost-config/catalina.properties
-
-Servers/Tomcat v9.0 Server at localhost-config/context.xml
-
-Servers/Tomcat v9.0 Server at localhost-config/server.xml
-
-Servers/Tomcat v9.0 Server at localhost-config/tomcat-users.xml
-
-Servers/Tomcat v9.0 Server at localhost-config/web.xml
-
-medusa/frontend/package.json
-
-medusa/frontend/yarn.lock
+.classpath
+.idea
+.project
+.settings
+target
