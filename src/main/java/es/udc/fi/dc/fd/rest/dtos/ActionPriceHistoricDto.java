@@ -19,17 +19,17 @@ public class ActionPriceHistoricDto {
 
 	private Long id;
 
-	private Date date;
+	private Date x;
 
-	private Float price;
+	private Float y;
 
 	public ActionPriceHistoricDto() {
 	}
 
 	public ActionPriceHistoricDto(Date date, Float price) {
 		super();
-		this.date = date;
-		this.price = price;
+		this.x = date;
+		this.y = price;
 	}
 
 	public Long getId() {
@@ -40,25 +40,25 @@ public class ActionPriceHistoricDto {
 		this.id = id;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getX() {
+		return x;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setX(Date date) {
+		this.x = date;
 	}
 
-	public Float getPrice() {
-		return price;
+	public Float getY() {
+		return y;
 	}
 
-	public void setPrice(Float price) {
-		this.price = price;
+	public void setY(Float price) {
+		this.y = price;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(date, id, price);
+		return Objects.hash(x, id, y);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class ActionPriceHistoricDto {
 		if (getClass() != obj.getClass())
 			return false;
 		ActionPriceHistoricDto other = (ActionPriceHistoricDto) obj;
-		return Objects.equals(date, other.date) && Objects.equals(id, other.id) && Objects.equals(price, other.price);
+		return Objects.equals(x, other.x) && Objects.equals(id, other.id) && Objects.equals(y, other.y);
 	}
 
 	
