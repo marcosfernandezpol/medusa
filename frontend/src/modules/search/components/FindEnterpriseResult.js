@@ -38,18 +38,19 @@ const FindEnterpriseResult = () => {
 		const enterpriseId = Number(id);
 		if (!Number.isNaN(enterpriseId)) {
 			dispatch(actions.searchEnterpriseById(enterpriseId));
+			dispatch(actions.searchEnterpriseHistoric(enterpriseId));
 		}
 
 		return () => null;
 
 	}, [id, dispatch]);
 	
-	useEffect(() => {
+	/*useEffect(() => {
 		const enterpriseId = Number(id);
 		if (!Number.isNaN(enterpriseId)) {
         	dispatch(actions.searchEnterpriseHistoric(enterpriseId));
 		}
-    }),[id, dispatch];
+    }),[id, dispatch];*/
 
 	
 	const data = useSelector(selectors.getEnterpriseHistoric);
