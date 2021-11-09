@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotAvaliableException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
@@ -338,6 +339,41 @@ public class StockMarketServiceImpl implements StockMarketService {
 		}
 
 		return enter;
+	}
+	
+	public void deleteOrder (Long owner, Long orderId, Boolean avaliable) throws NotOwnedException, 
+				InstanceNotFoundException, NotAvaliableException {
+		
+		User user = null;
+		OrderLine order = null;
+
+		Optional<User> userOp = userDao.findById(owner);
+		Optional<OrderLine> orderOp = orderLineDao.findById(orderId);
+
+		if (userOp.isPresent()){
+			user = userOp.get();
+			
+			if (orderOp.isPresent()){
+				order = orderOp.get();
+				
+				if (!avaliable) {
+					orderLineDao.delete(order);
+				} else {
+					throw new NotAvaliableException();
+				}
+				
+			} else {
+				throw new InstanceNotFoundException("No existe order con id", orderId);
+			}
+			
+		} else {
+			throw new NotOwnedException();
+		}
+		
+
+		
+		
+		
 	}
 
 }

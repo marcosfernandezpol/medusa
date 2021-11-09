@@ -2,6 +2,7 @@ package es.udc.fi.dc.fd.rest.controllers;
 
 import java.util.Locale;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotAvaliableException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.services.StockMarketService;
@@ -29,6 +31,7 @@ import es.udc.fi.dc.fd.model.services.exceptions.InvalidArgumentException;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
 import es.udc.fi.dc.fd.rest.common.ErrorsDto;
 import es.udc.fi.dc.fd.rest.dtos.AnnualBenefitsListDto;
+import es.udc.fi.dc.fd.rest.dtos.DeleteParamsDto;
 import es.udc.fi.dc.fd.rest.dtos.EnterpriseConversor;
 import es.udc.fi.dc.fd.rest.dtos.EnterpriseDto;
 import es.udc.fi.dc.fd.rest.dtos.OrderParamsDto;
@@ -46,6 +49,7 @@ public class MarketController {
 	private final static String NOT_OWNED_EXCEPTION_CODE = "project.exceptions.NotOwnedException";
 	private final static String NUMBER_EXCEPTION_CODE = "project.exceptions.NumberException";
 	private final static String INVALID_ARGUMENT_EXCEPTION_CODE = "project.exceptions.InvalidArgumentException";
+	private final static String NOT_AVALIABLE_EXCEPTION_CODE = "project.exceptions.NotAvaliableException";
 
 	/** The user service. */
 	@Autowired
@@ -153,6 +157,19 @@ public class MarketController {
 		return new ErrorsDto(errorMessage);
 
 	}
+	
+	
+	@ExceptionHandler(InvalidArgumentException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public ErrorsDto NotAvaliableException (NotAvaliableException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(NOT_AVALIABLE_EXCEPTION_CODE, null,
+				NOT_AVALIABLE_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
+	}
 
 	/**
 	 * Create an enterprise.
@@ -208,5 +225,16 @@ public class MarketController {
 			throws NotEnoughBalanceException, NotOwnedException {
 		marketService.order(userId, params.getType(), params.getPrice(), params.getNumber(), params.getEnterpriseId());
 	}
+	
 
+	/**
+	 * Delete not executed orders.
+	 */
+	@PostMapping("/delete_order")
+	public void delete(@RequestAttribute Long userId,
+			@Validated @RequestBody DeleteParamsDto params)
+			throws NotOwnedException, InstanceNotFoundException, NotAvaliableException {
+
+		marketService.deleteOrder(userId, params.getOrderId(), params.getAvaliable());
+	}
 }

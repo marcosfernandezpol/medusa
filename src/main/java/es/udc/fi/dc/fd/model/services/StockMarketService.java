@@ -3,6 +3,7 @@ package es.udc.fi.dc.fd.model.services;
 import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotAvaliableException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
@@ -26,4 +27,6 @@ public interface StockMarketService {
 	public void order(Long owner, OrderType orderType, Float price, int number, Long enterpriseId)
 			throws NotEnoughBalanceException, NotOwnedException;
 
-}
+	public void deleteOrder (Long owner, Long orderId, Boolean avaliable) throws NotOwnedException, 
+	InstanceNotFoundException, NotAvaliableException;
+} 

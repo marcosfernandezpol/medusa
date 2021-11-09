@@ -37,7 +37,7 @@ public class Enterprise {
 
 	private Set<AnnualBenefits> annualBenefits = new HashSet<>();
 	
-	private boolean availiable;
+	private boolean avaliable;
 
 	// End atributes
 
@@ -56,7 +56,7 @@ public class Enterprise {
 		this.incomes = incomes;
 		this.actions = actions;
 		this.actionsPrice = actionsPrice;
-		this.availiable = true;
+		this.avaliable = true;
 		}
 
 	@Id
@@ -126,12 +126,12 @@ public class Enterprise {
 		this.actionsPrice = actionsPrice;
 	}
 	
-	public boolean isAvailiable() {
-		return availiable;
+	public boolean isAvaliable() {
+		return avaliable;
 	}
 
-	public void setAvailiable(boolean availiable) {
-		this.availiable = availiable;
+	public void setAvaliable(boolean availiable) {
+		this.avaliable = availiable;
 	}
 
 	@Transient
