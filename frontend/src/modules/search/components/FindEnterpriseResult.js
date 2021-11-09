@@ -10,6 +10,7 @@ import * as selectors from '../selectors';
 import { Errors, BackLink } from '../../common';
 import * as actions from '../actions';
 import { Pager } from '../../common';
+import GraphicChart from '../../stockmarket/components/GraphicChart';
 
 
 const FindEnterpriseResult = () => {
@@ -31,6 +32,65 @@ const FindEnterpriseResult = () => {
 		const enterpriseId = Number(id);
 		history.push(`/market/create_order/${id}`)
 	}
+	
+	const dataExample = [
+  {
+    "id": "Enterprise 1",
+    "color": "hsl(255, 70%, 50%)",
+    "data": [
+      {
+        "x": "date1",
+        "y": 68
+      },
+      {
+        "x": "date2",
+        "y": 20
+      },
+      {
+        "x": "date3",
+        "y": 234
+      },
+      {
+        "x": "date4",
+        "y": 32
+      },
+      {
+        "x": "date5",
+        "y": 77
+      },
+      {
+        "x": "date6",
+        "y": 294
+      },
+      {
+        "x": "date7",
+        "y": 112
+      },
+      {
+        "x": "date8",
+        "y": 37
+      },
+      {
+        "x": "date9",
+        "y": 287
+      },
+      {
+        "x": "date10",
+        "y": 241
+      },
+      {
+        "x": "date11",
+        "y": 170
+      },
+      {
+        "x": "date12",
+        "y": 163
+      }
+    ]
+  }
+]
+
+	console.log(dataExample)
 
 	useEffect(() => {
 		const enterpriseId = Number(id);
@@ -78,6 +138,9 @@ const FindEnterpriseResult = () => {
                     :   <FormattedNumber value={enterprise.actionsPrice} />€
                 </h5>
 				</div>
+			</div>
+			<div style={{height:500}}>
+				<GraphicChart data = {dataExample}/>
 			</div>
 			{isAdmin &&
 				<div className="card text-center">&nbsp;
