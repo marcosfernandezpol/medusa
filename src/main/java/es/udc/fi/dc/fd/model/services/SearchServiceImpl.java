@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
+import es.udc.fi.dc.fd.model.entities.ActionPriceHistoric;
+import es.udc.fi.dc.fd.model.entities.ActionPriceHistoricDao;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
 import es.udc.fi.dc.fd.model.entities.OrderLine;
@@ -24,6 +27,9 @@ public class SearchServiceImpl implements SearchService {
 
 	@Autowired
 	private EnterpriseDao enterpriseDao;
+	
+	@Autowired
+	private ActionPriceHistoricDao historicDao;
 
 	@Autowired
 	private OrderLineDao orderLineDao;
@@ -82,6 +88,22 @@ public class SearchServiceImpl implements SearchService {
 		Enterprise enter;
 		enter = enterprise.get();
 		return enter;
+	}
+	
+	public List<ActionPriceHistoric> findHistorics(Long id) throws InstanceNotFoundException {
+
+		Optional<Enterprise> enterprise = enterpriseDao.findById(id);
+		
+		if (enterprise.isEmpty()) {
+			throw new InstanceNotFoundException("No existe empresa con id", id);
+		}
+		Enterprise enter;
+		enter = enterprise.get();
+		
+		List<ActionPriceHistoric> historic = historicDao.findActionPriceHistoricByEnterpriseIdOrderByDateAsc(id);
+		
+		
+		return historic;
 	}
 
 }

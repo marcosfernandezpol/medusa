@@ -33,6 +33,8 @@ public class EnterpriseDto {
 	private Float actionsPrice;
 
 	private List<AnnualBenefitsDto> anualBenefitsDto;
+	
+	private boolean availiable;
 
 	public EnterpriseDto() {
 	}
@@ -48,6 +50,7 @@ public class EnterpriseDto {
 		this.incomes = incomes;
 		this.actions = actions;
 		this.actionsPrice = actionsPrice;
+		this.availiable = true;
 
 	}
 
@@ -127,5 +130,15 @@ public class EnterpriseDto {
 	public void setanualBenefitsDto(List<AnnualBenefitsDto> anualBenefitsDto) {
 		this.anualBenefitsDto = anualBenefitsDto;
 	}
+
+	public boolean isAvailiable() {
+		return availiable;
+	}
+
+	public void setAvailiable(boolean availiable) {
+		this.availiable = availiable;
+	}
+	
+	
 
 }
