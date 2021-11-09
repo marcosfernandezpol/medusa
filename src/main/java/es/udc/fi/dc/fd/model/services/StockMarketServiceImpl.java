@@ -356,7 +356,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 			if (orderOp.isPresent()){
 				order = orderOp.get();
 				
-				if (!avaliable) {
+				if (avaliable) {
 					orderLineDao.delete(order);
 				} else {
 					throw new NotAvaliableException();
