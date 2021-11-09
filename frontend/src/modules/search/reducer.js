@@ -8,7 +8,8 @@ const initialState = {
 	bought: null,
 	notBought: null,
 	sold: null,
-	notSold: null
+	notSold: null,
+	enterpriseHistoric: null
 }
 
 
@@ -37,6 +38,21 @@ const enterprise = (state = initialState.enterprise, action) => {
 			
 		case actionTypes.CLEAR_ENTERPRISE:
 			return initialState.enterprise;
+			
+		default:
+			return state; 
+	}
+}
+
+const enterpriseHistoric = (state = initialState.enterpriseHistoric, action) => {
+	
+	switch(action.type){
+		
+		case actionTypes.SEARCH_ENTERPRISE_HISTORIC_COMPLETED:
+			return action.enterpriseHistoric;
+			
+		case actionTypes.CLEAR_ENTERPRISE:
+			return initialState.enterpriseHistoric;
 			
 		default:
 			return state; 
@@ -112,7 +128,8 @@ const reducer = combineReducers({
 	bought,
 	notBought,
 	sold,
-	notSold
+	notSold,
+	enterpriseHistoric
 });
 
 export default reducer;

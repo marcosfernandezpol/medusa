@@ -1,5 +1,6 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -19,14 +20,14 @@ public class ActionPriceHistoricDto {
 
 	private Long id;
 
-	private Date x;
+	private String x;
 
 	private Float y;
 
 	public ActionPriceHistoricDto() {
 	}
 
-	public ActionPriceHistoricDto(Date date, Float price) {
+	public ActionPriceHistoricDto(String date, Float price) {
 		super();
 		this.x = date;
 		this.y = price;
@@ -40,11 +41,11 @@ public class ActionPriceHistoricDto {
 		this.id = id;
 	}
 
-	public Date getX() {
+	public String getX() {
 		return x;
 	}
 
-	public void setX(Date date) {
+	public void setX(String date) {
 		this.x = date;
 	}
 

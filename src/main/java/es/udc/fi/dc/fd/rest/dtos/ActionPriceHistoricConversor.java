@@ -1,6 +1,11 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +23,19 @@ public class ActionPriceHistoricConversor {
 	}
 
 	public final static ActionPriceHistoricDto toActionPriceHistoricDto(ActionPriceHistoric t) {
-		return new ActionPriceHistoricDto(t.getDate(), t.getPrice());
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
+		String formatDateTime = t.getDate().format(formatter);
+		
+		return new ActionPriceHistoricDto(formatDateTime, t.getPrice());
 	}
 	
 	public final static ActionPriceHistoric toActionPriceHistoric(ActionPriceHistoricDto t) {
-		return new ActionPriceHistoric(t.getDate(), t.getPrice());
+		String str = t.getX();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
+		LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+		
+		return new ActionPriceHistoric(dateTime, t.getY());
 	}
 
 	public static final List<ActionPriceHistoricDto> toActionPriceHistoricsDto(List<ActionPriceHistoric> list) {
