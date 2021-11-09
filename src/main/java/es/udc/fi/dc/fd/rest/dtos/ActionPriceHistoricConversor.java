@@ -24,7 +24,7 @@ public class ActionPriceHistoricConversor {
 
 	public final static ActionPriceHistoricDto toActionPriceHistoricDto(ActionPriceHistoric t) {
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String formatDateTime = t.getDate().format(formatter);
 		
 		return new ActionPriceHistoricDto(formatDateTime, t.getPrice());
@@ -32,7 +32,7 @@ public class ActionPriceHistoricConversor {
 	
 	public final static ActionPriceHistoric toActionPriceHistoric(ActionPriceHistoricDto t) {
 		String str = t.getX();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 		
 		return new ActionPriceHistoric(dateTime, t.getY());
