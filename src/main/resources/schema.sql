@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS ActionPriceHistoric;
 DROP TABLE IF EXISTS OrderLine;
 DROP TABLE IF EXISTS AnnualBenefits;
 DROP TABLE IF EXISTS Enterprise;
@@ -31,6 +32,15 @@ CREATE TABLE Enterprise (
     availiable BIT NOT NULL,
     CONSTRAINT EnterprisePK PRIMARY KEY (id),
     CONSTRAINT enterpriseNameUnique UNIQUE (enterpriseName)
+);
+
+CREATE TABLE ActionPriceHistoric (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	enterpriseId BIGINT NOT NULL,
+	date DATETIME NOT NULL,
+	price BIGINT NOT NULL,
+	CONSTRAINT ActionPriceHistoricPK PRIMARY KEY (id),
+	CONSTRAINT EnterpriseActionPriceHistoricFK FOREIGN KEY (enterpriseId) REFERENCES Enterprise(id)
 );
 
 
