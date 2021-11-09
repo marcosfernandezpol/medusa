@@ -29,7 +29,7 @@ CREATE TABLE Enterprise (
     incomes FLOAT NOT NULL,
     stock BIGINT NOT NULL,
     stockPrice FLOAT NOT NULL,
-    avaliable BIT NOT NULL,
+    avaliable BIT,
     CONSTRAINT EnterprisePK PRIMARY KEY (id),
     CONSTRAINT enterpriseNameUnique UNIQUE (enterpriseName)
 );
@@ -79,7 +79,7 @@ CREATE TABLE OrderLine (
 	price FLOAT NOT NULL,
 	number INT  NOT NULL,
 	enterpriseId BIGINT NOT NULL,
-	avaliable BIT NOT NULL,
+	avaliable BIT,
 	deadline DATE,
 	CONSTRAINT Order_linePK PRIMARY KEY (id),
 	CONSTRAINT OwnerFK FOREIGN KEY (userId) REFERENCES User(id),
