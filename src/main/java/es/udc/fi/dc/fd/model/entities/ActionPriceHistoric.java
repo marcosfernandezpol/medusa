@@ -1,5 +1,6 @@
 package es.udc.fi.dc.fd.model.entities;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -21,7 +22,7 @@ public class ActionPriceHistoric {
 
 	private Enterprise enterprise;
 
-	private Date date;
+	private LocalDateTime date;
 
 	private Float price;
 
@@ -32,7 +33,7 @@ public class ActionPriceHistoric {
 
 	
 
-	public ActionPriceHistoric(Date date, Float price) {
+	public ActionPriceHistoric(LocalDateTime date, Float price) {
 		super();
 		this.date = date;
 		this.price = price;
@@ -42,7 +43,7 @@ public class ActionPriceHistoric {
 
 
 
-	public ActionPriceHistoric(Enterprise enterprise, Date date, Float price) {
+	public ActionPriceHistoric(Enterprise enterprise, Date LocalDateTime, Float price) {
 		super();
 		this.enterprise = enterprise;
 		this.date = date;
@@ -75,13 +76,13 @@ public class ActionPriceHistoric {
 
 
 
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
 
 
-	public void setDate(Date date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 

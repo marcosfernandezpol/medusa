@@ -1,7 +1,9 @@
 export const CLEAR_ENTERPRISES = "project/search/clearSearchEnterprises";
 export const CLEAR_ENTERPRISE = "project/search/clearSearchEnterprise";
+export const CLEAR_ENTERPRISE_HISTORIC = "project/search/clearSearchEnterpriseHistoric";
 export const SEARCH_ENTERPRISES_COMPLETED = "project/search/searchEnterprisesCompleted";
 export const SEARCH_ENTERPRISE_BY_ID_COMPLETED = "project/search/searchEnterpriseByIdComleted"
+export const SEARCH_ENTERPRISE_HISTORIC_COMPLETED = "project/search/searchEnterpriseHistoricComleted"
 
 
 export const CLEAR_BOUGHT = "project/search/clearBoughtOrders";
