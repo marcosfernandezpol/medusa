@@ -10,19 +10,19 @@ import { ResponsiveLine } from '@nivo/line'
 const GraphicChart = ({ data /* see data tab */ }) => (
     <ResponsiveLine
         data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: 'point' }}
+        margin={{ top: 50, right: 110, bottom: 115, left: 60 }}
+		xScale={{ type: 'point' }}
         yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
         yFormat=" >-.2f"
         axisTop={null}
         axisRight={null}
         axisBottom={{
             orient: 'bottom',
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: 'Time (t)',
-            legendOffset: 36,
+            tickSize: 6,
+            tickPadding: 3,
+            tickRotation: 52,
+            legend: 'Time(t)',
+            legendOffset: 110,
             legendPosition: 'middle'
         }}
         axisLeft={{

@@ -22,6 +22,9 @@ export const getEnterpriseName = (enterprises, id) => {
 
 export const getEnterprise = state =>
 	getModuleState(state).enterprise;
+	
+export const getEnterpriseHistoric = state =>
+	getModuleState(state).enterpriseHistoric;
 
 export const getEnterpriseSearch = state =>
     getModuleState(state).enterprisesSearch;

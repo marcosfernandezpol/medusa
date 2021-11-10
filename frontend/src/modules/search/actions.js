@@ -16,6 +16,10 @@ export const clearSearchEnterprise = () => ({
 	type: actionTypes.CLEAR_ENTERPRISE
 })
 
+export const clearSearchEnterpriseHistoric = () => ({
+	type: actionTypes.CLEAR_ENTERPRISE_HISTORIC
+})
+
 export const searchAllEnterprises = () => (dispatch, getState) => {
 
 	dispatch(clearSearchEnterprises());
@@ -30,9 +34,20 @@ export const searchEnterpriseByIdCompleted = enterprise => ({
 	enterprise
 })
 
+export const searchEnterpriseHistoricCompleted = enterpriseHistoric => ({
+	type: actionTypes.SEARCH_ENTERPRISE_HISTORIC_COMPLETED,
+	enterpriseHistoric
+})
+
 export const searchEnterpriseById = id => (dispatch) => {
 	backend.searchService.findEnterprise(id,
 		enterprise => dispatch(searchEnterpriseByIdCompleted(enterprise)))
+}
+
+export const searchEnterpriseHistoric = id => (dispatch) => {
+	dispatch(clearSearchEnterpriseHistoric());
+	backend.searchService.findEnterpriseHistoric(id,
+		enterpriseHistoric => dispatch(searchEnterpriseHistoricCompleted(enterpriseHistoric)))
 }
 
 

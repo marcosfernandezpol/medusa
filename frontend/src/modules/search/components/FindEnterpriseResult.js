@@ -33,79 +33,48 @@ const FindEnterpriseResult = () => {
 		history.push(`/market/create_order/${id}`)
 	}
 	
-	const dataExample = [
-  {
-    "id": "Enterprise 1",
-    "color": "hsl(255, 70%, 50%)",
-    "data": [
-      {
-        "x": "date1",
-        "y": 68
-      },
-      {
-        "x": "date2",
-        "y": 20
-      },
-      {
-        "x": "date3",
-        "y": 234
-      },
-      {
-        "x": "date4",
-        "y": 32
-      },
-      {
-        "x": "date5",
-        "y": 77
-      },
-      {
-        "x": "date6",
-        "y": 294
-      },
-      {
-        "x": "date7",
-        "y": 112
-      },
-      {
-        "x": "date8",
-        "y": 37
-      },
-      {
-        "x": "date9",
-        "y": 287
-      },
-      {
-        "x": "date10",
-        "y": 241
-      },
-      {
-        "x": "date11",
-        "y": 170
-      },
-      {
-        "x": "date12",
-        "y": 163
-      }
-    ]
-  }
-]
-
-	console.log(dataExample)
 
 	useEffect(() => {
 		const enterpriseId = Number(id);
 		if (!Number.isNaN(enterpriseId)) {
 			dispatch(actions.searchEnterpriseById(enterpriseId));
+			dispatch(actions.searchEnterpriseHistoric(enterpriseId));
 		}
 
 		return () => null;
 
 	}, [id, dispatch]);
+	
+	/*useEffect(() => {
+		const enterpriseId = Number(id);
+		if (!Number.isNaN(enterpriseId)) {
+        	dispatch(actions.searchEnterpriseHistoric(enterpriseId));
+		}
+    }),[id, dispatch];*/
+
+	
+	const data = useSelector(selectors.getEnterpriseHistoric);
+	
+	console.log(data);
 
 	if (!enterprise) {
 
 		return null;
 	}
+	
+	if (!data) {
+
+		return null;
+	}
+	
+	
+		const dataExample = [
+  {
+    "id": "Enterprise",
+    "color": "hsl(255, 70%, 50%)",
+    "data": data
+  }
+]
 
 	return (
 
