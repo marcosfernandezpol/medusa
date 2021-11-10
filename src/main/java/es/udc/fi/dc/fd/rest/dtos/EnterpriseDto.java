@@ -34,7 +34,7 @@ public class EnterpriseDto {
 
 	private List<AnnualBenefitsDto> anualBenefitsDto;
 	
-	private boolean availiable;
+	private boolean avaliable;
 
 	public EnterpriseDto() {
 	}
@@ -50,7 +50,7 @@ public class EnterpriseDto {
 		this.incomes = incomes;
 		this.actions = actions;
 		this.actionsPrice = actionsPrice;
-		this.availiable = true;
+		this.avaliable = true;
 
 	}
 
@@ -65,6 +65,7 @@ public class EnterpriseDto {
 		this.actions = actions;
 		this.actionsPrice = actionsPrice;
 		this.anualBenefitsDto = anualBenefitsDto;
+		this.avaliable = true;
 	}
 
 	public Long getId() {
@@ -131,12 +132,12 @@ public class EnterpriseDto {
 		this.anualBenefitsDto = anualBenefitsDto;
 	}
 
-	public boolean isAvailiable() {
-		return availiable;
+	public boolean isAvaliable() {
+		return avaliable;
 	}
 
-	public void setAvailiable(boolean availiable) {
-		this.availiable = availiable;
+	public void setAvaliable(boolean availiable) {
+		this.avaliable = availiable;
 	}
 	
 	
