@@ -14,7 +14,9 @@ const FindEnterprisesResult = () => {
 	const filterEnterprise = () => {
 		
 		if(EnterpriseSearch)
-			return EnterpriseSearch.filter(enterprise => enterprise.enterpriseName.includes(enterpriseName));
+			return EnterpriseSearch.filter(
+				enterprise => enterprise.enterpriseName.toLowerCase().includes(enterpriseName.toLowerCase())
+			);
 		else
 			return EnterpriseSearch;
 	}
