@@ -50,6 +50,7 @@ public class MarketController {
 	private final static String NUMBER_EXCEPTION_CODE = "project.exceptions.NumberException";
 	private final static String INVALID_ARGUMENT_EXCEPTION_CODE = "project.exceptions.InvalidArgumentException";
 	private final static String NOT_AVALIABLE_EXCEPTION_CODE = "project.exceptions.NotAvaliableException";
+	private final static String PERMISSION_EXCEPTION_CODE = "project.exceptions.PermissionException";
 
 	/** The user service. */
 	@Autowired
@@ -70,6 +71,18 @@ public class MarketController {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public ErrorsDto handleDuplicateInstanceException(DuplicateInstanceException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(DUPLICATE_INSTANCE_EXCEPTION_CODE, null,
+				DUPLICATE_INSTANCE_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
+	}
+	
+	@ExceptionHandler(PermissionException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public ErrorsDto handlePermissionException(PermissionException exception, Locale locale) {
 
 		String errorMessage = messageSource.getMessage(DUPLICATE_INSTANCE_EXCEPTION_CODE, null,
 				DUPLICATE_INSTANCE_EXCEPTION_CODE, locale);
@@ -183,7 +196,7 @@ public class MarketController {
 	@PostMapping("/create_enterprise")
 	public EnterpriseSummaryDto createEnterprise(@RequestAttribute Long userId,
 			@Validated @RequestBody EnterpriseSummaryDto enterpriseDto)
-			throws DuplicateInstanceException, PermissionException, NumberException {
+			throws DuplicateInstanceException, PermissionException, NumberException, InvalidArgumentException {
 
 		Enterprise enterprise = EnterpriseSummaryConversor.toEnterpriseSummary(enterpriseDto);
 		Enterprise e = marketService.createEnterprise(userId, enterprise);
