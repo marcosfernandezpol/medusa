@@ -67,22 +67,17 @@ public class MarketController {
 	 * @param locale    the locale
 	 * @return the errors dto
 	 */
+	/**
+	 * Handle duplicate instance exception.
+	 *
+	 * @param exception the exception
+	 * @param locale    the locale
+	 * @return the errors dto
+	 */
 	@ExceptionHandler(DuplicateInstanceException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public ErrorsDto handleDuplicateInstanceException(DuplicateInstanceException exception, Locale locale) {
-
-		String errorMessage = messageSource.getMessage(DUPLICATE_INSTANCE_EXCEPTION_CODE, null,
-				DUPLICATE_INSTANCE_EXCEPTION_CODE, locale);
-
-		return new ErrorsDto(errorMessage);
-
-	}
-	
-	@ExceptionHandler(PermissionException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ResponseBody
-	public ErrorsDto handlePermissionException(PermissionException exception, Locale locale) {
 
 		String errorMessage = messageSource.getMessage(DUPLICATE_INSTANCE_EXCEPTION_CODE, null,
 				DUPLICATE_INSTANCE_EXCEPTION_CODE, locale);
@@ -170,19 +165,8 @@ public class MarketController {
 		return new ErrorsDto(errorMessage);
 
 	}
-	
-	
-	@ExceptionHandler(InvalidArgumentException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ResponseBody
-	public ErrorsDto NotAvaliableException (NotAvaliableException exception, Locale locale) {
 
-		String errorMessage = messageSource.getMessage(NOT_AVALIABLE_EXCEPTION_CODE, null,
-				NOT_AVALIABLE_EXCEPTION_CODE, locale);
 
-		return new ErrorsDto(errorMessage);
-
-	}
 
 	/**
 	 * Create an enterprise.
