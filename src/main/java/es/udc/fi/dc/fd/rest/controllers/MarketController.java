@@ -172,6 +172,12 @@ public class MarketController {
 	@ResponseBody
 	public ErrorsDto NotAvaliableException (NotAvaliableException exception, Locale locale) {
 
+		String errorMessage = messageSource.getMessage(NOT_AVALIABLE_EXCEPTION_CODE, null,
+				NOT_AVALIABLE_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
+	}
 
 
 	/**
