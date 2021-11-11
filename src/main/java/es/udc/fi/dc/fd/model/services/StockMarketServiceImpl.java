@@ -128,22 +128,21 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 	}
 	
-	private void matchUserManagement (OrderLine buyOrder, OrderLine sellOrder, int numSold) {
+	private void matchUserManagement (OrderLine buyOrder, OrderLine sellOrder, int numSold, float operationPrice) {
 		User buyOwner = buyOrder.getOwner();
 		User sellOwner = sellOrder.getOwner();
 		
 		buyOwner.setBalance(
-				buyOwner.getBalance() - (sellOrder.getPrice() * numSold));
+				buyOwner.getBalance() - (operationPrice * numSold));
 		if (sellOwner != null) {
 			sellOwner.setBalance(
-					sellOwner.getBalance() + (sellOrder.getPrice() * numSold));
+					sellOwner.getBalance() + (operationPrice * numSold));
 		}
 		
 	}
 	
 	private void matchOrderManagement (OrderLine buyOrder, OrderLine sellOrder, int numSold, int numRemain, int control) {
-		switch (control) {
-		case 0:
+		if (control == 0) {
 			OrderLine sellRemain = new OrderLine(OrderType.SELL, sellOrder.getOwner(), sellOrder.getPrice(),
 					numRemain, sellOrder.getEnterprise());
 			sellRemain.setRequestDate(sellOrder.getRequestDate());
@@ -156,7 +155,8 @@ public class StockMarketServiceImpl implements StockMarketService {
 			buyOrder.setAvaliable(false);
 			
 			match(sellRemain.getEnterprise());
-		case 1:
+		}
+		else if (control == 1) {
 			OrderLine buyRemain = new OrderLine(OrderType.BUY, buyOrder.getOwner(), buyOrder.getPrice(),
 					numRemain, buyOrder.getEnterprise());
 			buyRemain.setRequestDate(buyOrder.getRequestDate());
@@ -169,13 +169,13 @@ public class StockMarketServiceImpl implements StockMarketService {
 			sellOrder.setAvaliable(false);
 			
 			match(buyRemain.getEnterprise());
-		case 2:
+		}
+		else if (control == 2) {
 			buyOrder.setPrice(sellOrder.getPrice());
 			
 			buyOrder.setAvaliable(false);
 			sellOrder.setAvaliable(false);
-			
-		}
+		}		
 	}
 
 	private void match(Enterprise enterprise) {
@@ -196,11 +196,15 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 						if (sellOrder.getPrice() <= buyOrder.getPrice()) {
 							
+							float operationPrice = sellOrder.getPrice();
+							
+							if(sellOrder.getAvaliable() && buyOrder.getAvaliable()) {
+							
 							if (sellOrder.getNumber() > buyOrder.getNumber()) {
 								int numSold = buyOrder.getNumber();
 								int numRemain = sellOrder.getNumber() - numSold;
 								
-								matchUserManagement (buyOrder, sellOrder, numSold);
+								matchUserManagement (buyOrder, sellOrder, numSold, operationPrice);
 								
 								matchOrderManagement (buyOrder, sellOrder, numSold, numRemain, 0);
 								
@@ -209,7 +213,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 								int numSold = sellOrder.getNumber();
 								int numRemain = buyOrder.getNumber() - numSold;
 								
-								matchUserManagement (buyOrder, sellOrder, numSold);
+								matchUserManagement (buyOrder, sellOrder, numSold, operationPrice);
 								
 								matchOrderManagement (buyOrder, sellOrder, numSold, numRemain, 1);
 
@@ -217,14 +221,14 @@ public class StockMarketServiceImpl implements StockMarketService {
 								int numSold = sellOrder.getNumber();
 								int numRemain = 0;
 								
-								matchUserManagement (buyOrder, sellOrder, numSold);
+								matchUserManagement (buyOrder, sellOrder, numSold, operationPrice);
 								
 								matchOrderManagement (buyOrder, sellOrder, numSold, numRemain, 2);
 							}
 							
 							enterprise.setStockPrice(sellOrder.getPrice());
+							}
 						}
-
 					}
 				}
 			}
@@ -268,7 +272,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 			if (boughtStockOp.isPresent()) {
 				boughtStock = boughtStockOp.get();
 				for (OrderLine orderLine : boughtStock) {
-					bs = +orderLine.getNumber();
+					bs += orderLine.getNumber();
 				}
 
 			} else {
@@ -278,7 +282,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 			if (soldStockOp.isPresent()) {
 				soldStock = soldStockOp.get();
 				for (OrderLine orderLine : soldStock) {
-					ss = +orderLine.getNumber();
+					ss += orderLine.getNumber();
 				}
 			}
 
@@ -290,7 +294,6 @@ public class StockMarketServiceImpl implements StockMarketService {
 		orderLineDao.save(order);
 
 		this.match(enterprise);
-
 	}
 
 	@Override

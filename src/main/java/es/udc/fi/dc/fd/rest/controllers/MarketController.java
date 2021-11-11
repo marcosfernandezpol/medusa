@@ -159,7 +159,7 @@ public class MarketController {
 	}
 	
 	
-	@ExceptionHandler(InvalidArgumentException.class)
+	@ExceptionHandler(NotAvaliableException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public ErrorsDto NotAvaliableException (NotAvaliableException exception, Locale locale) {
