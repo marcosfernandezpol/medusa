@@ -53,10 +53,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 	@Autowired
 	private AnnualBenefitsDao annualBennefitsDao;
 
-
 	@Override
 	public Enterprise createEnterprise(Long userId, Enterprise enterprise)
-			throws DuplicateInstanceException, PermissionException, NumberException{
+			throws DuplicateInstanceException, PermissionException, NumberException {
 
 		Optional<User> userOp = null;
 		User user = null;
@@ -65,21 +64,19 @@ public class StockMarketServiceImpl implements StockMarketService {
 			throw new DuplicateInstanceException("project.entities.enterprise", enterprise.getEnterpriseName());
 		}
 
-
 		userOp = userDao.findById(userId);
 		if (userOp.isPresent()) { // Aqui habría que añadir algo para cuando el user no exista
 			user = userOp.get();
-			
 
 			if (user.getRole() == RoleType.ADMIN) {
-				
+
 				Calendar cal = Calendar.getInstance();
 				Calendar cal2 = Calendar.getInstance();
 				cal.setTime(enterprise.getFundation());
-				LocalDate now= LocalDate.now();
-				cal2.set(now.getYear(),now.getMonthValue()-1,now.getDayOfMonth());
-				
-				if(cal.after(cal2)) {
+				LocalDate now = LocalDate.now();
+				cal2.set(now.getYear(), now.getMonthValue() - 1, now.getDayOfMonth());
+
+				if (cal.after(cal2)) {
 					throw new PermissionException();
 				}
 
@@ -130,10 +127,58 @@ public class StockMarketServiceImpl implements StockMarketService {
 		}
 
 	}
+	
+	private void matchUserManagement (OrderLine buyOrder, OrderLine sellOrder, int numSold) {
+		User buyOwner = buyOrder.getOwner();
+		User sellOwner = sellOrder.getOwner();
+		
+		buyOwner.setBalance(
+				buyOwner.getBalance() - (sellOrder.getPrice() * numSold));
+		if (sellOwner != null) {
+			sellOwner.setBalance(
+					sellOwner.getBalance() + (sellOrder.getPrice() * numSold));
+		}
+		
+	}
+	
+	private void matchOrderManagement (OrderLine buyOrder, OrderLine sellOrder, int numSold, int numRemain, int control) {
+		switch (control) {
+		case 0:
+			OrderLine sellRemain = new OrderLine(OrderType.SELL, sellOrder.getOwner(), sellOrder.getPrice(),
+					numRemain, sellOrder.getEnterprise());
+			sellRemain.setRequestDate(sellOrder.getRequestDate());
+			orderLineDao.save(sellRemain);
+			
+			sellOrder.setNumber(numSold);
+			sellOrder.setAvaliable(false);
+			
+			buyOrder.setPrice(sellOrder.getPrice());
+			buyOrder.setAvaliable(false);
+			
+			match(sellRemain.getEnterprise());
+		case 1:
+			OrderLine buyRemain = new OrderLine(OrderType.BUY, buyOrder.getOwner(), buyOrder.getPrice(),
+					numRemain, buyOrder.getEnterprise());
+			buyRemain.setRequestDate(buyOrder.getRequestDate());
+			orderLineDao.save(buyRemain);
+			
+			buyOrder.setNumber(numSold);
+			buyOrder.setPrice(sellOrder.getPrice());
+			buyOrder.setAvaliable(false);
+			
+			sellOrder.setAvaliable(false);
+			
+			match(buyRemain.getEnterprise());
+		case 2:
+			buyOrder.setPrice(sellOrder.getPrice());
+			
+			buyOrder.setAvaliable(false);
+			sellOrder.setAvaliable(false);
+			
+		}
+	}
 
-	private void match() {
-
-		for (Enterprise enterprise : enterpriseDao.findAll()) { // Por cada empresa se matchean sus orders
+	private void match(Enterprise enterprise) {
 
 			Optional<List<OrderLine>> buyOrdersO = orderLineDao
 					.findByOrderTypeAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, enterprise, true);
@@ -150,81 +195,40 @@ public class StockMarketServiceImpl implements StockMarketService {
 					for (OrderLine sellOrder : sellOrders) {
 
 						if (sellOrder.getPrice() <= buyOrder.getPrice()) {
-							User buyOwner = buyOrder.getOwner();
-							User sellOwner = sellOrder.getOwner();
-
+							
 							if (sellOrder.getNumber() > buyOrder.getNumber()) {
-								buyOwner.setBalance(
-										buyOwner.getBalance() - (sellOrder.getPrice() * buyOrder.getNumber()));
-								if (sellOwner != null) {
-									sellOwner.setBalance(
-											sellOwner.getBalance() + (sellOrder.getPrice() * buyOrder.getNumber()));
-								}
-
 								int numSold = buyOrder.getNumber();
 								int numRemain = sellOrder.getNumber() - numSold;
-								OrderLine sold = new OrderLine(OrderType.SELL, sellOwner, sellOrder.getPrice(), numSold,
-										enterprise);
-								sold.setAvaliable(false);
-								sold.setRequestDate(sellOrder.getRequestDate());
-								OrderLine remain = new OrderLine(OrderType.SELL, sellOwner, sellOrder.getPrice(),
-										numRemain, enterprise);
-								remain.setRequestDate(sellOrder.getRequestDate());
-								orderLineDao.delete(sellOrder);
-								orderLineDao.save(sold);
-								orderLineDao.save(remain);
-
-								buyOrder.setAvaliable(false);
-								buyOrder.setPrice(sold.getPrice());
 								
-								enterprise.setStockPrice(sold.getPrice());
+								matchUserManagement (buyOrder, sellOrder, numSold);
+								
+								matchOrderManagement (buyOrder, sellOrder, numSold, numRemain, 0);
 								
 							} else if (sellOrder.getNumber() < buyOrder.getNumber()) {
-								buyOwner.setBalance(
-										buyOwner.getBalance() - (sellOrder.getPrice() * sellOrder.getNumber()));
-								if (sellOwner != null) {
-									sellOwner.setBalance(
-											sellOwner.getBalance() + (sellOrder.getPrice() * sellOrder.getNumber()));
-								}
 								
-								int numBought = sellOrder.getNumber();
-								int numRemain = buyOrder.getNumber() - numBought;
-								OrderLine remain = new OrderLine(OrderType.BUY, buyOwner, buyOrder.getPrice(),
-										numRemain, enterprise);
-								remain.setRequestDate(buyOrder.getRequestDate());
-								orderLineDao.save(remain);
+								int numSold = sellOrder.getNumber();
+								int numRemain = buyOrder.getNumber() - numSold;
 								
-								buyOrder.setNumber(sellOrder.getNumber());
-								buyOrder.setAvaliable(false);
-								buyOrder.setPrice(sellOrder.getPrice());
-								sellOrder.setAvaliable(false);
+								matchUserManagement (buyOrder, sellOrder, numSold);
+								
+								matchOrderManagement (buyOrder, sellOrder, numSold, numRemain, 1);
 
-
-								enterprise.setStockPrice(sellOrder.getPrice());
 							} else {
-								buyOwner.setBalance(
-										buyOwner.getBalance() - (sellOrder.getPrice() * buyOrder.getNumber()));
-								if (sellOwner != null) {
-									sellOwner.setBalance(
-											sellOwner.getBalance() + (sellOrder.getPrice() * buyOrder.getNumber()));
-								}
+								int numSold = sellOrder.getNumber();
+								int numRemain = 0;
 								
-								buyOrder.setPrice(sellOrder.getPrice());
+								matchUserManagement (buyOrder, sellOrder, numSold);
 								
-								buyOrder.setAvaliable(false);
-								sellOrder.setAvaliable(false);
-
-								enterprise.setStockPrice(sellOrder.getPrice());
+								matchOrderManagement (buyOrder, sellOrder, numSold, numRemain, 2);
 							}
+							
+							enterprise.setStockPrice(sellOrder.getPrice());
 						}
 
 					}
 				}
 			}
 		}
-
-	}
-
 
 	@Override
 	public void order(Long owner, OrderType orderType, Float price, int number, Long enterpriseId)
@@ -237,9 +241,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 		Optional<Enterprise> enterpriseOp = enterpriseDao.findById(enterpriseId);
 
 		if (userOp.isPresent())
-			user = userOp.get();
+			user = userOp.get(); //Else excepcion
 		if (enterpriseOp.isPresent())
-			enterprise = enterpriseOp.get();
+			enterprise = enterpriseOp.get();//Else excepcion
 
 		OrderLine order = new OrderLine(orderType, user, price, number, enterprise);
 
@@ -277,7 +281,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 					ss = +orderLine.getNumber();
 				}
 			}
-			
+
 			if ((bs - ss) < number) {
 				throw new NotOwnedException();
 			}
@@ -285,14 +289,14 @@ public class StockMarketServiceImpl implements StockMarketService {
 		}
 		orderLineDao.save(order);
 
-		this.match();
+		this.match(enterprise);
 
 	}
 
-
 	@Override
 	public Enterprise createAnnualBenefits(Long userId, Long enterpriseId, AnnualBenefitsListDto benefitsList)
-			throws DuplicateInstanceException, PermissionException, InstanceNotFoundException, InvalidArgumentException {
+			throws DuplicateInstanceException, PermissionException, InstanceNotFoundException,
+			InvalidArgumentException {
 
 		Optional<User> userOp = null;
 		User user = null;
@@ -318,17 +322,17 @@ public class StockMarketServiceImpl implements StockMarketService {
 					cal.setTime(enter.getFundation());
 					int year = LocalDate.now().getYear();
 					Set<AnnualBenefits> benefits = enter.getAnnualBenefits();
-					if(!benefits.isEmpty()) {
-						Iterator <AnnualBenefits> iter = benefits.iterator();
+					if (!benefits.isEmpty()) {
+						Iterator<AnnualBenefits> iter = benefits.iterator();
 						while (iter.hasNext()) {
 							if (iter.next().getYear() == params.getYear())
 								throw new InvalidArgumentException();
 						}
 					}
-					
-					if (params.getYear() < cal.get(Calendar.YEAR) || params==null || params.getYear()>=year) {
+
+					if (params.getYear() < cal.get(Calendar.YEAR) || params == null || params.getYear() >= year) {
 						throw new InvalidArgumentException();
-					}else {
+					} else {
 						AnnualBenefits annualParms = new AnnualBenefits(enter, params.getYear(), params.getBenefits());
 						enter.addAnnualBenefits(annualParms);
 						annualBennefitsDao.save(annualParms);
@@ -340,40 +344,36 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 		return enter;
 	}
-	
-	public void deleteOrder (Long owner, Long orderId, Boolean avaliable) throws NotOwnedException, 
-				InstanceNotFoundException, NotAvaliableException {
-		
+
+	public void deleteOrder(Long owner, Long orderId, Boolean avaliable)
+			throws NotOwnedException, InstanceNotFoundException, NotAvaliableException {
+
 		User user = null;
 		OrderLine order = null;
 
 		Optional<User> userOp = userDao.findById(owner);
 		Optional<OrderLine> orderOp = orderLineDao.findById(orderId);
 
-		if (userOp.isPresent()){
+		if (userOp.isPresent()) {
 			user = userOp.get();
-			
-			if (orderOp.isPresent()){
+
+			if (orderOp.isPresent()) {
 				order = orderOp.get();
-				
+
 				if (avaliable) {
 					orderLineDao.delete(order);
 				} else {
 					throw new NotAvaliableException();
 				}
-				
+
 			} else {
 				throw new InstanceNotFoundException("No existe order con id", orderId);
 			}
-			
+
 		} else {
 			throw new NotOwnedException();
 		}
-		
 
-		
-		
-		
 	}
 
 }
