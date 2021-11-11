@@ -165,6 +165,12 @@ public class MarketController {
 		return new ErrorsDto(errorMessage);
 
 	}
+	
+	
+	@ExceptionHandler(NotAvaliableException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public ErrorsDto NotAvaliableException (NotAvaliableException exception, Locale locale) {
 
 
 
