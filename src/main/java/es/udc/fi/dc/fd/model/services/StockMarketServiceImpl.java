@@ -1,6 +1,7 @@
 package es.udc.fi.dc.fd.model.services;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -19,6 +20,8 @@ import es.udc.fi.dc.fd.model.common.exceptions.NotAvaliableException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
+import es.udc.fi.dc.fd.model.entities.ActionPriceHistoric;
+import es.udc.fi.dc.fd.model.entities.ActionPriceHistoricDao;
 import es.udc.fi.dc.fd.model.entities.AnnualBenefits;
 import es.udc.fi.dc.fd.model.entities.AnnualBenefitsDao;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
@@ -52,6 +55,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 	@Autowired
 	private AnnualBenefitsDao annualBennefitsDao;
+	
+	@Autowired
+	private ActionPriceHistoricDao actionPriceHistoricDao;
 
 	@Override
 	public Enterprise createEnterprise(Long userId, Enterprise enterprise)
@@ -227,6 +233,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 							}
 							
 							enterprise.setStockPrice(sellOrder.getPrice());
+							LocalDateTime date = LocalDateTime.now();
+							ActionPriceHistoric historic = new ActionPriceHistoric(enterprise,date,sellOrder.getPrice());
+							actionPriceHistoricDao.save(historic);
 							}
 						}
 					}

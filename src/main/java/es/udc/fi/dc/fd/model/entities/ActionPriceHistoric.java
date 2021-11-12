@@ -43,7 +43,7 @@ public class ActionPriceHistoric {
 
 
 
-	public ActionPriceHistoric(Enterprise enterprise, Date LocalDateTime, Float price) {
+	public ActionPriceHistoric(Enterprise enterprise, LocalDateTime date, Float price) {
 		super();
 		this.enterprise = enterprise;
 		this.date = date;
