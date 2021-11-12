@@ -1,5 +1,6 @@
 package es.udc.fi.dc.fd.model.services;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -90,7 +91,7 @@ public class SearchServiceImpl implements SearchService {
 		return enter;
 	}
 	
-	public List<ActionPriceHistoric> findHistorics(Long id) throws InstanceNotFoundException {
+	public List<ActionPriceHistoric> findHistorics(Long id, int numberOfDays) throws InstanceNotFoundException {
 
 		Optional<Enterprise> enterprise = enterpriseDao.findById(id);
 		
@@ -101,9 +102,19 @@ public class SearchServiceImpl implements SearchService {
 		enter = enterprise.get();
 		
 		List<ActionPriceHistoric> historic = historicDao.findActionPriceHistoricByEnterpriseIdOrderByDateAsc(id);
+		List<ActionPriceHistoric> result = new ArrayList<>();
 		
 		
-		return historic;
+		LocalDateTime aux = LocalDateTime.now().minusDays(numberOfDays);
+		
+		for (int i = 0; i<historic.size();i++) {
+			
+			if(aux.isBefore(historic.get(i).getDate())) {
+				result.add(historic.get(i));
+			}
+		}
+		
+		return result;
 	}
 
 }

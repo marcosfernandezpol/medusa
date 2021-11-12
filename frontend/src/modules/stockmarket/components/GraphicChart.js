@@ -30,7 +30,7 @@ const GraphicChart = ({ data /* see data tab */ }) => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 45,
-            legend: "data",
+            legend: "",
             legendOffset: 36,
             legendPosition: "middle"
         }}

@@ -44,9 +44,9 @@ export const searchEnterpriseById = id => (dispatch) => {
 		enterprise => dispatch(searchEnterpriseByIdCompleted(enterprise)))
 }
 
-export const searchEnterpriseHistoric = id => (dispatch) => {
+export const searchEnterpriseHistoric = (id, numberOfDays) => (dispatch) => {
 	dispatch(clearSearchEnterpriseHistoric());
-	backend.searchService.findEnterpriseHistoric(id,
+	backend.searchService.findEnterpriseHistoric(id,numberOfDays,
 		enterpriseHistoric => dispatch(searchEnterpriseHistoricCompleted(enterpriseHistoric)))
 }
 
