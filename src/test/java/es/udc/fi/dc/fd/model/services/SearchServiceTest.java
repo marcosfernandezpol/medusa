@@ -74,8 +74,8 @@ public class SearchServiceTest {
 		return user.getId();
 	}
 
-	private Enterprise createEnterprise(String name, String acronim) {
-		return new Enterprise(name, acronim, Date.valueOf("1999-01-17"), Float.valueOf(1000), 12, Float.valueOf(18));
+	private Enterprise createEnterprise(String name, String acronim, long id) {
+		return new Enterprise(id, name, acronim, Date.valueOf("1999-01-17"), Float.valueOf(1000), 12, Float.valueOf(18));
 
 	}
 
@@ -94,8 +94,8 @@ public class SearchServiceTest {
 
 		List<Enterprise> enterprises = null;
 
-		marketService.createEnterprise(id, createEnterprise("pol&sons", "PS"));
-		marketService.createEnterprise(id, createEnterprise("aòiergo", "ASD"));
+		marketService.createEnterprise(id,createEnterprise("pol&sons", "PS",id));
+		marketService.createEnterprise(id,createEnterprise("aòiergo", "ASD",id));
 
 		enterprises = searchService.findAllEnterprises();
 
@@ -111,7 +111,9 @@ public class SearchServiceTest {
 			DuplicateInstanceException, PermissionException, NumberException, NotOwnedException {
 
 		User client = createClient();
-		Enterprise enterprise = createEnterprise("adidas", "ads");
+		Long id = adminId(client);
+		
+		Enterprise enterprise = createEnterprise("adidas", "ads",id);
 
 		User savedClient = userDao.save(client);
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
