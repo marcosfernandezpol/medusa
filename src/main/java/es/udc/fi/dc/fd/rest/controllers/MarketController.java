@@ -193,7 +193,8 @@ public class MarketController {
 	public EnterpriseSummaryDto createEnterprise(@RequestAttribute Long userId,
 			@Validated @RequestBody EnterpriseSummaryDto enterpriseDto)
 			throws DuplicateInstanceException, PermissionException, NumberException, InvalidArgumentException {
-
+		
+		enterpriseDto.setCreatorId(userId);
 		Enterprise enterprise = EnterpriseSummaryConversor.toEnterpriseSummary(enterpriseDto);
 		Enterprise e = marketService.createEnterprise(userId, enterprise);
 		return EnterpriseSummaryConversor.toEnterpriseSummaryDto(e);

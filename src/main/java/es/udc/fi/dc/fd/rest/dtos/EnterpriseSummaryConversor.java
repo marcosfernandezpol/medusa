@@ -11,7 +11,7 @@ public class EnterpriseSummaryConversor {
 	}
 
 	public final static EnterpriseSummaryDto toEnterpriseSummaryDto(Enterprise t) {
-		return new EnterpriseSummaryDto(t.getId(), t.getEnterpriseName(), t.getAcronim(), t.getFundation(), t.getIncomes(),
+		return new EnterpriseSummaryDto(t.getId(), t.getEnterpriseName(), t.getCreatorId() ,t.getAcronim(), t.getFundation(), t.getIncomes(),
 				t.getStock(), t.getStockPrice(), t.isAvaliable());
 	}
 
@@ -28,7 +28,7 @@ public class EnterpriseSummaryConversor {
 	 */
 	public static final Enterprise toEnterpriseSummary(EnterpriseSummaryDto enterpriseSummaryDto) {
 
-		return new Enterprise(enterpriseSummaryDto.getEnterpriseName(), enterpriseSummaryDto.getAcronim(),
+		return new Enterprise( enterpriseSummaryDto.getCreatorId() ,enterpriseSummaryDto.getEnterpriseName(),enterpriseSummaryDto.getAcronim(),
 				enterpriseSummaryDto.getFundation(), enterpriseSummaryDto.getIncomes(), enterpriseSummaryDto.getActions(),
 				enterpriseSummaryDto.getActionsPrice());
 

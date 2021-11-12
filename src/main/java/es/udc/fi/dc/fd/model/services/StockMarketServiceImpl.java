@@ -379,5 +379,32 @@ public class StockMarketServiceImpl implements StockMarketService {
 		}
 
 	}
+	
+	@Override
+	public Enterprise modifyAvaliableEnterprise(Long adminId, Long enterpriseId, Boolean avaliable)
+			throws NotCreatorException, InstanceNotFoundException {
+		// TODO Auto-generated method stub
+
+		Enterprise enterprise = null;
+
+		Optional<User> adminOp = userDao.findById(adminId);
+		Optional<Enterprise> enterpriseOp = enterpriseDao.findById(enterpriseId);
+
+		if (adminOp.isEmpty() || enterpriseOp.isEmpty()) {
+			throw new InstanceNotFoundException("No existe empresa con id", adminId);
+		}
+
+		enterprise = enterpriseOp.get();
+
+		if (adminId != enterprise.getCreatorId()) {
+			throw new NotCreatorException();
+		}
+
+		enterprise.setAvaliable(avaliable);
+		enterpriseDao.save(enterprise);
+
+		return enterprise;
+
+	}
 
 }

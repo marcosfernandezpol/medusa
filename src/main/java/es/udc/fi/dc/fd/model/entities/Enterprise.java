@@ -61,6 +61,19 @@ public class Enterprise {
 		this.avaliable = true;
 	}
 	
+	public Enterprise(Long creatorId, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
+			Float actionsPrice) {
+		super();
+		this.creatorId = creatorId;
+		this.enterpriseName = enterpriseName;
+		this.acronim = acronim;
+		this.fundation = fundation;
+		this.incomes = incomes;
+		this.actions = actions;
+		this.actionsPrice = actionsPrice;
+		this.avaliable = true;
+	}
+	
 	
 
 	public Enterprise(Long id, Long creatorId, String enterpriseName, String acronim, Date fundation, Float incomes,
