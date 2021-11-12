@@ -16,6 +16,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotAvaliableException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotCreatorException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
@@ -53,10 +54,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 	@Autowired
 	private AnnualBenefitsDao annualBennefitsDao;
 
-
 	@Override
 	public Enterprise createEnterprise(Long userId, Enterprise enterprise)
-			throws DuplicateInstanceException, PermissionException, NumberException{
+			throws DuplicateInstanceException, PermissionException, NumberException {
 
 		Optional<User> userOp = null;
 		User user = null;
@@ -65,21 +65,19 @@ public class StockMarketServiceImpl implements StockMarketService {
 			throw new DuplicateInstanceException("project.entities.enterprise", enterprise.getEnterpriseName());
 		}
 
-
 		userOp = userDao.findById(userId);
 		if (userOp.isPresent()) { // Aqui habría que añadir algo para cuando el user no exista
 			user = userOp.get();
-			
 
 			if (user.getRole() == RoleType.ADMIN) {
-				
+				enterprise.setCreatorId(userId);
 				Calendar cal = Calendar.getInstance();
 				Calendar cal2 = Calendar.getInstance();
 				cal.setTime(enterprise.getFundation());
-				LocalDate now= LocalDate.now();
-				cal2.set(now.getYear(),now.getMonthValue()-1,now.getDayOfMonth());
-				
-				if(cal.after(cal2)) {
+				LocalDate now = LocalDate.now();
+				cal2.set(now.getYear(), now.getMonthValue() - 1, now.getDayOfMonth());
+
+				if (cal.after(cal2)) {
 					throw new PermissionException();
 				}
 
@@ -176,9 +174,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 								buyOrder.setAvaliable(false);
 								buyOrder.setPrice(sold.getPrice());
-								
+
 								enterprise.setStockPrice(sold.getPrice());
-								
+
 							} else if (sellOrder.getNumber() < buyOrder.getNumber()) {
 								buyOwner.setBalance(
 										buyOwner.getBalance() - (sellOrder.getPrice() * sellOrder.getNumber()));
@@ -186,19 +184,18 @@ public class StockMarketServiceImpl implements StockMarketService {
 									sellOwner.setBalance(
 											sellOwner.getBalance() + (sellOrder.getPrice() * sellOrder.getNumber()));
 								}
-								
+
 								int numBought = sellOrder.getNumber();
 								int numRemain = buyOrder.getNumber() - numBought;
 								OrderLine remain = new OrderLine(OrderType.BUY, buyOwner, buyOrder.getPrice(),
 										numRemain, enterprise);
 								remain.setRequestDate(buyOrder.getRequestDate());
 								orderLineDao.save(remain);
-								
+
 								buyOrder.setNumber(sellOrder.getNumber());
 								buyOrder.setAvaliable(false);
 								buyOrder.setPrice(sellOrder.getPrice());
 								sellOrder.setAvaliable(false);
-
 
 								enterprise.setStockPrice(sellOrder.getPrice());
 							} else {
@@ -208,9 +205,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 									sellOwner.setBalance(
 											sellOwner.getBalance() + (sellOrder.getPrice() * buyOrder.getNumber()));
 								}
-								
+
 								buyOrder.setPrice(sellOrder.getPrice());
-								
+
 								buyOrder.setAvaliable(false);
 								sellOrder.setAvaliable(false);
 
@@ -224,7 +221,6 @@ public class StockMarketServiceImpl implements StockMarketService {
 		}
 
 	}
-
 
 	@Override
 	public void order(Long owner, OrderType orderType, Float price, int number, Long enterpriseId)
@@ -277,7 +273,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 					ss = +orderLine.getNumber();
 				}
 			}
-			
+
 			if ((bs - ss) < number) {
 				throw new NotOwnedException();
 			}
@@ -289,10 +285,10 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 	}
 
-
 	@Override
 	public Enterprise createAnnualBenefits(Long userId, Long enterpriseId, AnnualBenefitsListDto benefitsList)
-			throws DuplicateInstanceException, PermissionException, InstanceNotFoundException, InvalidArgumentException {
+			throws DuplicateInstanceException, PermissionException, InstanceNotFoundException,
+			InvalidArgumentException {
 
 		Optional<User> userOp = null;
 		User user = null;
@@ -318,17 +314,17 @@ public class StockMarketServiceImpl implements StockMarketService {
 					cal.setTime(enter.getFundation());
 					int year = LocalDate.now().getYear();
 					Set<AnnualBenefits> benefits = enter.getAnnualBenefits();
-					if(!benefits.isEmpty()) {
-						Iterator <AnnualBenefits> iter = benefits.iterator();
+					if (!benefits.isEmpty()) {
+						Iterator<AnnualBenefits> iter = benefits.iterator();
 						while (iter.hasNext()) {
 							if (iter.next().getYear() == params.getYear())
 								throw new InvalidArgumentException();
 						}
 					}
-					
-					if (params.getYear() < cal.get(Calendar.YEAR) || params==null || params.getYear()>=year) {
+
+					if (params.getYear() < cal.get(Calendar.YEAR) || params == null || params.getYear() >= year) {
 						throw new InvalidArgumentException();
-					}else {
+					} else {
 						AnnualBenefits annualParms = new AnnualBenefits(enter, params.getYear(), params.getBenefits());
 						enter.addAnnualBenefits(annualParms);
 						annualBennefitsDao.save(annualParms);
@@ -340,40 +336,63 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 		return enter;
 	}
-	
-	public void deleteOrder (Long owner, Long orderId, Boolean avaliable) throws NotOwnedException, 
-				InstanceNotFoundException, NotAvaliableException {
-		
+
+	public void deleteOrder(Long owner, Long orderId, Boolean avaliable)
+			throws NotOwnedException, InstanceNotFoundException, NotAvaliableException {
+
 		User user = null;
 		OrderLine order = null;
 
 		Optional<User> userOp = userDao.findById(owner);
 		Optional<OrderLine> orderOp = orderLineDao.findById(orderId);
 
-		if (userOp.isPresent()){
+		if (userOp.isPresent()) {
 			user = userOp.get();
-			
-			if (orderOp.isPresent()){
+
+			if (orderOp.isPresent()) {
 				order = orderOp.get();
-				
+
 				if (avaliable) {
 					orderLineDao.delete(order);
 				} else {
 					throw new NotAvaliableException();
 				}
-				
+
 			} else {
 				throw new InstanceNotFoundException("No existe order con id", orderId);
 			}
-			
+
 		} else {
 			throw new NotOwnedException();
 		}
-		
 
-		
-		
-		
+	}
+
+	@Override
+	public Enterprise modifyAvaliableEnterprise(Long adminId, Long enterpriseId, Boolean avaliable)
+			throws NotCreatorException, InstanceNotFoundException {
+		// TODO Auto-generated method stub
+
+		Enterprise enterprise = null;
+
+		Optional<User> adminOp = userDao.findById(adminId);
+		Optional<Enterprise> enterpriseOp = enterpriseDao.findById(enterpriseId);
+
+		if (adminOp.isEmpty() || enterpriseOp.isEmpty()) {
+			throw new InstanceNotFoundException("No existe empresa con id", adminId);
+		}
+
+		enterprise = enterpriseOp.get();
+
+		if (adminId != enterprise.getCreatorId()) {
+			throw new NotCreatorException();
+		}
+
+		enterprise.setAvaliable(avaliable);
+		enterpriseDao.save(enterprise);
+
+		return enterprise;
+
 	}
 
 }

@@ -30,11 +30,13 @@ public class EnterpriseSummaryDto {
 
 	private Float actionsPrice;
 
+	private boolean avaliable;
+
 	public EnterpriseSummaryDto() {
 	}
 
-	public EnterpriseSummaryDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
-			Float actionsPrice) {
+	public EnterpriseSummaryDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes,
+			int actions, Float actionsPrice, boolean avaliable) {
 
 		super();
 		this.id = id;
@@ -44,6 +46,7 @@ public class EnterpriseSummaryDto {
 		this.incomes = incomes;
 		this.actions = actions;
 		this.actionsPrice = actionsPrice;
+		this.avaliable = avaliable;
 
 	}
 
@@ -101,6 +104,14 @@ public class EnterpriseSummaryDto {
 
 	public void setActionsPrice(Float actionsPrice) {
 		this.actionsPrice = actionsPrice;
+	}
+
+	public boolean isAvaliable() {
+		return avaliable;
+	}
+
+	public void setAvaliable(boolean avaliable) {
+		this.avaliable = avaliable;
 	}
 
 }

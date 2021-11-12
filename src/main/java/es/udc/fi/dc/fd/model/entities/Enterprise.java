@@ -22,6 +22,8 @@ public class Enterprise {
 	// Start atributes
 
 	private Long id;
+	
+	private Long creatorId;
 
 	private String enterpriseName;
 
@@ -36,7 +38,7 @@ public class Enterprise {
 	private Float actionsPrice;
 
 	private Set<AnnualBenefits> annualBenefits = new HashSet<>();
-	
+
 	private boolean avaliable;
 
 	// End atributes
@@ -57,7 +59,24 @@ public class Enterprise {
 		this.actions = actions;
 		this.actionsPrice = actionsPrice;
 		this.avaliable = true;
-		}
+	}
+	
+	
+
+	public Enterprise(Long id, Long creatorId, String enterpriseName, String acronim, Date fundation, Float incomes,
+			int actions, Float actionsPrice, Set<AnnualBenefits> annualBenefits, boolean avaliable) {
+		super();
+		this.id = id;
+		this.creatorId = creatorId;
+		this.enterpriseName = enterpriseName;
+		this.acronim = acronim;
+		this.fundation = fundation;
+		this.incomes = incomes;
+		this.actions = actions;
+		this.actionsPrice = actionsPrice;
+		this.annualBenefits = annualBenefits;
+		this.avaliable = avaliable;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,6 +86,16 @@ public class Enterprise {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	
+
+	public Long getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Long creatorId) {
+		this.creatorId = creatorId;
 	}
 
 	public String getEnterpriseName() {
@@ -125,7 +154,7 @@ public class Enterprise {
 	public void setStockPrice(Float actionsPrice) {
 		this.actionsPrice = actionsPrice;
 	}
-	
+
 	public boolean isAvaliable() {
 		return avaliable;
 	}
@@ -136,26 +165,21 @@ public class Enterprise {
 
 	@Transient
 	public Optional<AnnualBenefits> getAnnualBenefits(Long id) {
-		return annualBenefits.stream().filter(annualBenefits -> annualBenefits.getEnterprise().getId().equals(id)).findFirst();
+		return annualBenefits.stream().filter(annualBenefits -> annualBenefits.getEnterprise().getId().equals(id))
+				.findFirst();
 	}
 
 	public void addAnnualBenefits(AnnualBenefits annualBenefit) {
-		
+
 		annualBenefits.add(annualBenefit);
 		annualBenefit.setEnterprise(this);
-		
-	}
 
-	@Override
-	public String toString() {
-		return "Enterprise [id=" + id + ", enterpriseName=" + enterpriseName + ", acronim=" + acronim + ", fundation="
-				+ fundation + ", incomes=" + incomes + ", actions=" + actions + ", actionsPrice=" + actionsPrice
-				+ ", annualBenefits=" + annualBenefits + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(acronim, actions, actionsPrice, annualBenefits, enterpriseName, fundation, id, incomes);
+		return Objects.hash(acronim, actions, actionsPrice, annualBenefits, avaliable, creatorId, enterpriseName,
+				fundation, id, incomes);
 	}
 
 	@Override
@@ -169,9 +193,20 @@ public class Enterprise {
 		Enterprise other = (Enterprise) obj;
 		return Objects.equals(acronim, other.acronim) && actions == other.actions
 				&& Objects.equals(actionsPrice, other.actionsPrice)
-				&& Objects.equals(annualBenefits, other.annualBenefits)
-				&& Objects.equals(enterpriseName, other.enterpriseName) && Objects.equals(fundation, other.fundation)
-				&& Objects.equals(id, other.id) && Objects.equals(incomes, other.incomes);
+				&& Objects.equals(annualBenefits, other.annualBenefits) && avaliable == other.avaliable
+				&& Objects.equals(creatorId, other.creatorId) && Objects.equals(enterpriseName, other.enterpriseName)
+				&& Objects.equals(fundation, other.fundation) && Objects.equals(id, other.id)
+				&& Objects.equals(incomes, other.incomes);
 	}
+
+	@Override
+	public String toString() {
+		return "Enterprise [id=" + id + ", creatorId=" + creatorId + ", enterpriseName=" + enterpriseName + ", acronim="
+				+ acronim + ", fundation=" + fundation + ", incomes=" + incomes + ", actions=" + actions
+				+ ", actionsPrice=" + actionsPrice + ", annualBenefits=" + annualBenefits + ", avaliable=" + avaliable
+				+ "]";
+	}
+
+	
 
 }
