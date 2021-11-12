@@ -50,6 +50,7 @@ public class MarketController {
 	private final static String NUMBER_EXCEPTION_CODE = "project.exceptions.NumberException";
 	private final static String INVALID_ARGUMENT_EXCEPTION_CODE = "project.exceptions.InvalidArgumentException";
 	private final static String NOT_AVALIABLE_EXCEPTION_CODE = "project.exceptions.NotAvaliableException";
+	private final static String PERMISSION_EXCEPTION_CODE = "project.exceptions.PermissionException";
 
 	/** The user service. */
 	@Autowired
@@ -59,6 +60,13 @@ public class MarketController {
 	@Autowired
 	private MessageSource messageSource;
 
+	/**
+	 * Handle duplicate instance exception.
+	 *
+	 * @param exception the exception
+	 * @param locale    the locale
+	 * @return the errors dto
+	 */
 	/**
 	 * Handle duplicate instance exception.
 	 *
@@ -157,8 +165,9 @@ public class MarketController {
 		return new ErrorsDto(errorMessage);
 
 	}
-
-	@ExceptionHandler(InvalidArgumentException.class)
+	
+	
+	@ExceptionHandler(NotAvaliableException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public ErrorsDto NotAvaliableException(NotAvaliableException exception, Locale locale) {
@@ -169,6 +178,7 @@ public class MarketController {
 		return new ErrorsDto(errorMessage);
 
 	}
+
 
 	/**
 	 * Create an enterprise.
@@ -182,7 +192,7 @@ public class MarketController {
 	@PostMapping("/create_enterprise")
 	public EnterpriseSummaryDto createEnterprise(@RequestAttribute Long userId,
 			@Validated @RequestBody EnterpriseSummaryDto enterpriseDto)
-			throws DuplicateInstanceException, PermissionException, NumberException {
+			throws DuplicateInstanceException, PermissionException, NumberException, InvalidArgumentException {
 
 		Enterprise enterprise = EnterpriseSummaryConversor.toEnterpriseSummary(enterpriseDto);
 		Enterprise e = marketService.createEnterprise(userId, enterprise);

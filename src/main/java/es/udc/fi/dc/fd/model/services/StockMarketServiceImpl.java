@@ -70,7 +70,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 			user = userOp.get();
 
 			if (user.getRole() == RoleType.ADMIN) {
-				enterprise.setCreatorId(userId);
+
 				Calendar cal = Calendar.getInstance();
 				Calendar cal2 = Calendar.getInstance();
 				cal.setTime(enterprise.getFundation());
@@ -128,10 +128,58 @@ public class StockMarketServiceImpl implements StockMarketService {
 		}
 
 	}
+	
+	private void matchUserManagement (OrderLine buyOrder, OrderLine sellOrder, int numSold, float operationPrice) {
+		User buyOwner = buyOrder.getOwner();
+		User sellOwner = sellOrder.getOwner();
+		
+		buyOwner.setBalance(
+				buyOwner.getBalance() - (operationPrice * numSold));
+		if (sellOwner != null) {
+			sellOwner.setBalance(
+					sellOwner.getBalance() + (operationPrice * numSold));
+		}
+		
+	}
+	
+	private void matchOrderManagement (OrderLine buyOrder, OrderLine sellOrder, int numSold, int numRemain, int control) {
+		if (control == 0) {
+			OrderLine sellRemain = new OrderLine(OrderType.SELL, sellOrder.getOwner(), sellOrder.getPrice(),
+					numRemain, sellOrder.getEnterprise());
+			sellRemain.setRequestDate(sellOrder.getRequestDate());
+			orderLineDao.save(sellRemain);
+			
+			sellOrder.setNumber(numSold);
+			sellOrder.setAvaliable(false);
+			
+			buyOrder.setPrice(sellOrder.getPrice());
+			buyOrder.setAvaliable(false);
+			
+			match(sellRemain.getEnterprise());
+		}
+		else if (control == 1) {
+			OrderLine buyRemain = new OrderLine(OrderType.BUY, buyOrder.getOwner(), buyOrder.getPrice(),
+					numRemain, buyOrder.getEnterprise());
+			buyRemain.setRequestDate(buyOrder.getRequestDate());
+			orderLineDao.save(buyRemain);
+			
+			buyOrder.setNumber(numSold);
+			buyOrder.setPrice(sellOrder.getPrice());
+			buyOrder.setAvaliable(false);
+			
+			sellOrder.setAvaliable(false);
+			
+			match(buyRemain.getEnterprise());
+		}
+		else if (control == 2) {
+			buyOrder.setPrice(sellOrder.getPrice());
+			
+			buyOrder.setAvaliable(false);
+			sellOrder.setAvaliable(false);
+		}		
+	}
 
-	private void match() {
-
-		for (Enterprise enterprise : enterpriseDao.findAll()) { // Por cada empresa se matchean sus orders
+	private void match(Enterprise enterprise) {
 
 			Optional<List<OrderLine>> buyOrdersO = orderLineDao
 					.findByOrderTypeAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, enterprise, true);
@@ -148,79 +196,44 @@ public class StockMarketServiceImpl implements StockMarketService {
 					for (OrderLine sellOrder : sellOrders) {
 
 						if (sellOrder.getPrice() <= buyOrder.getPrice()) {
-							User buyOwner = buyOrder.getOwner();
-							User sellOwner = sellOrder.getOwner();
-
+							
+							float operationPrice = sellOrder.getPrice();
+							
+							if(sellOrder.getAvaliable() && buyOrder.getAvaliable()) {
+							
 							if (sellOrder.getNumber() > buyOrder.getNumber()) {
-								buyOwner.setBalance(
-										buyOwner.getBalance() - (sellOrder.getPrice() * buyOrder.getNumber()));
-								if (sellOwner != null) {
-									sellOwner.setBalance(
-											sellOwner.getBalance() + (sellOrder.getPrice() * buyOrder.getNumber()));
-								}
-
 								int numSold = buyOrder.getNumber();
 								int numRemain = sellOrder.getNumber() - numSold;
-								OrderLine sold = new OrderLine(OrderType.SELL, sellOwner, sellOrder.getPrice(), numSold,
-										enterprise);
-								sold.setAvaliable(false);
-								sold.setRequestDate(sellOrder.getRequestDate());
-								OrderLine remain = new OrderLine(OrderType.SELL, sellOwner, sellOrder.getPrice(),
-										numRemain, enterprise);
-								remain.setRequestDate(sellOrder.getRequestDate());
-								orderLineDao.delete(sellOrder);
-								orderLineDao.save(sold);
-								orderLineDao.save(remain);
-
-								buyOrder.setAvaliable(false);
-								buyOrder.setPrice(sold.getPrice());
-
-								enterprise.setStockPrice(sold.getPrice());
-
+								
+								matchUserManagement (buyOrder, sellOrder, numSold, operationPrice);
+								
+								matchOrderManagement (buyOrder, sellOrder, numSold, numRemain, 0);
+								
 							} else if (sellOrder.getNumber() < buyOrder.getNumber()) {
-								buyOwner.setBalance(
-										buyOwner.getBalance() - (sellOrder.getPrice() * sellOrder.getNumber()));
-								if (sellOwner != null) {
-									sellOwner.setBalance(
-											sellOwner.getBalance() + (sellOrder.getPrice() * sellOrder.getNumber()));
-								}
+								
+								int numSold = sellOrder.getNumber();
+								int numRemain = buyOrder.getNumber() - numSold;
+								
+								matchUserManagement (buyOrder, sellOrder, numSold, operationPrice);
+								
+								matchOrderManagement (buyOrder, sellOrder, numSold, numRemain, 1);
 
-								int numBought = sellOrder.getNumber();
-								int numRemain = buyOrder.getNumber() - numBought;
-								OrderLine remain = new OrderLine(OrderType.BUY, buyOwner, buyOrder.getPrice(),
-										numRemain, enterprise);
-								remain.setRequestDate(buyOrder.getRequestDate());
-								orderLineDao.save(remain);
-
-								buyOrder.setNumber(sellOrder.getNumber());
-								buyOrder.setAvaliable(false);
-								buyOrder.setPrice(sellOrder.getPrice());
-								sellOrder.setAvaliable(false);
-
-								enterprise.setStockPrice(sellOrder.getPrice());
 							} else {
-								buyOwner.setBalance(
-										buyOwner.getBalance() - (sellOrder.getPrice() * buyOrder.getNumber()));
-								if (sellOwner != null) {
-									sellOwner.setBalance(
-											sellOwner.getBalance() + (sellOrder.getPrice() * buyOrder.getNumber()));
-								}
-
-								buyOrder.setPrice(sellOrder.getPrice());
-
-								buyOrder.setAvaliable(false);
-								sellOrder.setAvaliable(false);
-
-								enterprise.setStockPrice(sellOrder.getPrice());
+								int numSold = sellOrder.getNumber();
+								int numRemain = 0;
+								
+								matchUserManagement (buyOrder, sellOrder, numSold, operationPrice);
+								
+								matchOrderManagement (buyOrder, sellOrder, numSold, numRemain, 2);
+							}
+							
+							enterprise.setStockPrice(sellOrder.getPrice());
 							}
 						}
-
 					}
 				}
 			}
 		}
-
-	}
 
 	@Override
 	public void order(Long owner, OrderType orderType, Float price, int number, Long enterpriseId)
@@ -233,9 +246,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 		Optional<Enterprise> enterpriseOp = enterpriseDao.findById(enterpriseId);
 
 		if (userOp.isPresent())
-			user = userOp.get();
+			user = userOp.get(); //Else excepcion
 		if (enterpriseOp.isPresent())
-			enterprise = enterpriseOp.get();
+			enterprise = enterpriseOp.get();//Else excepcion
 
 		OrderLine order = new OrderLine(orderType, user, price, number, enterprise);
 
@@ -260,7 +273,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 			if (boughtStockOp.isPresent()) {
 				boughtStock = boughtStockOp.get();
 				for (OrderLine orderLine : boughtStock) {
-					bs = +orderLine.getNumber();
+					bs += orderLine.getNumber();
 				}
 
 			} else {
@@ -270,7 +283,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 			if (soldStockOp.isPresent()) {
 				soldStock = soldStockOp.get();
 				for (OrderLine orderLine : soldStock) {
-					ss = +orderLine.getNumber();
+					ss += orderLine.getNumber();
 				}
 			}
 
@@ -281,8 +294,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 		}
 		orderLineDao.save(order);
 
-		this.match();
-
+		this.match(enterprise);
 	}
 
 	@Override
@@ -365,33 +377,6 @@ public class StockMarketServiceImpl implements StockMarketService {
 		} else {
 			throw new NotOwnedException();
 		}
-
-	}
-
-	@Override
-	public Enterprise modifyAvaliableEnterprise(Long adminId, Long enterpriseId, Boolean avaliable)
-			throws NotCreatorException, InstanceNotFoundException {
-		// TODO Auto-generated method stub
-
-		Enterprise enterprise = null;
-
-		Optional<User> adminOp = userDao.findById(adminId);
-		Optional<Enterprise> enterpriseOp = enterpriseDao.findById(enterpriseId);
-
-		if (adminOp.isEmpty() || enterpriseOp.isEmpty()) {
-			throw new InstanceNotFoundException("No existe empresa con id", adminId);
-		}
-
-		enterprise = enterpriseOp.get();
-
-		if (adminId != enterprise.getCreatorId()) {
-			throw new NotCreatorException();
-		}
-
-		enterprise.setAvaliable(avaliable);
-		enterpriseDao.save(enterprise);
-
-		return enterprise;
 
 	}
 
