@@ -11,19 +11,28 @@ const GraphicChart = ({ data /* see data tab */ }) => (
     <ResponsiveLine
         data={data}
         margin={{ top: 50, right: 110, bottom: 115, left: 60 }}
-		xScale={{ type: 'point' }}
-        yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
+		xScale={{ 
+			type: "time",
+            format: "%Y-%m-%d %H:%M:%S",
+            precision: "minute"}}
+        xFormat="time:%HH:%MM:%SS"
+		yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
         yFormat=" >-.2f"
         axisTop={null}
         axisRight={null}
         axisBottom={{
-            orient: 'bottom',
-            tickSize: 6,
-            tickPadding: 3,
-            tickRotation: 52,
-            legend: 'Time(t)',
-            legendOffset: 110,
-            legendPosition: 'middle'
+            format: "%Y-%m-%d %H:%M:%S",
+            tickValues: "every 10 minutes",
+            legend: "time scale",
+            legendOffset: -12,
+            orient: "bottom",
+            tickValues: 15,
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 45,
+            legend: "",
+            legendOffset: 36,
+            legendPosition: "middle"
         }}
         axisLeft={{
             orient: 'left',

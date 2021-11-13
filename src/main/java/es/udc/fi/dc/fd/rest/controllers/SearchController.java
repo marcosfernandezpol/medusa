@@ -53,8 +53,8 @@ public class SearchController {
 	}
 	
 	@GetMapping("/enterprise/{id}/historic")
-	public List<ActionPriceHistoricDto> findHistoricPrice(@PathVariable Long id) throws InstanceNotFoundException {
-		return ActionPriceHistoricConversor.toActionPriceHistoricsDto(searchService.findHistorics(id));
+	public List<ActionPriceHistoricDto> findHistoricPrice(@PathVariable Long id, @RequestParam int numberOfDays) throws InstanceNotFoundException {
+		return ActionPriceHistoricConversor.toActionPriceHistoricsDto(searchService.findHistorics(id,numberOfDays));
 	}
 
 }
