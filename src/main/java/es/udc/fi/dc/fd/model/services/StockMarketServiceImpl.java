@@ -16,6 +16,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotAvaliableException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotCreatorException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
@@ -376,6 +377,33 @@ public class StockMarketServiceImpl implements StockMarketService {
 		} else {
 			throw new NotOwnedException();
 		}
+
+	}
+	
+	@Override
+	public Enterprise modifyAvaliableEnterprise(Long adminId, Long enterpriseId, Boolean avaliable)
+			throws NotCreatorException, InstanceNotFoundException {
+		// TODO Auto-generated method stub
+
+		Enterprise enterprise = null;
+
+		Optional<User> adminOp = userDao.findById(adminId);
+		Optional<Enterprise> enterpriseOp = enterpriseDao.findById(enterpriseId);
+
+		if (adminOp.isEmpty() || enterpriseOp.isEmpty()) {
+			throw new InstanceNotFoundException("No existe empresa con id", adminId);
+		}
+
+		enterprise = enterpriseOp.get();
+
+		if (adminId != enterprise.getCreatorId()) {
+			throw new NotCreatorException();
+		}
+
+		enterprise.setAvaliable(avaliable);
+		enterpriseDao.save(enterprise);
+
+		return enterprise;
 
 	}
 

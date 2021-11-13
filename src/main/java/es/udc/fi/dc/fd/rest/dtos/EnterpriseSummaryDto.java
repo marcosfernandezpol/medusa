@@ -19,6 +19,8 @@ public class EnterpriseSummaryDto {
 	private Long id;
 
 	private String enterpriseName;
+	
+	private Long creatorId;
 
 	private String acronim;
 
@@ -30,20 +32,24 @@ public class EnterpriseSummaryDto {
 
 	private Float actionsPrice;
 
+	private boolean avaliable;
+
 	public EnterpriseSummaryDto() {
 	}
 
-	public EnterpriseSummaryDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
-			Float actionsPrice) {
+	public EnterpriseSummaryDto(Long id, String enterpriseName, Long creatorId ,String acronim, Date fundation, Float incomes,
+			int actions, Float actionsPrice, boolean avaliable) {
 
 		super();
 		this.id = id;
 		this.enterpriseName = enterpriseName;
+		this.creatorId = creatorId;
 		this.acronim = acronim;
 		this.fundation = fundation;
 		this.incomes = incomes;
 		this.actions = actions;
 		this.actionsPrice = actionsPrice;
+		this.avaliable = avaliable;
 
 	}
 
@@ -102,5 +108,23 @@ public class EnterpriseSummaryDto {
 	public void setActionsPrice(Float actionsPrice) {
 		this.actionsPrice = actionsPrice;
 	}
+
+	public boolean isAvaliable() {
+		return avaliable;
+	}
+
+	public void setAvaliable(boolean avaliable) {
+		this.avaliable = avaliable;
+	}
+
+	public Long getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Long creatorId) {
+		this.creatorId = creatorId;
+	}
+	
+	
 
 }

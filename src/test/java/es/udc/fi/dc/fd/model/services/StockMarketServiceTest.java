@@ -84,6 +84,7 @@ public class StockMarketServiceTest {
 		Enterprise resultEnterprise = null;
 
 		userDao.save(admin);
+		enterprise.setCreatorId(admin.getId());
 		resultEnterprise = stockMarketService.createEnterprise(admin.getId(), enterprise);
 
 		assertNotNull(resultEnterprise.getId());
@@ -124,6 +125,7 @@ public class StockMarketServiceTest {
 		Enterprise enterprise = createEnterprise();
 
 		User savedClient = userDao.save(client);
+		enterprise.setCreatorId(client.getId());
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
 		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId());

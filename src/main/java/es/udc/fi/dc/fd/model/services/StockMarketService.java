@@ -4,6 +4,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotAvaliableException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotCreatorException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
@@ -29,4 +30,7 @@ public interface StockMarketService {
 
 	public void deleteOrder (Long owner, Long orderId, Boolean avaliable) throws NotOwnedException, 
 	InstanceNotFoundException, NotAvaliableException;
+	
+	public Enterprise modifyAvaliableEnterprise (Long creator, Long enterpriseId, Boolean avaliable) throws NotCreatorException, 
+	InstanceNotFoundException;
 } 
