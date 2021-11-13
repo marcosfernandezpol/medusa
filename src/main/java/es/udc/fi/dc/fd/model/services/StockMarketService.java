@@ -14,23 +14,25 @@ import es.udc.fi.dc.fd.model.services.exceptions.InvalidArgumentException;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
 import es.udc.fi.dc.fd.rest.dtos.AnnualBenefitsListDto;
 
+import java.time.LocalDate;
+
 public interface StockMarketService {
 
 	public Enterprise createEnterprise(Long userId, Enterprise enterprise)
 			throws DuplicateInstanceException, PermissionException, NumberException;
-			
+
 	public Enterprise createAnnualBenefits(Long userId, Long enterpriseId, AnnualBenefitsListDto benefitsList)
 			throws DuplicateInstanceException, PermissionException, InstanceNotFoundException, InvalidArgumentException;
 
 	public void transfer(Long userId, Float money, String Operation)
 			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException;
 
-	public void order(Long owner, OrderType orderType, Float price, int number, Long enterpriseId)
+	public void order(Long owner, OrderType orderType, Float price, int number, Long enterpriseId, LocalDate deadline)
 			throws NotEnoughBalanceException, NotOwnedException;
 
-	public void deleteOrder (Long owner, Long orderId, Boolean avaliable) throws NotOwnedException, 
-	InstanceNotFoundException, NotAvaliableException;
-	
-	public Enterprise modifyAvaliableEnterprise (Long creator, Long enterpriseId, Boolean avaliable) throws NotCreatorException, 
-	InstanceNotFoundException;
-} 
+	public void deleteOrder(Long owner, Long orderId, Boolean avaliable)
+			throws NotOwnedException, InstanceNotFoundException, NotAvaliableException;
+
+	public Enterprise modifyAvaliableEnterprise(Long creator, Long enterpriseId, Boolean avaliable)
+			throws NotCreatorException, InstanceNotFoundException;
+}

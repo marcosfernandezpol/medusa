@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import java.sql.Date;
 import java.util.List;
 
+import java.time.LocalDate;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -118,12 +120,32 @@ public class SearchServiceTest {
 		User savedClient = userDao.save(client);
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise));
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise));
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise));
+		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
 		List<OrderLine> orderList = searchService.findOrders(savedClient.getId(), true, true);
 
 		assertTrue(orderList.size() == 3);
+
+	}
+	
+	@Test
+	public void findOrdersOutOfTime() throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException,
+			DuplicateInstanceException, PermissionException, NumberException, NotOwnedException {
+
+		User client = createClient();
+		Long id = adminId(client);
+		Enterprise enterprise = createEnterprise("adidas", "ads", id);
+
+		User savedClient = userDao.save(client);
+		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
+
+		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().minusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		List<OrderLine> orderList = searchService.findOrders(savedClient.getId(), true, true);
+
+		assertTrue(orderList.size() == 2);
 
 	}
 

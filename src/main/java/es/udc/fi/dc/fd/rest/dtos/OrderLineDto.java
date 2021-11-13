@@ -1,6 +1,7 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
 
@@ -31,6 +32,8 @@ public class OrderLineDto {
 	private int number;
 
 	private Long enterpriseId;
+	
+	private LocalDate deadline;
 
 	public OrderLineDto() {
 		super();
@@ -46,6 +49,19 @@ public class OrderLineDto {
 		this.price = price;
 		this.number = number;
 		this.enterpriseId = enterpriseId;
+	}
+	
+	public OrderLineDto(Long id, LocalDateTime requestDate, OrderType orderType, Long ownerId, Float price, int number,
+			Long enterpriseId, LocalDate deadline) {
+		super();
+		this.id = id;
+		this.requestDate = requestDate;
+		this.orderType = orderType;
+		this.ownerId = ownerId;
+		this.price = price;
+		this.number = number;
+		this.enterpriseId = enterpriseId;
+		this.deadline = deadline;
 	}
 
 	public Long getId() {
@@ -103,11 +119,20 @@ public class OrderLineDto {
 	public void setEnterpriseId(Long enterpriseId) {
 		this.enterpriseId = enterpriseId;
 	}
+	
+	public LocalDate getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(LocalDate deadline) {
+		this.deadline = deadline;
+	}
 
 	@Override
 	public String toString() {
 		return "OrderLineDto [id=" + id + ", requestDate=" + requestDate + ", orderType=" + orderType + ", ownerId="
-				+ ownerId + ", price=" + price + ", number=" + number + ", enterpriseId=" + enterpriseId + "]";
+				+ ownerId + ", price=" + price + ", number=" + number + ", enterpriseId=" + enterpriseId + ", deadline="
+				+ deadline + "]";
 	}
 
 }
