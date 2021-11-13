@@ -23,6 +23,7 @@ CREATE TABLE User (
 
 CREATE TABLE Enterprise (
     id BIGINT NOT NULL AUTO_INCREMENT,
+    creatorId BIGINT NOT NULL,
     enterpriseName VARCHAR(60) NOT NULL, 
     acronim VARCHAR(10) NOT NULL,
     fundation DATE,
@@ -31,6 +32,7 @@ CREATE TABLE Enterprise (
     stockPrice FLOAT NOT NULL,
     avaliable BIT,
     CONSTRAINT EnterprisePK PRIMARY KEY (id),
+    CONSTRAINT creatorFK FOREIGN KEY (creatorId) REFERENCES User(id),
     CONSTRAINT enterpriseNameUnique UNIQUE (enterpriseName)
 );
 
