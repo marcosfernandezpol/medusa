@@ -222,9 +222,13 @@ public class MarketController {
 	 * Make a money transfer.
 	 */
 	@PostMapping("/transfer")
-	public void transfer(@RequestAttribute Long userId, @Validated @RequestBody TransferParamsDto params)
+	public TransferParamsDto transfer(@RequestAttribute Long userId, @Validated @RequestBody TransferParamsDto params)
 			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException {
-		marketService.transfer(userId, params.getMoney(), params.getOperation());
+			
+			TransferParamsDto result = new TransferParamsDto();
+			result.setMoney(marketService.transfer(userId, params.getMoney(), params.getOperation()));
+			
+		return result;
 	}
 
 	/**
@@ -256,7 +260,7 @@ public class MarketController {
 
 			throws NotCreatorException, InstanceNotFoundException {
 
-		Enterprise enterprise = marketService.modifyAvaliableEnterprise(userId, enterpriseId, params.isAvaliable());
+		Enterprise enterprise = marketService.modifyAvaliableEnterprise(userId, enterpriseId, !params.isAvaliable());
 
 		return EnterpriseConversor.toEnterpriseDto(enterprise);
 	}

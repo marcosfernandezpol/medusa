@@ -49,6 +49,7 @@ const GraphicChart = ({ data /* see data tab */ }) => (
         pointBorderColor={{ from: 'serieColor' }}
         pointLabelYOffset={-12}
         useMesh={true}
+		enableArea={true}
         
     />
 )

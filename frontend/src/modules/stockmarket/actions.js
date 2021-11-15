@@ -3,8 +3,9 @@ import backend from '../../backend';
 
 
 
-export const transferEventCompleted = () => ({
+export const transferEventCompleted = (balance) => ({
     type: actionTypes.TRANSFER_COMPLETED,
+	balance
 })
 
 export const cleartransferEvent = () => ({
@@ -12,12 +13,14 @@ export const cleartransferEvent = () => ({
 })
 
 
-export const transfer = (userId, money, operation, onSuccess, 
-							onErrors) => dispatch => {
+export const transfer = (money, operation, onSuccess, onErrors) => dispatch => {
 	dispatch(cleartransferEvent())
-	backend.stockMarketService.transfer(userId, money, operation, () => {
-		dispatch(transferEventCompleted());
-		onSuccess();
+	backend.stockMarketService.transfer( 
+		money, 
+		operation, 
+		balance => {
+			dispatch(transferEventCompleted(balance));
+			onSuccess()
 		},
 		onErrors)
 };

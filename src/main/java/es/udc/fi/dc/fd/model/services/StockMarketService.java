@@ -24,7 +24,7 @@ public interface StockMarketService {
 	public Enterprise createAnnualBenefits(Long userId, Long enterpriseId, AnnualBenefitsListDto benefitsList)
 			throws DuplicateInstanceException, PermissionException, InstanceNotFoundException, InvalidArgumentException;
 
-	public void transfer(Long userId, Float money, String Operation)
+	public float transfer(Long userId, Float money, String Operation)
 			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException;
 
 	public void order(Long owner, OrderType orderType, Float price, int number, Long enterpriseId, LocalDate deadline)

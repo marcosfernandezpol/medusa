@@ -11,3 +11,6 @@ export const isAdmin = state =>
 
 export const getUserName = state => 
     isLoggedIn(state) ? getUser(state).login : null;
+
+export const getUserBalance = state => 
+    isLoggedIn(state) ?  getUser(state).balance : null;
