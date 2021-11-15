@@ -16,4 +16,12 @@ export const findOrders = (option, avaliable, onSuccess) =>{
 	
 	appFetch(path, fetchConfig('GET'), onSuccess);
 	}
+	
+export const setUnavaliable = (enterprise, enterpriseId, onSuccess, onErrors) =>{
+	
+	let path=`/market/avaliable/${enterpriseId}`;
+	
+	
+	appFetch(path, fetchConfig('PUT',enterprise), onSuccess);
+	}
 

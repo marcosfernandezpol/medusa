@@ -10,6 +10,7 @@ const FindEnterprisesResult = () => {
     const EnterpriseSearch = useSelector(selectors.getEnterprises);
     const dispatch = useDispatch();
 	const [enterpriseName, setEnterpriseName] = useState('');
+	
 
 	const filterEnterprise = () => {
 		

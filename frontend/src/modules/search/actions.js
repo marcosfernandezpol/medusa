@@ -74,8 +74,6 @@ export const searchBoughtOrders = (option, avaliable, onErrors) => (dispatch ,ge
 }
 
 
-
-
 export const searchNotBoughtOrdersCompleted = (notBought) => ({
 	type: actionTypes.SEARCH_NOT_BOUGHT_COMPLETED,
 	notBought
@@ -141,5 +139,29 @@ export const searchNotSoldOrders = (option, avaliable,onErrors) => (dispatch,get
 		avaliable,
 		notSold => dispatch(searchNotSoldOrdersCompleted(notSold))
 	);
+}
+
+export const clearUnavaliable = () => ({
+	type: actionTypes.CLEAR_UNAVALIABLE
+})
+
+export const setUnavaliableCompleted = enterprise => ({
+    type: actionTypes.SET_UNAVALIABLE_COMPLETED,
+    enterprise
+})
+
+export const setUnavaliable = (enterprise,enterpriseId,onSuccess,onErrors) => (dispatch, getState) => {
+	
+	backend.searchService.setUnavaliable(
+		enterprise,
+		enterpriseId,
+		enterprise => {
+			dispatch(setUnavaliableCompleted(enterprise));
+		},
+		onSuccess,
+		onErrors
+	);
+	
+	
 }
 

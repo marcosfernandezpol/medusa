@@ -103,7 +103,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 	}
 
 	@Override
-	public void transfer(Long userId, Float money, String operation)
+	public float transfer(Long userId, Float money, String operation)
 			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException {
 
 		// Comprobamos la existencia del usuario
@@ -120,10 +120,12 @@ public class StockMarketServiceImpl implements StockMarketService {
 		if (operation.equals("INCOME")) { // Caso de ingresar
 			user.setBalance(money + user.getBalance());
 			userDao.save(user);
+			return user.getBalance();
 		} else if (operation.equals("WITHDRAW")) { // Caso de retirar
 			if (user.getBalance() >= money) {
 				user.setBalance(user.getBalance() - money);
 				userDao.save(user);
+				return user.getBalance();
 			} else {
 
 				throw new NotEnoughBalanceException("Not enough balance"); // Cantidad para retirar insuficiente

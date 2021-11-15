@@ -9,7 +9,7 @@ const initialState = {
 	notBought: null,
 	sold: null,
 	notSold: null,
-	enterpriseHistoric: null
+	enterpriseHistoric: null,
 }
 
 
