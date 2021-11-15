@@ -101,9 +101,9 @@ public class StockMarketServiceTest {
 
 		userDao.save(client);
 
-		stockMarketService.transfer(client.getId(), Float.valueOf(500), "INCOME");
+		float aux = stockMarketService.transfer(client.getId(), Float.valueOf(500), "INCOME");
 
-		assertTrue(client.getBalance() == 1700F);
+		assertTrue(aux == client.getBalance());
 	}
 
 	@Test
@@ -114,8 +114,8 @@ public class StockMarketServiceTest {
 
 		userDao.save(client);
 
-		stockMarketService.transfer(client.getId(), Float.valueOf(200), "WITHDRAW");
-		assertTrue(client.getBalance() == 1000F);
+		float aux = stockMarketService.transfer(client.getId(), Float.valueOf(200), "WITHDRAW");
+		assertTrue(client.getBalance() == aux);
 
 	}
 
