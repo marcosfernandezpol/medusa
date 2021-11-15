@@ -158,6 +158,7 @@ export const setUnavaliable = (enterprise,enterpriseId,onSuccess,onErrors) => (d
 		enterprise => {
 			dispatch(setUnavaliableCompleted(enterprise));
 		},
+		onSuccess,
 		onErrors
 	);
 	
