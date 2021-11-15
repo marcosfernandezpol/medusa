@@ -16,4 +16,7 @@ export const updateEnterprise = (id,annualBenefits,onSuccess, onErrors) =>
 	
 export const createOrder = (order, onSuccess, onErrors) =>
 	appFetch(`/market/order`, fetchConfig('POST', order), onSuccess, onErrors);
+	
+export const deleteOrder = (orderId, avaliable , onSuccess, onErrors) =>
+	appFetch(`/market/delete_order`, fetchConfig('POST', {orderId, avaliable}), onSuccess, onErrors);
 
