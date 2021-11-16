@@ -75,6 +75,7 @@ export default {
 	'project.global.fields.requestdate':'Request Date',
 	'project.global.fields.orderType' : 'OrderType',
 	'project.global.fields.price':'Price',
+	'project.global.fields.avaliable':'Avaliable',
 	'project.global.fields.actionPrice':'Price per Action',
 	'project.global.fields.actionsNumber':'Number of Actions',
 	'project.global.fields.enterpriseName':'Enterprise Name',

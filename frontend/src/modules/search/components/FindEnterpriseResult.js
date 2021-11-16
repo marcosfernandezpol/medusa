@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FormattedMessage, FormattedNumber } from 'react-intl';
@@ -18,7 +18,11 @@ const FindEnterpriseResult = () => {
 	const enterprise = useSelector(selectors.getEnterprise);
 	const isAdmin = useSelector(users.selectors.isAdmin);
 	const dispatch = useDispatch();
+	const [numDays, setNumDays]  = useState('');
+	const [loaded, setLoaded] = useState(false);
+	let form;
 
+	
 	const history = useHistory();
 	const { id } = useParams();
 	const buy = 1;
@@ -38,12 +42,25 @@ const FindEnterpriseResult = () => {
 		const enterpriseId = Number(id);
 		if (!Number.isNaN(enterpriseId)) {
 			dispatch(actions.searchEnterpriseById(enterpriseId));
-			dispatch(actions.searchEnterpriseHistoric(enterpriseId));
+			dispatch(actions.searchEnterpriseHistoric(enterpriseId,1));
+
+			//dispatch(actions.searchEnterpriseHistoric(enterpriseId,numDays));	
 		}
 
 		return () => null;
 
-	}, [id, dispatch]);
+	}, [id, dispatch, !numDays]);
+	
+	const handleSubmit = (event) => {
+		event.preventDefault();
+
+		const enterpriseId = Number(id);
+		let number = Number(numDays);
+		if (!Number.isNaN(enterpriseId)) {		
+			dispatch(actions.searchEnterpriseHistoric(enterpriseId,numDays));
+			
+		}
+	}
 	
 	/*useEffect(() => {
 		const enterpriseId = Number(id);
@@ -55,7 +72,6 @@ const FindEnterpriseResult = () => {
 	
 	const data = useSelector(selectors.getEnterpriseHistoric);
 	
-	console.log(data);
 
 	if (!enterprise) {
 
@@ -108,6 +124,19 @@ const FindEnterpriseResult = () => {
                 </h5>
 				</div>
 			</div>
+			<div className="col-md-4">
+				<form ref={node => form = node}
+						className="needs-validation" noValidate
+						onSubmit={handleSubmit}>
+					<input type="number" step="1" id="numDays" className="form-control"
+									value={numDays}
+									onChange={e => setNumDays(e.target.value)}
+									placeholder="Number of Days"
+									autoFocus
+									required />
+					<button onClick={handleSubmit} class="fas fa-sort"></button>
+				</form>
+            </div>
 			<div style={{height:500}}>
 				<GraphicChart data = {dataExample}/>
 			</div>

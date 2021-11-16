@@ -2,7 +2,6 @@ package es.udc.fi.dc.fd.rest.controllers;
 
 import java.util.Locale;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -24,6 +23,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotAvaliableException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotCreatorException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.services.StockMarketService;
@@ -153,7 +153,7 @@ public class MarketController {
 		return new ErrorsDto(errorMessage);
 
 	}
-	
+
 	@ExceptionHandler(InvalidArgumentException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
@@ -165,6 +165,7 @@ public class MarketController {
 		return new ErrorsDto(errorMessage);
 
 	}
+	
 
 	
 	@ExceptionHandler(NotAvaliableException.class)
@@ -186,13 +187,14 @@ public class MarketController {
 	 * @return the response entity
 	 * @throws DuplicateInstanceException the duplicate instance exception
 	 * @throws PermissionException
-	 * @throws NumberException 
+	 * @throws NumberException
 	 */
 	@PostMapping("/create_enterprise")
 	public EnterpriseSummaryDto createEnterprise(@RequestAttribute Long userId,
 			@Validated @RequestBody EnterpriseSummaryDto enterpriseDto)
 			throws DuplicateInstanceException, PermissionException, NumberException, InvalidArgumentException {
-
+		
+		enterpriseDto.setCreatorId(userId);
 		Enterprise enterprise = EnterpriseSummaryConversor.toEnterpriseSummary(enterpriseDto);
 		Enterprise e = marketService.createEnterprise(userId, enterprise);
 		return EnterpriseSummaryConversor.toEnterpriseSummaryDto(e);
@@ -208,9 +210,9 @@ public class MarketController {
 	@PutMapping("/update_enterprise/{id}")
 	public EnterpriseDto updateEnterprise(@RequestAttribute Long userId, @PathVariable("id") Long id,
 			@Validated({ EnterpriseDto.UpdateValidations.class }) @RequestBody AnnualBenefitsListDto params)
-			throws InstanceNotFoundException, PermissionException, DuplicateInstanceException, InvalidArgumentException {
-		
-		
+			throws InstanceNotFoundException, PermissionException, DuplicateInstanceException,
+			InvalidArgumentException {
+
 		Enterprise enterprise = marketService.createAnnualBenefits(userId, id, params);
 
 		return EnterpriseConversor.toEnterpriseDto(enterprise);
@@ -220,9 +222,13 @@ public class MarketController {
 	 * Make a money transfer.
 	 */
 	@PostMapping("/transfer")
-	public void transfer(@RequestAttribute Long userId, @Validated @RequestBody TransferParamsDto params)
+	public TransferParamsDto transfer(@RequestAttribute Long userId, @Validated @RequestBody TransferParamsDto params)
 			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException {
-		marketService.transfer(userId, params.getMoney(), params.getOperation());
+			
+			TransferParamsDto result = new TransferParamsDto();
+			result.setMoney(marketService.transfer(userId, params.getMoney(), params.getOperation()));
+			
+		return result;
 	}
 
 	/**
@@ -231,18 +237,32 @@ public class MarketController {
 	@PostMapping("/order")
 	public void order(@RequestAttribute Long userId, @Validated @RequestBody OrderParamsDto params)
 			throws NotEnoughBalanceException, NotOwnedException {
-		marketService.order(userId, params.getType(), params.getPrice(), params.getNumber(), params.getEnterpriseId());
+		marketService.order(userId, params.getType(), params.getPrice(), params.getNumber(), params.getEnterpriseId(),
+				params.getDeadline());
 	}
-	
 
 	/**
 	 * Delete not executed orders.
 	 */
 	@PostMapping("/delete_order")
-	public void delete(@RequestAttribute Long userId,
-			@Validated @RequestBody DeleteParamsDto params)
+	public void delete(@RequestAttribute Long userId, @Validated @RequestBody DeleteParamsDto params)
 			throws NotOwnedException, InstanceNotFoundException, NotAvaliableException {
 
 		marketService.deleteOrder(userId, params.getOrderId(), params.getAvaliable());
 	}
+
+	/**
+	 * Modify availability of enterprises.
+	 */
+	@PutMapping("/avaliable/{id}")
+	public EnterpriseDto avaliable_enterprise(@RequestAttribute Long userId, @PathVariable("id") Long enterpriseId,
+			@RequestBody EnterpriseSummaryDto params)
+
+			throws NotCreatorException, InstanceNotFoundException {
+
+		Enterprise enterprise = marketService.modifyAvaliableEnterprise(userId, enterpriseId, !params.isAvaliable());
+
+		return EnterpriseConversor.toEnterpriseDto(enterprise);
+	}
+
 }

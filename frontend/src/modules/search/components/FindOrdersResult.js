@@ -21,7 +21,7 @@ const FindOrdersResult = ({orders, displayTrash}) =>{
 	
 	const handleClick = () => {
 		dispatch(actions.deleteOrder(order.id, displayTrash));
-		history.push(`/search/orders`);
+		window.location.reload();
 	}
 	
 	

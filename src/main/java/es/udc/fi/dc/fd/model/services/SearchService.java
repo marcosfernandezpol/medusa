@@ -15,6 +15,6 @@ public interface SearchService {
 
 	public Enterprise findEnterprise(Long id) throws InstanceNotFoundException;
 	
-	public List<ActionPriceHistoric> findHistorics(Long id) throws InstanceNotFoundException;
+	public List<ActionPriceHistoric> findHistorics(Long id, int numberOfDays) throws InstanceNotFoundException;
 
 }

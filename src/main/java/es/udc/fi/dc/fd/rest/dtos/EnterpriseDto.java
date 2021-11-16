@@ -39,7 +39,7 @@ public class EnterpriseDto {
 	public EnterpriseDto() {
 	}
 
-	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
+	/*public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
 			Float actionsPrice) {
 
 		super();
@@ -52,6 +52,22 @@ public class EnterpriseDto {
 		this.actionsPrice = actionsPrice;
 		this.avaliable = true;
 
+	}*/
+	
+	
+
+	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
+			Float actionsPrice, List<AnnualBenefitsDto> anualBenefitsDto, boolean avaliable) {
+		super();
+		this.id = id;
+		this.enterpriseName = enterpriseName;
+		this.acronim = acronim;
+		this.fundation = fundation;
+		this.incomes = incomes;
+		this.actions = actions;
+		this.actionsPrice = actionsPrice;
+		this.anualBenefitsDto = anualBenefitsDto;
+		this.avaliable = avaliable;
 	}
 
 	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,

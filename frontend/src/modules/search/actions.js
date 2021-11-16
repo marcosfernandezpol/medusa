@@ -44,9 +44,9 @@ export const searchEnterpriseById = id => (dispatch) => {
 		enterprise => dispatch(searchEnterpriseByIdCompleted(enterprise)))
 }
 
-export const searchEnterpriseHistoric = id => (dispatch) => {
+export const searchEnterpriseHistoric = (id, numberOfDays) => (dispatch) => {
 	dispatch(clearSearchEnterpriseHistoric());
-	backend.searchService.findEnterpriseHistoric(id,
+	backend.searchService.findEnterpriseHistoric(id,numberOfDays,
 		enterpriseHistoric => dispatch(searchEnterpriseHistoricCompleted(enterpriseHistoric)))
 }
 
@@ -72,8 +72,6 @@ export const searchBoughtOrders = (option, avaliable, onErrors) => (dispatch ,ge
 		bought => dispatch(searchBoughtOrdersCompleted(bought))
 	);
 }
-
-
 
 
 export const searchNotBoughtOrdersCompleted = (notBought) => ({
@@ -143,6 +141,7 @@ export const searchNotSoldOrders = (option, avaliable,onErrors) => (dispatch,get
 	);
 }
 
+
 export const deleteOrdersCompleted = () => ({
 	type: actionTypes.DELETE_ORDER_COMPLETED
 });
@@ -153,6 +152,28 @@ export const deleteOrder = (orderId, avaliable, onErrors) => (dispatch,getState)
 		orderId,
 		avaliable,
 		()=>dispatch(deleteOrdersCompleted())
+	);
+}
+
+export const clearUnavaliable = () => ({
+	type: actionTypes.CLEAR_UNAVALIABLE
+})
+
+export const setUnavaliableCompleted = enterprise => ({
+    type: actionTypes.SET_UNAVALIABLE_COMPLETED,
+    enterprise
+})
+
+export const setUnavaliable = (enterprise,enterpriseId,onSuccess,onErrors) => (dispatch, getState) => {
+	
+	backend.searchService.setUnavaliable(
+		enterprise,
+		enterpriseId,
+		enterprise => {
+			dispatch(setUnavaliableCompleted(enterprise));
+		},
+		onSuccess,
+		onErrors
 	);
 }
 
