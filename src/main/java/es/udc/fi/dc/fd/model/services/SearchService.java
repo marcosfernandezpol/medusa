@@ -17,4 +17,5 @@ public interface SearchService {
 	
 	public List<ActionPriceHistoric> findHistorics(Long id, int numberOfDays) throws InstanceNotFoundException;
 
+	public List<OrderLine> findUserActions(Long userId, Boolean avaliable)throws InstanceNotFoundException;
 }

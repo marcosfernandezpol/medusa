@@ -125,4 +125,41 @@ public class SearchServiceImpl implements SearchService {
 		return result;
 	}
 
+	@Override
+	public List<OrderLine> findUserActions(Long userId, Boolean avaliable) throws InstanceNotFoundException {
+		
+
+		Optional<User> userOp = userDao.findById(userId);
+		User user = null;
+		
+		if (userOp.isPresent())
+			user = userOp.get();
+		else throw new InstanceNotFoundException("No existe user con ese id", userId);
+		
+
+		List<OrderLine> buyOrders = orderLineDao.findByOwnerAndOrderTypeAndAvaliableOrderByRequestDateDesc(user, OrderType.BUY, false).get();
+		
+		List<OrderLine> sellOrders = orderLineDao.findByOwnerAndOrderTypeAndAvaliableOrderByRequestDateDesc(user, OrderType.SELL, false).get();
+		
+		
+		List<OrderLine> userActions = null;
+		
+		if(sellOrders==null) {
+			userActions=buyOrders;
+			return userActions;
+		}
+		
+		if(buyOrders==null) {
+			return null;
+		}
+		
+		for(OrderLine orderLine : buyOrders) {
+			if (sellOrders.contains(orderLine.getEnterprise())) {
+				
+			}
+		}
+		
+		return userActions;
+	}
+
 }
