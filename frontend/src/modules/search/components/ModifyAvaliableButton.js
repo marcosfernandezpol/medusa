@@ -34,7 +34,7 @@ const ModifyAvaliableButton = ({ id, enterprise }) => {
 
 	}
 	
-	if (id == enterprise.id) {
+	if (id == enterprise.creatorId) {
 		return (
 			<td>
 			<button className="btn btn-primary" onClick={() => handleClick({ enterprise })}>
