@@ -82,6 +82,7 @@ export default {
 	'project.global.fields.orderList':'Order Lists',
 	'project.global.fields.executedList':'Executed List',
 	'project.global.fields.notExecutedList':'Not Executed List',
+	'project.global.fields.deadLine':'Dead Line',
 	'project.global.buttons.submitOperation':'Submit Operation',
 	'project.global.form.buySellForm':'Operation Formulary',
 	'project.global.button.addElement':'Add Element',

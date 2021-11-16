@@ -12,6 +12,7 @@ const CreateOrders = () => {
 	const history = useHistory();
 	const [numberActions, setNumberActions] = useState('');
 	const [priceActions, setPriceActions] = useState('');
+	const [deadline, setDeadline] = useState('');
 	const [backendErrors, setBackendErrors] = useState(null);
 	const { id, enterpriseName, type } = useParams();
 	let form;
@@ -27,7 +28,8 @@ const CreateOrders = () => {
 					type: type.trim(),
 					price: priceActions.trim(),
 					number: numberActions.trim(),
-					enterpriseId: id.trim()
+					enterpriseId: id.trim(),
+					deadline: deadline.trim()
 				},
 				() => history.push('/search/orders'),
 				errors => setBackendErrors(errors),
@@ -76,6 +78,22 @@ const CreateOrders = () => {
 								<input type="text" id="priceActions" className="form-control"
 									value={priceActions}
 									onChange={e => setPriceActions(e.target.value)}
+									required />
+								<div className="invalid-feedback">
+									<FormattedMessage id='project.global.validator.required' />
+								</div>
+							</div>
+						</div>
+						
+						<div className="form-group row">
+							<label htmlFor="deadline" className="col-md-3 col-form-label">
+								<FormattedMessage id="project.global.fields.deadLine" />
+							</label>
+							<div className="col-md-4">
+								<input type="date" id="deadline" className="form-control"
+									value={deadline}
+									min = {new Date().toISOString().split('T')[0]}
+									onChange={e => setDeadline(e.target.value)}
 									required />
 								<div className="invalid-feedback">
 									<FormattedMessage id='project.global.validator.required' />

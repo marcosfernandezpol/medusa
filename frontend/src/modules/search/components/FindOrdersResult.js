@@ -45,6 +45,9 @@ const FindOrdersResult = ({orders, displayTrash}) =>{
 				<th scope="col">
 					<FormattedMessage id='project.global.fields.enterpriseName' />
 				</th>
+				<th scope="col">
+					<FormattedMessage id='project.global.fields.deadLine' />
+				</th>
 				{displayTrash && <th scope="col"></th>}
 			</tr>
 		</thead>
@@ -58,6 +61,8 @@ const FindOrdersResult = ({orders, displayTrash}) =>{
 					<td> {order.price} € </td>
 					<td> {order.number} </td>
 					<td> {selectors.getEnterpriseName(enterprises,order.enterpriseId)} </td>
+					<td> {order.deadline} </td>
+
 					{displayTrash && <td> <button class=" fas fa-trash btn btn-light shadow-none" onClick={handleClick}></button></td>}
 				</tr>
 
