@@ -141,6 +141,20 @@ export const searchNotSoldOrders = (option, avaliable,onErrors) => (dispatch,get
 	);
 }
 
+
+export const deleteOrdersCompleted = () => ({
+	type: actionTypes.DELETE_ORDER_COMPLETED
+});
+
+export const deleteOrder = (orderId, avaliable, onErrors) => (dispatch,getState) => {
+	
+	backend.stockMarketService.deleteOrder(
+		orderId,
+		avaliable,
+		()=>dispatch(deleteOrdersCompleted())
+	);
+}
+
 export const clearUnavaliable = () => ({
 	type: actionTypes.CLEAR_UNAVALIABLE
 })
@@ -161,7 +175,5 @@ export const setUnavaliable = (enterprise,enterpriseId,onSuccess,onErrors) => (d
 		onSuccess,
 		onErrors
 	);
-	
-	
 }
 
