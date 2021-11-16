@@ -9,7 +9,7 @@ export const getBalanceAux = state =>
 
 
 export const getBalance = state => {
-	console.log(state);
+
 	if(	getBalanceAux(state)==null){
 		const balance = getModuleStateUser(state).user.balance;
 		return balance;
