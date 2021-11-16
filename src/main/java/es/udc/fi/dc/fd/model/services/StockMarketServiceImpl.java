@@ -201,10 +201,10 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 			for (OrderLine buyOrder : buyOrders) {
 
-				if (buyOrder.getDeadline().isAfter(LocalDate.now())) {
+				if (buyOrder.getDeadline() == null || buyOrder.getDeadline().isAfter(LocalDate.now())) {
 					for (OrderLine sellOrder : sellOrders) {
 
-						if (sellOrder.getDeadline().isAfter(LocalDate.now())) {
+						if (sellOrder.getDeadline()==null || sellOrder.getDeadline().isAfter(LocalDate.now())) {
 							if (sellOrder.getPrice() <= buyOrder.getPrice()) {
 
 								float operationPrice = sellOrder.getPrice();

@@ -31,6 +31,9 @@ const FindOrdersResult = ({ orders }) =>{
 				<th scope="col">
 					<FormattedMessage id='project.global.fields.enterpriseName' />
 				</th>
+				<th scope="col">
+					<FormattedMessage id='project.global.fields.deadLine' />
+				</th>
 			</tr>
 		</thead>
 
@@ -43,6 +46,8 @@ const FindOrdersResult = ({ orders }) =>{
 					<td> {order.price} € </td>
 					<td> {order.number} </td>
 					<td> {selectors.getEnterpriseName(enterprises,order.enterpriseId)} </td>
+					<td> {order.deadline} </td>
+
 				</tr>
 
 
