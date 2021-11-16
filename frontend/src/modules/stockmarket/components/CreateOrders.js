@@ -92,7 +92,7 @@ const CreateOrders = () => {
 							<div className="col-md-4">
 								<input type="date" id="deadline" className="form-control"
 									value={deadline}
-									//min = {new Date().toISOString().split('T')[0]}
+									min = {new Date().toISOString().split('T')[0]}
 									onChange={e => setDeadline(e.target.value)}
 									required />
 								<div className="invalid-feedback">
