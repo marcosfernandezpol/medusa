@@ -18,5 +18,8 @@ export const SEARCH_SOLD_COMPLETED = "project/search/searchSoldCompleted";
 export const CLEAR_NOT_SOLD = "project/search/clearNotSoldOrders";
 export const SEARCH_NOT_SOLD_COMPLETED = "project/search/searchNotSoldCompleted";
 
+export const DELETE_ORDER_COMPLETED="project/market/deleteOrderCompleted";
+
 export const CLEAR_UNAVALIABLE = "project/search/clearUnavaliable";
 export const SET_UNAVALIABLE_COMPLETED = "project/search/setUnavaliableCompleted"
+

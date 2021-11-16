@@ -29,7 +29,7 @@ const ModifyAvaliableButton = ({ id, enterprise }) => {
 		dispatch(actions.setUnavaliable(
 			result,
 			enterprise.id,
-			history.push('/'),
+			window.location.reload(),
 			errors => setBackendErrors(errors)));
 
 	}

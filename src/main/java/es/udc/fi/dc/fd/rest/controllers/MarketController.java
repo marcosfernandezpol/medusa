@@ -166,19 +166,19 @@ public class MarketController {
 
 	}
 	
+
 	
 	@ExceptionHandler(NotAvaliableException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public ErrorsDto NotAvaliableException(NotAvaliableException exception, Locale locale) {
 
-		String errorMessage = messageSource.getMessage(NOT_AVALIABLE_EXCEPTION_CODE, null, NOT_AVALIABLE_EXCEPTION_CODE,
-				locale);
+		String errorMessage = messageSource.getMessage(NOT_AVALIABLE_EXCEPTION_CODE, null,
+				NOT_AVALIABLE_EXCEPTION_CODE, locale);
 
 		return new ErrorsDto(errorMessage);
 
 	}
-
 
 	/**
 	 * Create an enterprise.

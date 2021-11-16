@@ -1,16 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import Orders from './Orders';
 import * as selectors from '../selectors';
-import { useSelector} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import * as actions from '../actions';
 
 
-const FindOrdersResult = ({ orders }) =>{
+const FindOrdersResult = ({orders, displayTrash}) =>{
 
 	const enterprises = useSelector(selectors.getEnterprises);
+	const dispatch = useDispatch();
+	var order;
+	const history = useHistory();
+	
+	for(let i = 0; i < orders.length; i++){ 
+		order = orders[i];
+	}
 
-
+	
+	const handleClick = () => {
+		dispatch(actions.deleteOrder(order.id, displayTrash));
+		window.location.reload();
+	}
+	
+	
 	return(
 	<table className="table table-striped table-hover text-center">
 
@@ -34,6 +48,7 @@ const FindOrdersResult = ({ orders }) =>{
 				<th scope="col">
 					<FormattedMessage id='project.global.fields.deadLine' />
 				</th>
+				{displayTrash && <th scope="col"></th>}
 			</tr>
 		</thead>
 
@@ -48,6 +63,7 @@ const FindOrdersResult = ({ orders }) =>{
 					<td> {selectors.getEnterpriseName(enterprises,order.enterpriseId)} </td>
 					<td> {order.deadline} </td>
 
+					{displayTrash && <td> <button class=" fas fa-trash btn btn-light shadow-none" onClick={handleClick}></button></td>}
 				</tr>
 
 

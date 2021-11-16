@@ -1,6 +1,7 @@
 package es.udc.fi.dc.fd.model.services;
 
 import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -201,7 +202,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 			for (OrderLine buyOrder : buyOrders) {
 
-				if (buyOrder.getDeadline() == null || buyOrder.getDeadline().isAfter(LocalDate.now())) {
+				if (buyOrder.getDeadline()==null || buyOrder.getDeadline().isAfter(LocalDate.now())) {
 					for (OrderLine sellOrder : sellOrders) {
 
 						if (sellOrder.getDeadline()==null || sellOrder.getDeadline().isAfter(LocalDate.now())) {
