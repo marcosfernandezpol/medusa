@@ -14,7 +14,9 @@ const GraphicChart = ({ data /* see data tab */ }) => (
 		xScale={{ 
 			type: "time",
             format: "%Y-%m-%d %H:%M:%S",
-            precision: "minute"}}
+            precision: "second",
+			useUTC:false
+			}}
         xFormat="time:%HH:%MM:%SS"
 		yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
         yFormat=" >-.2f"
