@@ -25,3 +25,6 @@ export const setUnavaliable = (enterprise, enterpriseId, onSuccess, onErrors) =>
 	appFetch(path, fetchConfig('PUT',enterprise), onSuccess);
 	}
 
+export const findActions = (onSuccess) => {
+	appFetch(`/search/user/actions`, fetchConfig('GET'), onSuccess)
+}

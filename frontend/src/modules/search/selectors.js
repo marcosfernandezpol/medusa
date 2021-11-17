@@ -34,3 +34,5 @@ export const getBought = state => getModuleState(state).bought;
 export const getNotBought = state => getModuleState(state).notBought;
 export const getSold = state => getModuleState(state).sold;
 export const getNotSold = state => getModuleState(state).notSold;
+
+export const getActions = state => getModuleState(state).actions;
