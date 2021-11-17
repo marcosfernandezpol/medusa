@@ -1,7 +1,6 @@
 package es.udc.fi.dc.fd.model.services;
 
 import java.time.LocalDate;
-
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -151,10 +150,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 		
 	}
 	
-	private void matchOrderManagement(OrderLine buyOrder, OrderLine sellOrder, int numSold, int numRemain,
-			int control) {
+	private void matchOrderManagement(OrderLine buyOrder, OrderLine sellOrder, int numSold, int numRemain, float price, int control) {
 		if (control == 0) {
-			OrderLine sellRemain = new OrderLine(OrderType.SELL, OrderLineType.LIMIT, sellOrder.getOwner(), sellOrder.getPrice(), numRemain,
+			OrderLine sellRemain = new OrderLine(OrderType.SELL, sellOrder.getOrderLineType(), sellOrder.getOwner(), sellOrder.getPrice() , numRemain,
 					sellOrder.getEnterprise(), sellOrder.getDeadline());
 			sellRemain.setRequestDate(sellOrder.getRequestDate());
 			orderLineDao.save(sellRemain);
@@ -162,93 +160,168 @@ public class StockMarketServiceImpl implements StockMarketService {
 			sellOrder.setNumber(numSold);
 			sellOrder.setAvaliable(false);
 
-			buyOrder.setPrice(sellOrder.getPrice());
+			buyOrder.setPrice(price);
 			buyOrder.setAvaliable(false);
 
 			match(sellRemain.getEnterprise());
 		} else if (control == 1) {
-			OrderLine buyRemain = new OrderLine(OrderType.BUY, OrderLineType.LIMIT, buyOrder.getOwner(), buyOrder.getPrice(), numRemain,
+			OrderLine buyRemain = new OrderLine(OrderType.BUY, buyOrder.getOrderLineType(), buyOrder.getOwner(), buyOrder.getPrice() , numRemain,
 					buyOrder.getEnterprise(), buyOrder.getDeadline());
 			buyRemain.setRequestDate(buyOrder.getRequestDate());
 			orderLineDao.save(buyRemain);
 
 			buyOrder.setNumber(numSold);
-			buyOrder.setPrice(sellOrder.getPrice());
+			buyOrder.setPrice(price);
 			buyOrder.setAvaliable(false);
 
 			sellOrder.setAvaliable(false);
 
 			match(buyRemain.getEnterprise());
 		} else if (control == 2) {
-			buyOrder.setPrice(sellOrder.getPrice());
+			buyOrder.setPrice(price);
 
 			buyOrder.setAvaliable(false);
 			sellOrder.setAvaliable(false);
 		}
 	}
 
-	private void match(Enterprise enterprise) {
+//	private void match(Enterprise enterprise) {
+//
+//		Optional<List<OrderLine>> buyOrdersO = orderLineDao
+//				.findByOrderTypeAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, enterprise, true);
+//
+//		Optional<List<OrderLine>> sellOrdersO = orderLineDao
+//				.findByOrderTypeAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.SELL, enterprise, true);
+//
+//		if (!(buyOrdersO.isEmpty() || sellOrdersO.isEmpty())) {
+//
+//			List<OrderLine> buyOrders = buyOrdersO.get();
+//			List<OrderLine> sellOrders = sellOrdersO.get();
+//
+//			for (OrderLine buyOrder : buyOrders) {
+//
+//				if (buyOrder.getDeadline()==null || buyOrder.getDeadline().isAfter(LocalDate.now())) {
+//					for (OrderLine sellOrder : sellOrders) {
+//
+//						if (sellOrder.getDeadline()==null || sellOrder.getDeadline().isAfter(LocalDate.now())) {
+//							if (sellOrder.getPrice() <= buyOrder.getPrice()) {
+//
+//								float operationPrice = sellOrder.getPrice();
+//
+//								if (sellOrder.getAvaliable() && buyOrder.getAvaliable()) {
+//
+//									if (sellOrder.getNumber() > buyOrder.getNumber()) {
+//										int numSold = buyOrder.getNumber();
+//										int numRemain = sellOrder.getNumber() - numSold;
+//
+//										matchUserManagement(buyOrder, sellOrder, numSold, operationPrice);
+//
+//										matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, 0);
+//
+//									} else if (sellOrder.getNumber() < buyOrder.getNumber()) {
+//
+//										int numSold = sellOrder.getNumber();
+//										int numRemain = buyOrder.getNumber() - numSold;
+//
+//										matchUserManagement(buyOrder, sellOrder, numSold, operationPrice);
+//
+//										matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, 1);
+//
+//									} else {
+//										int numSold = sellOrder.getNumber();
+//										int numRemain = 0;
+//
+//										matchUserManagement(buyOrder, sellOrder, numSold, operationPrice);
+//
+//										matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, 2);
+//									}
+//
+//									enterprise.setStockPrice(sellOrder.getPrice());
+//									ActionPriceHistoric historic = new ActionPriceHistoric(enterprise,LocalDateTime.now(),sellOrder.getPrice());
+//									actionPriceHistoricDao.save(historic);
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
 
-		Optional<List<OrderLine>> buyOrdersO = orderLineDao
-				.findByOrderTypeAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, enterprise, true);
-
+	
+	private void manageOrdersNumber(Enterprise enterprise, OrderLine sellOrder, OrderLine buyOrder, Float operationPrice) {
+		int numSoldMax = (int) Math.floor((buyOrder.getOwner().getBalance() % operationPrice));
+		int numSoldExpected = sellOrder.getNumber() > buyOrder.getNumber() ? buyOrder.getNumber() : sellOrder.getNumber();
+		int numSold = numSoldMax > numSoldExpected ? numSoldExpected : numSoldMax;
+		int numRemain = (sellOrder.getNumber() > buyOrder.getNumber() ? sellOrder.getNumber() : buyOrder.getNumber()) - numSold;
+		
+		matchUserManagement(buyOrder, sellOrder, numSold, operationPrice);
+		
+		if (sellOrder.getNumber() > buyOrder.getNumber()) {	
+			matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 0);
+		} else if (sellOrder.getNumber() < buyOrder.getNumber()) {
+			matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 1);
+		} else {
+			matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 2);
+		}
+		
+		if (numSold != 0) {
+			enterprise.setStockPrice(operationPrice);
+			ActionPriceHistoric historic = new ActionPriceHistoric(enterprise,LocalDateTime.now(), operationPrice);
+			actionPriceHistoricDao.save(historic);
+		}
+	}
+	
+	private void matchBuyLimitOrder(OrderLine buyOrder, Enterprise enterprise) {
 		Optional<List<OrderLine>> sellOrdersO = orderLineDao
-				.findByOrderTypeAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.SELL, enterprise, true);
-
-		if (!(buyOrdersO.isEmpty() || sellOrdersO.isEmpty())) {
-
-			List<OrderLine> buyOrders = buyOrdersO.get();
-			List<OrderLine> sellOrders = sellOrdersO.get();
-
-			for (OrderLine buyOrder : buyOrders) {
-
-				if (buyOrder.getDeadline()==null || buyOrder.getDeadline().isAfter(LocalDate.now())) {
-					for (OrderLine sellOrder : sellOrders) {
-
-						if (sellOrder.getDeadline()==null || sellOrder.getDeadline().isAfter(LocalDate.now())) {
-							if (sellOrder.getPrice() <= buyOrder.getPrice()) {
-
-								float operationPrice = sellOrder.getPrice();
-
-								if (sellOrder.getAvaliable() && buyOrder.getAvaliable()) {
-
-									if (sellOrder.getNumber() > buyOrder.getNumber()) {
-										int numSold = buyOrder.getNumber();
-										int numRemain = sellOrder.getNumber() - numSold;
-
-										matchUserManagement(buyOrder, sellOrder, numSold, operationPrice);
-
-										matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, 0);
-
-									} else if (sellOrder.getNumber() < buyOrder.getNumber()) {
-
-										int numSold = sellOrder.getNumber();
-										int numRemain = buyOrder.getNumber() - numSold;
-
-										matchUserManagement(buyOrder, sellOrder, numSold, operationPrice);
-
-										matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, 1);
-
-									} else {
-										int numSold = sellOrder.getNumber();
-										int numRemain = 0;
-
-										matchUserManagement(buyOrder, sellOrder, numSold, operationPrice);
-
-										matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, 2);
-									}
-
-									enterprise.setStockPrice(sellOrder.getPrice());
-									ActionPriceHistoric historic = new ActionPriceHistoric(enterprise,LocalDateTime.now(),sellOrder.getPrice());
-									actionPriceHistoricDao.save(historic);
-								}
-							}
-						}
-					}
-				}
+				.findByOrderTypeAndEnterpriseAndAvaliableOrderByRequestDateAsc(OrderType.SELL, enterprise, true);
+		
+		if (!sellOrdersO.isEmpty()) { return; }
+		
+		List<OrderLine> sellOrders = sellOrdersO.get();
+		
+		for (OrderLine sellOrder : sellOrders) {
+			if (!(sellOrder.getDeadline()==null || sellOrder.getDeadline().isAfter(LocalDate.now()))) { continue; }
+		
+			if ((sellOrder.getPrice() <= buyOrder.getPrice()) || (sellOrder.getOrderLineType().equals(OrderLineType.MARKET))) {
+				float price = (sellOrder.getOrderLineType().equals(OrderLineType.MARKET)) ?
+					buyOrder.getPrice() :
+					(buyOrder.getDeadline().isBefore(sellOrder.getDeadline()) ?
+						buyOrder.getPrice() :
+						sellOrder.getPrice());
+				manageOrdersNumber(enterprise, sellOrder, buyOrder, price);
 			}
 		}
 	}
+	
+	private void match(Enterprise enterprise) {
+
+		Optional<List<OrderLine>> buyOrdersO = orderLineDao
+				.findByOrderTypeAndEnterpriseAndAvaliableOrderByRequestDateAsc(OrderType.BUY, enterprise, true);
+
+//		Optional<List<OrderLine>> sellOrdersO = orderLineDao
+//				.findByOrderTypeAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.SELL, enterprise, true);
+//		findByOrderTypeAndEnterpriseAndAvaliableOrderByPriceAsc
+
+		if (!buyOrdersO.isEmpty()) { return; }
+
+		List<OrderLine> buyOrders = buyOrdersO.get();
+
+		for (OrderLine buyOrder : buyOrders) {
+			if (!(buyOrder.getDeadline()==null || buyOrder.getDeadline().isAfter(LocalDate.now()))) { return; }
+			
+			if (buyOrder.getOrderLineType().equals(OrderLineType.LIMIT)) {
+				matchBuyLimitOrder(buyOrder, enterprise);
+			} else {
+//				matchBuyMarketOrder(buyOrder);
+			}
+		}
+		
+	}
+	
+	
+	
+	
 	
 	public int searchUserActionsNumber(User user, Enterprise enterprise) {
 		List<OrderLine> boughtStock = null;

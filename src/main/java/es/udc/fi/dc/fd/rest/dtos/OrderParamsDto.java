@@ -35,7 +35,7 @@ public class OrderParamsDto {
 		return orderLineType;
 	}
 
-	public void setType(OrderLineType type) {
+	public void setOrderLineType(OrderLineType type) {
 		this.orderLineType = type;
 	}
 
