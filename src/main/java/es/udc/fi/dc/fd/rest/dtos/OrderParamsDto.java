@@ -4,11 +4,14 @@ import javax.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
+import es.udc.fi.dc.fd.model.entities.OrderLine.OrderLineType;
 import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
 
 public class OrderParamsDto {
 
 	private OrderType type;
+	
+	private OrderLineType orderLineType;
 
 	private Float price;
 
@@ -25,6 +28,15 @@ public class OrderParamsDto {
 
 	public void setType(OrderType type) {
 		this.type = type;
+	}
+	
+	@NotNull
+	public OrderLineType getOrderLineType() {
+		return orderLineType;
+	}
+
+	public void setType(OrderLineType type) {
+		this.orderLineType = type;
 	}
 
 	@NotNull

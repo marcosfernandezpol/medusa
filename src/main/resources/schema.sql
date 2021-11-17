@@ -77,6 +77,7 @@ CREATE TABLE OrderLine (
 	id BIGINT NOT NULL AUTO_INCREMENT,
 	requestDate DATETIME NOT NULL,
 	orderType TINYINT NOT NULL,
+	orderLineType TINYINT NOT NULL,
 	userId BIGINT,
 	price FLOAT NOT NULL,
 	number INT  NOT NULL,

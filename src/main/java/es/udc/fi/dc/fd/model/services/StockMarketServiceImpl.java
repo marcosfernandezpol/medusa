@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +28,7 @@ import es.udc.fi.dc.fd.model.entities.AnnualBenefitsDao;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
 import es.udc.fi.dc.fd.model.entities.OrderLine;
+import es.udc.fi.dc.fd.model.entities.OrderLine.OrderLineType;
 import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
 import es.udc.fi.dc.fd.model.entities.OrderLineDao;
 import es.udc.fi.dc.fd.model.entities.User;
@@ -90,7 +90,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 				enterpriseDao.save(enterprise);
 
-				OrderLine order = new OrderLine(OrderType.SELL, null, enterprise.getStockPrice(), enterprise.getStock(),
+				OrderLine order = new OrderLine(OrderType.SELL, OrderLineType.LIMIT ,null, enterprise.getStockPrice(), enterprise.getStock(),
 						enterprise);
 
 				orderLineDao.save(order);
@@ -154,7 +154,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 	private void matchOrderManagement(OrderLine buyOrder, OrderLine sellOrder, int numSold, int numRemain,
 			int control) {
 		if (control == 0) {
-			OrderLine sellRemain = new OrderLine(OrderType.SELL, sellOrder.getOwner(), sellOrder.getPrice(), numRemain,
+			OrderLine sellRemain = new OrderLine(OrderType.SELL, OrderLineType.LIMIT, sellOrder.getOwner(), sellOrder.getPrice(), numRemain,
 					sellOrder.getEnterprise(), sellOrder.getDeadline());
 			sellRemain.setRequestDate(sellOrder.getRequestDate());
 			orderLineDao.save(sellRemain);
@@ -167,7 +167,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 			match(sellRemain.getEnterprise());
 		} else if (control == 1) {
-			OrderLine buyRemain = new OrderLine(OrderType.BUY, buyOrder.getOwner(), buyOrder.getPrice(), numRemain,
+			OrderLine buyRemain = new OrderLine(OrderType.BUY, OrderLineType.LIMIT, buyOrder.getOwner(), buyOrder.getPrice(), numRemain,
 					buyOrder.getEnterprise(), buyOrder.getDeadline());
 			buyRemain.setRequestDate(buyOrder.getRequestDate());
 			orderLineDao.save(buyRemain);
@@ -282,7 +282,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 	}
 
 	@Override
-	public void order(Long owner, OrderType orderType, Float price, int number, Long enterpriseId, LocalDate deadline)
+	public void order(Long owner, OrderType orderType, OrderLineType orderLineType, Float price, int number, Long enterpriseId, LocalDate deadline)
 			throws NotEnoughBalanceException, NotOwnedException, NotAvaliableException {
 
 		User user = null;
@@ -292,12 +292,12 @@ public class StockMarketServiceImpl implements StockMarketService {
 		Optional<Enterprise> enterpriseOp = enterpriseDao.findById(enterpriseId);
 
 		if (userOp.isPresent())
-			user = userOp.get(); // Else excepcion
+			user = userOp.get(); // Else exception
 		if (enterpriseOp.isPresent())
-			enterprise = enterpriseOp.get();// Else excepcion
+			enterprise = enterpriseOp.get();// Else exception
 		
 		if(enterprise.isAvaliable()) {
-			OrderLine order = new OrderLine(orderType, user, price, number, enterprise, deadline);
+			OrderLine order = new OrderLine(orderType, orderLineType, user, price, number, enterprise, deadline);
 	
 			if (order.getOrderType() == OrderType.BUY) {
 				if (user.getBalance() < (price * number))
@@ -376,14 +376,12 @@ public class StockMarketServiceImpl implements StockMarketService {
 	public void deleteOrder(Long owner, Long orderId, Boolean avaliable)
 			throws NotOwnedException, InstanceNotFoundException, NotAvaliableException {
 
-		User user = null;
 		OrderLine order = null;
 
 		Optional<User> userOp = userDao.findById(owner);
 		Optional<OrderLine> orderOp = orderLineDao.findById(orderId);
 
-		if (userOp.isPresent()) {
-			user = userOp.get();
+		if (userOp.get().equals(orderOp.get().getOwner())) { //condition changed
 
 			if (orderOp.isPresent()) {
 				order = orderOp.get();
@@ -407,7 +405,6 @@ public class StockMarketServiceImpl implements StockMarketService {
 	@Override
 	public Enterprise modifyAvaliableEnterprise(Long adminId, Long enterpriseId, Boolean avaliable)
 			throws NotCreatorException, InstanceNotFoundException {
-		// TODO Auto-generated method stub
 
 		Enterprise enterprise = null;
 

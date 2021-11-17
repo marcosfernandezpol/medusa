@@ -29,6 +29,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
 import es.udc.fi.dc.fd.model.entities.OrderLine;
+import es.udc.fi.dc.fd.model.entities.OrderLine.OrderLineType;
 import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
 import es.udc.fi.dc.fd.model.entities.OrderLineDao;
 import es.udc.fi.dc.fd.model.entities.User;
@@ -131,9 +132,9 @@ public class StockMarketServiceTest {
 		enterprise.setCreatorId(client.getId());
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, OrderLineType.LIMIT, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, OrderLineType.LIMIT, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, OrderLineType.LIMIT, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
 		Optional<List<OrderLine>> orderListOp = orderLineDao
 				.findByOwnerAndOrderTypeAndAvaliableOrderByRequestDateDesc(savedClient, OrderType.BUY, true);
 

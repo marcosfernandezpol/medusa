@@ -237,7 +237,7 @@ public class MarketController {
 	@PostMapping("/order")
 	public void order(@RequestAttribute Long userId, @Validated @RequestBody OrderParamsDto params)
 			throws NotEnoughBalanceException, NotOwnedException, NotAvaliableException {
-		marketService.order(userId, params.getType(), params.getPrice(), params.getNumber(), params.getEnterpriseId(),
+		marketService.order(userId, params.getType(), params.getOrderLineType(), params.getPrice(), params.getNumber(), params.getEnterpriseId(),
 				params.getDeadline());
 	}
 

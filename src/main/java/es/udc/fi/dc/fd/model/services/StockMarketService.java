@@ -10,6 +10,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.User;
+import es.udc.fi.dc.fd.model.entities.OrderLine.OrderLineType;
 import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
 import es.udc.fi.dc.fd.model.services.exceptions.InvalidArgumentException;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
@@ -28,7 +29,7 @@ public interface StockMarketService {
 	public float transfer(Long userId, Float money, String Operation)
 			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException;
 
-	public void order(Long owner, OrderType orderType, Float price, int number, Long enterpriseId, LocalDate deadline)
+	public void order(Long owner, OrderType orderType, OrderLineType orderLineType, Float price, int number, Long enterpriseId, LocalDate deadline)
 			throws NotEnoughBalanceException, NotOwnedException, NotAvaliableException;
 
 	public void deleteOrder(Long owner, Long orderId, Boolean avaliable)

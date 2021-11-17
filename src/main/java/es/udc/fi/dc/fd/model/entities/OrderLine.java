@@ -20,11 +20,18 @@ public class OrderLine {
 		SELL, BUY
 	}
 
+	public enum OrderLineType {
+		/** The order. */
+		LIMIT, MARKET
+	}
+	
 	private Long id;
 
 	private LocalDateTime requestDate;
 
 	private OrderType orderType;
+	
+	private OrderLineType orderLineType;
 
 	private User owner;
 
@@ -42,10 +49,11 @@ public class OrderLine {
 		super();
 	}
 
-	public OrderLine(OrderType type, User owner, Float price, int number, Enterprise enterprise) {
+	public OrderLine(OrderType orderType, OrderLineType orderLineType, User owner, Float price, int number, Enterprise enterprise) {
 		super();
 		this.requestDate = LocalDateTime.now();
-		this.orderType = type;
+		this.orderType = orderType;
+		this.orderLineType = orderLineType;
 		this.owner = owner;
 		this.price = price;
 		this.number = number;
@@ -53,10 +61,11 @@ public class OrderLine {
 		this.avaliable = true;
 	}
 
-	public OrderLine(OrderType type, User owner, Float price, int number, Enterprise enterprise, LocalDate deadline) {
+	public OrderLine(OrderType orderType, OrderLineType orderLineType, User owner, Float price, int number, Enterprise enterprise, LocalDate deadline) {
 		super();
 		this.requestDate = LocalDateTime.now();
-		this.orderType = type;
+		this.orderType = orderType;
+		this.orderLineType = orderLineType;
 		this.owner = owner;
 		this.price = price;
 		this.number = number;
@@ -89,6 +98,14 @@ public class OrderLine {
 
 	public void setOrderType(OrderType type) {
 		this.orderType = type;
+	}
+	
+	public OrderLineType getOrderLineType() {
+		return orderLineType;
+	}
+
+	public void setOrderLineType(OrderLineType type) {
+		this.orderLineType = type;
 	}
 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -145,7 +162,7 @@ public class OrderLine {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(avaliable, requestDate, enterprise, id, number, owner, price, orderType, deadline);
+		return Objects.hash(avaliable, requestDate, enterprise, id, number, owner, price, orderType, orderLineType, deadline);
 	}
 
 	@Override
@@ -160,14 +177,14 @@ public class OrderLine {
 		return Objects.equals(avaliable, other.avaliable) && Objects.equals(requestDate, other.requestDate)
 				&& Objects.equals(enterprise, other.enterprise) && Objects.equals(id, other.id)
 				&& number == other.number && Objects.equals(owner, other.owner) && Objects.equals(price, other.price)
-				&& orderType == other.orderType && deadline == other.deadline;
+				&& orderType == other.orderType && orderLineType == other.orderLineType && deadline == other.deadline;
 	}
 
 	@Override
 	public String toString() {
-		return "Order_line [id=" + id + ", date=" + requestDate + ", type=" + orderType + ", owner=" + owner
-				+ ", price=" + price + ", number=" + number + ", enterprise=" + enterprise + ", avaliable=" + avaliable
-				+ ", deadLine=" + deadline + "]";
+		return "Order_line [id=" + id + ", date=" + requestDate + ", orderType=" + orderType + ", orderType=" + orderType 
+				+ ", owner=" + owner + ", price=" + price + ", number=" + number + ", enterprise=" + enterprise
+				+ ", avaliable=" + avaliable + ", deadLine=" + deadline + "]";
 	}
 
 }
