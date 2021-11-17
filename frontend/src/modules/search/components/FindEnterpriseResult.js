@@ -151,7 +151,7 @@ const FindEnterpriseResult = () => {
 				</div>
 			}
 
-			{!isAdmin &&
+			{(!isAdmin && enterprise.avaliable==true) &&
 				<div className="card text-center">&nbsp;
 				<h4>
 						<Link to={`/market/create_order/${id}/enterpriseName=${enterprise.enterpriseName}/${buy}`} className="btn btn-secondary mx-5">buy </Link>

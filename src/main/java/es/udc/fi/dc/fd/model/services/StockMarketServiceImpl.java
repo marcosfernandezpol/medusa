@@ -239,6 +239,8 @@ public class StockMarketServiceImpl implements StockMarketService {
 									}
 
 									enterprise.setStockPrice(sellOrder.getPrice());
+									ActionPriceHistoric historic = new ActionPriceHistoric(enterprise,LocalDateTime.now(),sellOrder.getPrice());
+									actionPriceHistoricDao.save(historic);
 								}
 							}
 						}
@@ -247,10 +249,41 @@ public class StockMarketServiceImpl implements StockMarketService {
 			}
 		}
 	}
+	
+	public int searchUserActionsNumber(User user, Enterprise enterprise) {
+		List<OrderLine> boughtStock = null;
+		List<OrderLine> soldStock = null;
+
+		Optional<List<OrderLine>> boughtStockOp = orderLineDao
+				.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, user,
+						enterprise, false);
+		Optional<List<OrderLine>> soldStockOp = orderLineDao
+				.findByOrderTypeAndOwnerAndEnterpriseOrderByRequestDateDesc(OrderType.SELL, user, enterprise);
+
+		int bs = 0;
+		int ss = 0;
+
+		if (boughtStockOp.isPresent()) {
+			boughtStock = boughtStockOp.get();
+			for (OrderLine orderLine : boughtStock) {
+				bs += orderLine.getNumber();
+			}
+
+		} 
+
+		if (soldStockOp.isPresent()) {
+			soldStock = soldStockOp.get();
+			for (OrderLine orderLine : soldStock) {
+				ss += orderLine.getNumber();
+			}
+		}
+		
+		return bs-ss;
+	}
 
 	@Override
 	public void order(Long owner, OrderType orderType, Float price, int number, Long enterpriseId, LocalDate deadline)
-			throws NotEnoughBalanceException, NotOwnedException {
+			throws NotEnoughBalanceException, NotOwnedException, NotAvaliableException {
 
 		User user = null;
 		Enterprise enterprise = null;
@@ -262,52 +295,30 @@ public class StockMarketServiceImpl implements StockMarketService {
 			user = userOp.get(); // Else excepcion
 		if (enterpriseOp.isPresent())
 			enterprise = enterpriseOp.get();// Else excepcion
-
-		OrderLine order = new OrderLine(orderType, user, price, number, enterprise, deadline);
-
-		if (order.getOrderType() == OrderType.BUY) {
-			if (user.getBalance() < (price * number))
-				throw new NotEnoughBalanceException("Offering more money than owned");
-
-		} else {
-
-			List<OrderLine> boughtStock = null;
-			List<OrderLine> soldStock = null;
-
-			Optional<List<OrderLine>> boughtStockOp = orderLineDao
-					.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, user,
-							enterprise, false);
-			Optional<List<OrderLine>> soldStockOp = orderLineDao
-					.findByOrderTypeAndOwnerAndEnterpriseOrderByRequestDateDesc(OrderType.SELL, user, enterprise);
-
-			int bs = 0;
-			int ss = 0;
-
-			if (boughtStockOp.isPresent()) {
-				boughtStock = boughtStockOp.get();
-				for (OrderLine orderLine : boughtStock) {
-					bs += orderLine.getNumber();
-				}
-
+		
+		if(enterprise.isAvaliable()) {
+			OrderLine order = new OrderLine(orderType, user, price, number, enterprise, deadline);
+	
+			if (order.getOrderType() == OrderType.BUY) {
+				if (user.getBalance() < (price * number))
+					throw new NotEnoughBalanceException("Offering more money than owned");
+	
 			} else {
-				throw new NotOwnedException();
-			}
-
-			if (soldStockOp.isPresent()) {
-				soldStock = soldStockOp.get();
-				for (OrderLine orderLine : soldStock) {
-					ss += orderLine.getNumber();
+	
+				int ownedActionNumber = searchUserActionsNumber(user, enterprise);
+				
+				if (ownedActionNumber < number) {
+					throw new NotOwnedException();
 				}
+	
 			}
-
-			if ((bs - ss) < number) {
-				throw new NotOwnedException();
-			}
-
+			orderLineDao.save(order);
+			
+	
+			this.match(enterprise);
+		} else {
+			throw new NotAvaliableException();
 		}
-		orderLineDao.save(order);
-
-		this.match(enterprise);
 	}
 
 	@Override
