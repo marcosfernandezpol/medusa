@@ -44,7 +44,6 @@ const FindEnterpriseResult = () => {
 			dispatch(actions.searchEnterpriseById(enterpriseId));
 			dispatch(actions.searchEnterpriseHistoric(enterpriseId,1));
 
-			//dispatch(actions.searchEnterpriseHistoric(enterpriseId,numDays));	
 		}
 
 		return () => null;
@@ -61,13 +60,6 @@ const FindEnterpriseResult = () => {
 			
 		}
 	}
-	
-	/*useEffect(() => {
-		const enterpriseId = Number(id);
-		if (!Number.isNaN(enterpriseId)) {
-        	dispatch(actions.searchEnterpriseHistoric(enterpriseId));
-		}
-    }),[id, dispatch];*/
 
 	
 	const data = useSelector(selectors.getEnterpriseHistoric);
@@ -151,7 +143,7 @@ const FindEnterpriseResult = () => {
 				</div>
 			}
 
-			{!isAdmin &&
+			{(!isAdmin && enterprise.avaliable==true) &&
 				<div className="card text-center">&nbsp;
 				<h4>
 						<Link to={`/market/create_order/${id}/enterpriseName=${enterprise.enterpriseName}/${buy}`} className="btn btn-secondary mx-5">buy </Link>

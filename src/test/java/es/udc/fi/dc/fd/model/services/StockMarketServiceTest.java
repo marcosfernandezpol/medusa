@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotAvaliableException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
@@ -121,7 +122,7 @@ public class StockMarketServiceTest {
 
 	@Test
 	public void createOrders() throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException,
-			DuplicateInstanceException, PermissionException, NumberException, NotOwnedException {
+			DuplicateInstanceException, PermissionException, NumberException, NotOwnedException, NotAvaliableException {
 
 		User client = createClient();
 		Enterprise enterprise = createEnterprise();

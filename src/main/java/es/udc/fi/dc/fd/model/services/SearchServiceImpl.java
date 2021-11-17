@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.entities.ActionPriceHistoric;
 import es.udc.fi.dc.fd.model.entities.ActionPriceHistoricDao;
+import es.udc.fi.dc.fd.model.entities.Actions;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
 import es.udc.fi.dc.fd.model.entities.OrderLine;
@@ -24,6 +25,8 @@ import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
 import es.udc.fi.dc.fd.model.entities.OrderLineDao;
 import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.entities.UserDao;
+import es.udc.fi.dc.fd.model.services.StockMarketServiceImpl;
+
 
 @Service
 @Transactional(readOnly = true)
@@ -40,6 +43,9 @@ public class SearchServiceImpl implements SearchService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private StockMarketService marketService;
 
 	@Override
 	public List<Enterprise> findAllEnterprises() {
@@ -123,6 +129,32 @@ public class SearchServiceImpl implements SearchService {
 		}
 
 		return result;
+	}
+
+	@Override
+	public List<Actions> findUserActions(Long userId) throws InstanceNotFoundException {
+		
+
+		Optional<User> userOp = userDao.findById(userId);
+		User user = null;
+		
+		if (userOp.isPresent())
+			user = userOp.get();
+		else throw new InstanceNotFoundException("No existe user con ese id", userId);
+		
+		List<Actions> userActions = new ArrayList<>();
+		
+		List<Enterprise> allEnterprises = findAllEnterprises();
+		
+		for(Enterprise enterprise : allEnterprises) {
+			int aux = marketService.searchUserActionsNumber(user,enterprise);
+			if(aux != 0) {
+				userActions.add(new Actions(aux,enterprise));
+			}
+		}
+		
+		
+		return userActions;
 	}
 
 }
