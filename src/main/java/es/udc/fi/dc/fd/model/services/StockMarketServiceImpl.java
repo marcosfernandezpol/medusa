@@ -56,7 +56,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 	@Autowired
 	private AnnualBenefitsDao annualBennefitsDao;
-	
+
 	@Autowired
 	private ActionPriceHistoricDao actionPriceHistoricDao;
 
@@ -89,8 +89,8 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 				enterpriseDao.save(enterprise);
 
-				OrderLine order = new OrderLine(OrderType.SELL, OrderLineType.LIMIT ,null, enterprise.getStockPrice(), enterprise.getStock(),
-						enterprise);
+				OrderLine order = new OrderLine(OrderType.SELL, OrderLineType.LIMIT, null, enterprise.getStockPrice(),
+						enterprise.getStock(), enterprise);
 
 				orderLineDao.save(order);
 
@@ -136,24 +136,23 @@ public class StockMarketServiceImpl implements StockMarketService {
 		}
 
 	}
-	
-	private void matchUserManagement (OrderLine buyOrder, OrderLine sellOrder, int numSold, float operationPrice) {
+
+	private void matchUserManagement(OrderLine buyOrder, OrderLine sellOrder, int numSold, float operationPrice) {
 		User buyOwner = buyOrder.getOwner();
 		User sellOwner = sellOrder.getOwner();
-		
-		buyOwner.setBalance(
-				buyOwner.getBalance() - (operationPrice * numSold));
+
+		buyOwner.setBalance(buyOwner.getBalance() - (operationPrice * numSold));
 		if (sellOwner != null) {
-			sellOwner.setBalance(
-					sellOwner.getBalance() + (operationPrice * numSold));
+			sellOwner.setBalance(sellOwner.getBalance() + (operationPrice * numSold));
 		}
-		
+
 	}
-	
-	private void matchOrderManagement(OrderLine buyOrder, OrderLine sellOrder, int numSold, int numRemain, float price, int control) {
+
+	private void matchOrderManagement(OrderLine buyOrder, OrderLine sellOrder, int numSold, int numRemain, float price,
+			int control) {
 		if (control == 0) {
-			OrderLine sellRemain = new OrderLine(OrderType.SELL, sellOrder.getOrderLineType(), sellOrder.getOwner(), sellOrder.getPrice() , numRemain,
-					sellOrder.getEnterprise(), sellOrder.getDeadline());
+			OrderLine sellRemain = new OrderLine(OrderType.SELL, sellOrder.getOrderLineType(), sellOrder.getOwner(),
+					sellOrder.getPrice(), numRemain, sellOrder.getEnterprise(), sellOrder.getDeadline());
 			sellRemain.setRequestDate(sellOrder.getRequestDate());
 			orderLineDao.save(sellRemain);
 
@@ -165,8 +164,8 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 			match(sellRemain.getEnterprise());
 		} else if (control == 1) {
-			OrderLine buyRemain = new OrderLine(OrderType.BUY, buyOrder.getOrderLineType(), buyOrder.getOwner(), buyOrder.getPrice() , numRemain,
-					buyOrder.getEnterprise(), buyOrder.getDeadline());
+			OrderLine buyRemain = new OrderLine(OrderType.BUY, buyOrder.getOrderLineType(), buyOrder.getOwner(),
+					buyOrder.getPrice(), numRemain, buyOrder.getEnterprise(), buyOrder.getDeadline());
 			buyRemain.setRequestDate(buyOrder.getRequestDate());
 			orderLineDao.save(buyRemain);
 
@@ -248,52 +247,65 @@ public class StockMarketServiceImpl implements StockMarketService {
 //		}
 //	}
 
-	
-	private void manageOrdersNumber(Enterprise enterprise, OrderLine sellOrder, OrderLine buyOrder, Float operationPrice) {
-		int numSoldMax = (int) Math.floor((buyOrder.getOwner().getBalance() % operationPrice));
-		int numSoldExpected = sellOrder.getNumber() > buyOrder.getNumber() ? buyOrder.getNumber() : sellOrder.getNumber();
+	private void manageOrdersNumber(Enterprise enterprise, OrderLine sellOrder, OrderLine buyOrder,
+			Float operationPrice) {
+
+		int numSoldMax = (int) Math.floor((buyOrder.getOwner().getBalance() / operationPrice));
+		int numSoldExpected = sellOrder.getNumber() > buyOrder.getNumber() ? buyOrder.getNumber()
+				: sellOrder.getNumber();
 		int numSold = numSoldMax > numSoldExpected ? numSoldExpected : numSoldMax;
-		int numRemain = (sellOrder.getNumber() > buyOrder.getNumber() ? sellOrder.getNumber() : buyOrder.getNumber()) - numSold;
-		
+
 		matchUserManagement(buyOrder, sellOrder, numSold, operationPrice);
-		
-		if (sellOrder.getNumber() > buyOrder.getNumber()) {	
+
+		if (sellOrder.getNumber() > buyOrder.getNumber()) {
+			int numRemain = sellOrder.getNumber() - numSold;
+			
 			matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 0);
 		} else if (sellOrder.getNumber() < buyOrder.getNumber()) {
+			int numRemain = buyOrder.getNumber() - numSold;
 			matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 1);
 		} else {
+			int numRemain = 0;
 			matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 2);
 		}
-		
+
 		if (numSold != 0) {
 			enterprise.setStockPrice(operationPrice);
-			ActionPriceHistoric historic = new ActionPriceHistoric(enterprise,LocalDateTime.now(), operationPrice);
+			ActionPriceHistoric historic = new ActionPriceHistoric(enterprise, LocalDateTime.now(), operationPrice);
 			actionPriceHistoricDao.save(historic);
 		}
 	}
-	
+
 	private void matchBuyLimitOrder(OrderLine buyOrder, Enterprise enterprise) {
 		Optional<List<OrderLine>> sellOrdersO = orderLineDao
 				.findByOrderTypeAndEnterpriseAndAvaliableOrderByRequestDateAsc(OrderType.SELL, enterprise, true);
-		
-		if (!sellOrdersO.isEmpty()) { return; }
-		
+
+		if (sellOrdersO.isEmpty()) {
+			return;
+		}
+
 		List<OrderLine> sellOrders = sellOrdersO.get();
-		
+
 		for (OrderLine sellOrder : sellOrders) {
-			if (!(sellOrder.getDeadline()==null || sellOrder.getDeadline().isAfter(LocalDate.now()))) { continue; }
-		
-			if ((sellOrder.getPrice() <= buyOrder.getPrice()) || (sellOrder.getOrderLineType().equals(OrderLineType.MARKET))) {
-				float price = (sellOrder.getOrderLineType().equals(OrderLineType.MARKET)) ?
-					buyOrder.getPrice() :
-					(buyOrder.getDeadline().isBefore(sellOrder.getDeadline()) ?
-						buyOrder.getPrice() :
-						sellOrder.getPrice());
-				manageOrdersNumber(enterprise, sellOrder, buyOrder, price);
+			if (sellOrder.getDeadline() == null || sellOrder.getDeadline().isAfter(LocalDate.now())) {
+
+				if ((sellOrder.getPrice() <= buyOrder.getPrice())
+						|| (sellOrder.getOrderLineType().equals(OrderLineType.MARKET))) {
+					
+					float price;
+					if (sellOrder.getOwner() == null) {
+						price = sellOrder.getPrice();
+					} else {
+						price = (sellOrder.getOrderLineType().equals(OrderLineType.MARKET)) ? buyOrder.getPrice()
+								: (buyOrder.getDeadline().isBefore(sellOrder.getDeadline()) ? buyOrder.getPrice()
+										: sellOrder.getPrice());
+					}
+					manageOrdersNumber(enterprise, sellOrder, buyOrder, price);
+				}
 			}
 		}
 	}
-	
+
 	private void match(Enterprise enterprise) {
 
 		Optional<List<OrderLine>> buyOrdersO = orderLineDao
@@ -303,33 +315,32 @@ public class StockMarketServiceImpl implements StockMarketService {
 //				.findByOrderTypeAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.SELL, enterprise, true);
 //		findByOrderTypeAndEnterpriseAndAvaliableOrderByPriceAsc
 
-		if (!buyOrdersO.isEmpty()) { return; }
+		if (buyOrdersO.isPresent()) {
 
-		List<OrderLine> buyOrders = buyOrdersO.get();
+			List<OrderLine> buyOrders = buyOrdersO.get();
 
-		for (OrderLine buyOrder : buyOrders) {
-			if (!(buyOrder.getDeadline()==null || buyOrder.getDeadline().isAfter(LocalDate.now()))) { return; }
-			
-			if (buyOrder.getOrderLineType().equals(OrderLineType.LIMIT)) {
-				matchBuyLimitOrder(buyOrder, enterprise);
-			} else {
+			for (OrderLine buyOrder : buyOrders) {
+				if (buyOrder.getDeadline().isBefore(LocalDate.now())) {
+					return;
+				}
+
+				if (buyOrder.getOrderLineType().equals(OrderLineType.LIMIT)) {
+					matchBuyLimitOrder(buyOrder, enterprise);
+				} else {
 //				matchBuyMarketOrder(buyOrder);
+				}
 			}
 		}
-		
+
 	}
-	
-	
-	
-	
-	
+
 	public int searchUserActionsNumber(User user, Enterprise enterprise) {
 		List<OrderLine> boughtStock = null;
 		List<OrderLine> soldStock = null;
 
 		Optional<List<OrderLine>> boughtStockOp = orderLineDao
-				.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, user,
-						enterprise, false);
+				.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, user, enterprise,
+						false);
 		Optional<List<OrderLine>> soldStockOp = orderLineDao
 				.findByOrderTypeAndOwnerAndEnterpriseOrderByRequestDateDesc(OrderType.SELL, user, enterprise);
 
@@ -342,7 +353,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 				bs += orderLine.getNumber();
 			}
 
-		} 
+		}
 
 		if (soldStockOp.isPresent()) {
 			soldStock = soldStockOp.get();
@@ -350,12 +361,13 @@ public class StockMarketServiceImpl implements StockMarketService {
 				ss += orderLine.getNumber();
 			}
 		}
-		
-		return bs-ss;
+
+		return bs - ss;
 	}
 
 	@Override
-	public void order(Long owner, OrderType orderType, OrderLineType orderLineType, Float price, int number, Long enterpriseId, LocalDate deadline)
+	public void order(Long owner, OrderType orderType, OrderLineType orderLineType, Float price, int number,
+			Long enterpriseId, LocalDate deadline)
 			throws NotEnoughBalanceException, NotOwnedException, NotAvaliableException {
 
 		User user = null;
@@ -368,26 +380,25 @@ public class StockMarketServiceImpl implements StockMarketService {
 			user = userOp.get(); // Else exception
 		if (enterpriseOp.isPresent())
 			enterprise = enterpriseOp.get();// Else exception
-		
-		if(enterprise.isAvaliable()) {
+
+		if (enterprise.isAvaliable()) {
 			OrderLine order = new OrderLine(orderType, orderLineType, user, price, number, enterprise, deadline);
-	
+
 			if (order.getOrderType() == OrderType.BUY) {
 				if (user.getBalance() < (price * number))
 					throw new NotEnoughBalanceException("Offering more money than owned");
-	
+
 			} else {
-	
+
 				int ownedActionNumber = searchUserActionsNumber(user, enterprise);
-				
+
 				if (ownedActionNumber < number) {
 					throw new NotOwnedException();
 				}
-	
+
 			}
 			orderLineDao.save(order);
-			
-	
+
 			this.match(enterprise);
 		} else {
 			throw new NotAvaliableException();
@@ -454,7 +465,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 		Optional<User> userOp = userDao.findById(owner);
 		Optional<OrderLine> orderOp = orderLineDao.findById(orderId);
 
-		if (userOp.get().equals(orderOp.get().getOwner())) { //condition changed
+		if (userOp.get().equals(orderOp.get().getOwner())) { // condition changed
 
 			if (orderOp.isPresent()) {
 				order = orderOp.get();
@@ -474,7 +485,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 		}
 
 	}
-	
+
 	@Override
 	public Enterprise modifyAvaliableEnterprise(Long adminId, Long enterpriseId, Boolean avaliable)
 			throws NotCreatorException, InstanceNotFoundException {
