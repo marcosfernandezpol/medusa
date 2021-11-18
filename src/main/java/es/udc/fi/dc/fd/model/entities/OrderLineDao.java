@@ -23,8 +23,8 @@ public interface OrderLineDao extends PagingAndSortingRepository<OrderLine, Long
 	public Optional<List<OrderLine>> findByOrderTypeAndEnterpriseAndAvaliableOrderByPriceAsc(OrderType orderType,
 			Enterprise enterprise, Boolean avaliable);
 	
-//	public Optional<List<OrderLine>> findByOrderTypeAndEnterpriseAndAvaliableOrderByPriceAscAndRequestDateAsc(OrderType orderType,
-//			Enterprise enterprise, Boolean avaliable);
+	public Optional<List<OrderLine>> findByOrderTypeAndEnterpriseAndAvaliableOrderByPriceAscRequestDateAsc(OrderType orderType,
+			Enterprise enterprise, Boolean avaliable);
 	
 	public Optional<List<OrderLine>> findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(
 			OrderType orderType, User owner, Enterprise enterprise, Boolean avaliable);
