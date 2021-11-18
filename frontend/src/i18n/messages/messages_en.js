@@ -9,6 +9,10 @@ export default {
 
     'project.common.ErrorDialog.title': 'Error',
 
+	'project.global.buttons.sell': 'Sell',
+	'project.global.buttons.marketPriceSell': 'Sell orders by market price',
+	'project.global.buttons.marketPriceBuy': 'Buy orders by market price',
+	
     'project.global.buttons.buy': 'Buy',
     'project.global.buttons.cancel': 'Cancel',
     'project.global.buttons.close': 'Close',
@@ -91,6 +95,9 @@ export default {
 	'project.global.button.submit':'Submit',
 	'project.global.button.clearValues':'Clear Values',
 	'project.global.fields.actionsList':'Actions List',
+	
+	'project.global.fields.orderType': 'Order type',
+	'project.global.fields.priceNotEspecified': 'Not especified',
 	
 	
 	'project.shopping.BuyForm.title':'Balance',

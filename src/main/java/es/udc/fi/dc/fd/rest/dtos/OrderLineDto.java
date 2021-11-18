@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 
 import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
+import es.udc.fi.dc.fd.model.entities.OrderLine.OrderLineType;
 
 public class OrderLineDto {
 
@@ -34,6 +35,10 @@ public class OrderLineDto {
 	private Long enterpriseId;
 	
 	private LocalDate deadline;
+	
+	private OrderLineType orderLineType;
+	
+	
 
 	public OrderLineDto() {
 		super();
@@ -63,6 +68,20 @@ public class OrderLineDto {
 		this.enterpriseId = enterpriseId;
 		this.deadline = deadline;
 	}
+	
+	public OrderLineDto(Long id, LocalDateTime requestDate, OrderType orderType, Long ownerId, Float price, int number,
+			Long enterpriseId, LocalDate deadline, OrderLineType orderLineType) {
+		super();
+		this.id = id;
+		this.requestDate = requestDate;
+		this.orderType = orderType;
+		this.ownerId = ownerId;
+		this.price = price;
+		this.number = number;
+		this.enterpriseId = enterpriseId;
+		this.deadline = deadline;
+		this.orderLineType = orderLineType;
+	}
 
 	public Long getId() {
 		return id;
@@ -70,6 +89,14 @@ public class OrderLineDto {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public OrderLineType getOrderLineType() {
+		return orderLineType;
+	}
+
+	public void setOrderLineType(OrderLineType type) {
+		this.orderLineType = type;
 	}
 
 	public LocalDateTime getRequestDate() {
