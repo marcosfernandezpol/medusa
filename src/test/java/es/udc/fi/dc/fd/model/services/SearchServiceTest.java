@@ -77,7 +77,8 @@ public class SearchServiceTest {
 	}
 
 	private Enterprise createEnterprise(String name, String acronim, long id) {
-		return new Enterprise(id, name, acronim, Date.valueOf("1999-01-17"), Float.valueOf(1000), 12, Float.valueOf(18));
+		return new Enterprise(id, name, acronim, Date.valueOf("1999-01-17"), Float.valueOf(1000), 12,
+				Float.valueOf(18));
 
 	}
 
@@ -96,8 +97,8 @@ public class SearchServiceTest {
 
 		List<Enterprise> enterprises = null;
 
-		marketService.createEnterprise(id,createEnterprise("pol&sons", "PS",id));
-		marketService.createEnterprise(id,createEnterprise("aòiergo", "ASD",id));
+		marketService.createEnterprise(id, createEnterprise("pol&sons", "PS", id));
+		marketService.createEnterprise(id, createEnterprise("aòiergo", "ASD", id));
 
 		enterprises = searchService.findAllEnterprises();
 
@@ -114,23 +115,27 @@ public class SearchServiceTest {
 
 		User client = createClient();
 		Long id = adminId(client);
-		
-		Enterprise enterprise = createEnterprise("adidas", "ads",id);
+
+		Enterprise enterprise = createEnterprise("adidas", "ads", id);
 
 		User savedClient = userDao.save(client);
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise,
+				LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise,
+				LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise,
+				LocalDate.now().plusDays(1)));
 		List<OrderLine> orderList = searchService.findOrders(savedClient.getId(), true, true);
 
 		assertTrue(orderList.size() == 3);
 
 	}
-	
+
 	@Test
-	public void findOrdersOutOfTime() throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException,
+	public void findOrdersOutOfTime()
+			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException,
 			DuplicateInstanceException, PermissionException, NumberException, NotOwnedException {
 
 		User client = createClient();
@@ -140,12 +145,28 @@ public class SearchServiceTest {
 		User savedClient = userDao.save(client);
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().minusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise,
+				LocalDate.now().minusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise,
+				LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise,
+				LocalDate.now().plusDays(1)));
 		List<OrderLine> orderList = searchService.findOrders(savedClient.getId(), true, true);
 
 		assertTrue(orderList.size() == 2);
+
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void testInstanceNotFoundExceptionUserDao() throws InstanceNotFoundException, DuplicateInstanceException {
+
+		User client = createUser("jose");
+		Long id = adminId(client);
+		Enterprise enterprise = createEnterprise("adidas", "ads", id);
+
+		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
+		searchService.findEnterprise(savedEnterprise.getId());
+		searchService.findEnterprise(Long.valueOf(-1));
 
 	}
 
