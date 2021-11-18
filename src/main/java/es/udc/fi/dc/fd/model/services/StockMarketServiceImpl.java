@@ -154,6 +154,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 			OrderLine sellRemain = new OrderLine(OrderType.SELL, sellOrder.getOrderLineType(), sellOrder.getOwner(),
 					sellOrder.getPrice(), numRemain, sellOrder.getEnterprise(), sellOrder.getDeadline());
 			sellRemain.setRequestDate(sellOrder.getRequestDate());
+			if(sellRemain.getOrderLineType()==OrderLineType.MARKET) {
+				sellRemain.setPrice(0F);
+			}
 			orderLineDao.save(sellRemain);
 
 			sellOrder.setNumber(numSold);
@@ -167,6 +170,10 @@ public class StockMarketServiceImpl implements StockMarketService {
 			OrderLine buyRemain = new OrderLine(OrderType.BUY, buyOrder.getOrderLineType(), buyOrder.getOwner(),
 					buyOrder.getPrice(), numRemain, buyOrder.getEnterprise(), buyOrder.getDeadline());
 			buyRemain.setRequestDate(buyOrder.getRequestDate());
+			
+			if(buyRemain.getOrderLineType()==OrderLineType.MARKET) {
+				buyRemain.setPrice(0F);
+			}
 			orderLineDao.save(buyRemain);
 
 			buyOrder.setNumber(numSold);
@@ -198,15 +205,14 @@ public class StockMarketServiceImpl implements StockMarketService {
 			if(numSold>0) {
 				if (sellOrder.getNumber() > numSold ) {
 					int numRemain = sellOrder.getNumber() - numSold;
-					if(numSold<buyOrder.getNumber()) {
-						matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 1);
-					}
 	
 					matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 0);
-				} else if (sellOrder.getNumber() < numSold) {
+				}
+				if (buyOrder.getNumber() > numSold) {
 					int numRemain = buyOrder.getNumber() - numSold;
 					matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 1);
-				} else if (sellOrder.getNumber() == buyOrder.getNumber() && sellOrder.getNumber() != 0) {
+				}
+				if (sellOrder.getNumber() == buyOrder.getNumber() && buyOrder.getNumber()==numSold && sellOrder.getNumber() != 0) {
 					int numRemain = 0;
 					matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 2);
 				}
@@ -368,6 +374,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 					throw new NotOwnedException();
 				}
 
+			}
+			if(order.getOrderLineType()==OrderLineType.MARKET) {
+				order.setPrice(0F);
 			}
 			orderLineDao.save(order);
 

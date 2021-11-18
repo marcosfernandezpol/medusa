@@ -96,7 +96,7 @@ const CreateEnterprise = ({ }) => {
 							<div className="col-md-4">
 								<input type="date" id="fundation" className="form-control"
 									value={fundation}
-									min = {new Date().toISOString().split('T')[0]}
+									max = {new Date().toISOString().split('T')[0]}
 									onChange={e => setFundation(e.target.value)}
 									required />
 								<div className="invalid-feedback">
