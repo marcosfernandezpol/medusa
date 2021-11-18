@@ -70,6 +70,13 @@ public class StockMarketServiceTest {
 
 	}
 
+	// Creamos un usuario de tipo Cliente sin dinero.
+	private User createClientNoMoney() {
+		return new User("MariaM", "Maria", "Martinez", "password", "mariamartinez@gmail.com", "Spain", "A Coruña",
+				RoleType.CLIENT, 0F);
+
+	}
+
 	// Creamos una empresa
 	private Enterprise createEnterprise() {
 		return new Enterprise("MedusaEnterprises", "ME", Date.valueOf("1999-01-17"), Float.valueOf(1000), 28,
@@ -90,6 +97,34 @@ public class StockMarketServiceTest {
 		resultEnterprise = stockMarketService.createEnterprise(admin.getId(), enterprise);
 
 		assertNotNull(resultEnterprise.getId());
+
+	}
+
+	@Test(expected = PermissionException.class)
+	public void testCreateEnterpriseThrowsPermissionException()
+			throws DuplicateInstanceException, PermissionException, NumberException {
+
+		User client = createClient();
+		userDao.save(client);
+		Enterprise enterprise = createEnterprise();
+
+		userDao.save(client);
+		enterprise.setCreatorId(client.getId());
+		stockMarketService.createEnterprise(client.getId(), enterprise);
+
+	}
+
+	@Test(expected = DuplicateInstanceException.class)
+	public void testCreateEnterpriseThrowsDuplicateInstanceException() throws DuplicateInstanceException, PermissionException, NumberException {
+
+		User admin = createAdmin();
+		userDao.save(admin);
+		Enterprise enterprise = createEnterprise();
+
+		userDao.save(admin);
+		enterprise.setCreatorId(admin.getId());
+		stockMarketService.createEnterprise(admin.getId(), enterprise);
+		stockMarketService.createEnterprise(admin.getId(), enterprise);
 
 	}
 
@@ -119,6 +154,42 @@ public class StockMarketServiceTest {
 
 	}
 
+	@Test(expected = InvalidOperationException.class)
+	public void InvalidOperatorException()
+			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException {
+
+		User client = createClient();
+
+		userDao.save(client);
+
+		stockMarketService.transfer(client.getId(), Float.valueOf(200), "NULL");
+
+	}
+
+	@Test(expected = InvalidOperationException.class)
+	public void testTransferThrowsInvalidOperatorExpcetion()
+			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException {
+
+		User client = createClient();
+
+		userDao.save(client);
+
+		stockMarketService.transfer(client.getId(), Float.valueOf(-2), "WITHDRAW");
+
+	}
+
+	@Test(expected = NotEnoughBalanceException.class)
+	public void testTransferThrowsNotEnoughBalanceException()
+			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException {
+
+		User client = createClientNoMoney();
+
+		userDao.save(client);
+
+		stockMarketService.transfer(client.getId(), Float.valueOf(1000), "WITHDRAW");
+
+	}
+
 	@Test
 	public void createOrders() throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException,
 			DuplicateInstanceException, PermissionException, NumberException, NotOwnedException {
@@ -130,9 +201,12 @@ public class StockMarketServiceTest {
 		enterprise.setCreatorId(client.getId());
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(),
+				LocalDate.now().plusDays(1));
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(),
+				LocalDate.now().plusDays(1));
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(),
+				LocalDate.now().plusDays(1));
 		Optional<List<OrderLine>> orderListOp = orderLineDao
 				.findByOwnerAndOrderTypeAndAvaliableOrderByRequestDateDesc(savedClient, OrderType.BUY, true);
 
@@ -141,6 +215,36 @@ public class StockMarketServiceTest {
 			orderList = orderListOp.get();
 
 		assertTrue(orderList.size() == 3);
+
+	}
+
+	@Test(expected = NotOwnedException.class)
+	public void NotOwnedException() throws NotOwnedException, NotEnoughBalanceException {
+
+		User client = createClient();
+		Enterprise enterprise = createEnterprise();
+
+		User savedClient = userDao.save(client);
+		enterprise.setCreatorId(client.getId());
+		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
+
+		stockMarketService.order(savedClient.getId(), OrderType.SELL, Float.valueOf(10), 3, savedEnterprise.getId(),
+				LocalDate.now().plusDays(1));
+
+	}
+
+	@Test(expected = NotEnoughBalanceException.class)
+	public void NotEnoughBalanceException() throws NotOwnedException, NotEnoughBalanceException {
+
+		User client = createClientNoMoney();
+		Enterprise enterprise = createEnterprise();
+
+		User savedClient = userDao.save(client);
+		enterprise.setCreatorId(client.getId());
+		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
+
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(),
+				LocalDate.now().plusDays(1));
 
 	}
 
