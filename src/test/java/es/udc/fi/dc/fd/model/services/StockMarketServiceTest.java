@@ -203,11 +203,11 @@ public class StockMarketServiceTest {
 		enterprise.setCreatorId(client.getId());
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(),
+		stockMarketService.order(savedClient.getId(), OrderType.BUY,OrderLineType.LIMIT, Float.valueOf(10), 3, savedEnterprise.getId(),
 				LocalDate.now().plusDays(1));
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(),
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, OrderLineType.LIMIT,Float.valueOf(10), 3, savedEnterprise.getId(),
 				LocalDate.now().plusDays(1));
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(),
+		stockMarketService.order(savedClient.getId(), OrderType.BUY,OrderLineType.LIMIT, Float.valueOf(10), 3, savedEnterprise.getId(),
 				LocalDate.now().plusDays(1));
 		Optional<List<OrderLine>> orderListOp = orderLineDao
 				.findByOwnerAndOrderTypeAndAvaliableOrderByRequestDateDesc(savedClient, OrderType.BUY, true);
@@ -221,7 +221,7 @@ public class StockMarketServiceTest {
 	}
 
 	@Test(expected = NotOwnedException.class)
-	public void NotOwnedException() throws NotOwnedException, NotEnoughBalanceException {
+	public void NotOwnedException() throws NotOwnedException, NotEnoughBalanceException, NotAvaliableException {
 
 		User client = createClient();
 		Enterprise enterprise = createEnterprise();
@@ -230,13 +230,13 @@ public class StockMarketServiceTest {
 		enterprise.setCreatorId(client.getId());
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		stockMarketService.order(savedClient.getId(), OrderType.SELL, Float.valueOf(10), 3, savedEnterprise.getId(),
+		stockMarketService.order(savedClient.getId(), OrderType.SELL, OrderLineType.LIMIT, Float.valueOf(10), 3, savedEnterprise.getId(),
 				LocalDate.now().plusDays(1));
 
 	}
 
 	@Test(expected = NotEnoughBalanceException.class)
-	public void NotEnoughBalanceException() throws NotOwnedException, NotEnoughBalanceException {
+	public void NotEnoughBalanceException() throws NotOwnedException, NotEnoughBalanceException, NotAvaliableException {
 
 		User client = createClientNoMoney();
 		Enterprise enterprise = createEnterprise();
@@ -245,7 +245,7 @@ public class StockMarketServiceTest {
 		enterprise.setCreatorId(client.getId());
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(),
+		stockMarketService.order(savedClient.getId(), OrderType.BUY,OrderLineType.LIMIT, Float.valueOf(10), 3, savedEnterprise.getId(),
 				LocalDate.now().plusDays(1));
 
 	}
