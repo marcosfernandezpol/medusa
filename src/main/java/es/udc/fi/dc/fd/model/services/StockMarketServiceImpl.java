@@ -301,15 +301,24 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 	}
 
-	public int searchUserActionsNumber(User user, Enterprise enterprise) {
+	public int searchUserActionsNumber(User user, Enterprise enterprise, Boolean sellOnlyNotAvaliable) {
 		List<OrderLine> boughtStock = null;
 		List<OrderLine> soldStock = null;
+		Optional<List<OrderLine>> soldStockOp = null;
 
 		Optional<List<OrderLine>> boughtStockOp = orderLineDao
-				.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, user, enterprise,
-						false);
-		Optional<List<OrderLine>> soldStockOp = orderLineDao
-				.findByOrderTypeAndOwnerAndEnterpriseOrderByRequestDateDesc(OrderType.SELL, user, enterprise);
+				.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, user,
+						enterprise, false);
+		
+		
+		if (sellOnlyNotAvaliable) {
+			soldStockOp = orderLineDao
+					.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.SELL, user,
+							enterprise, false);
+		} else{
+			soldStockOp = orderLineDao.findByOrderTypeAndOwnerAndEnterpriseOrderByRequestDateDesc(OrderType.SELL, user, enterprise);
+		}
+			
 
 		int bs = 0;
 		int ss = 0;
@@ -320,7 +329,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 				bs += orderLine.getNumber();
 			}
 
-		}
+		} 
 
 		if (soldStockOp.isPresent()) {
 			soldStock = soldStockOp.get();
@@ -328,8 +337,8 @@ public class StockMarketServiceImpl implements StockMarketService {
 				ss += orderLine.getNumber();
 			}
 		}
-
-		return bs - ss;
+		
+		return bs-ss;
 	}
 
 	@Override
@@ -353,7 +362,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 			if (order.getOrderType() == OrderType.SELL) {
 
-				int ownedActionNumber = searchUserActionsNumber(user, enterprise);
+				int ownedActionNumber = searchUserActionsNumber(user, enterprise, false);
 
 				if (ownedActionNumber < number) {
 					throw new NotOwnedException();
