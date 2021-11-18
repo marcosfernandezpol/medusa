@@ -44,7 +44,6 @@ const FindEnterpriseResult = () => {
 			dispatch(actions.searchEnterpriseById(enterpriseId));
 			dispatch(actions.searchEnterpriseHistoric(enterpriseId, 1));
 
-			//dispatch(actions.searchEnterpriseHistoric(enterpriseId,numDays));	
 		}
 
 		return () => null;
@@ -61,14 +60,6 @@ const FindEnterpriseResult = () => {
 
 		}
 	}
-
-	/*useEffect(() => {
-		const enterpriseId = Number(id);
-		if (!Number.isNaN(enterpriseId)) {
-			dispatch(actions.searchEnterpriseHistoric(enterpriseId));
-		}
-	}),[id, dispatch];*/
-
 
 	const data = useSelector(selectors.getEnterpriseHistoric);
 

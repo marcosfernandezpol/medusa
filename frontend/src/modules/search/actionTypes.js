@@ -23,3 +23,5 @@ export const DELETE_ORDER_COMPLETED="project/market/deleteOrderCompleted";
 export const CLEAR_UNAVALIABLE = "project/search/clearUnavaliable";
 export const SET_UNAVALIABLE_COMPLETED = "project/search/setUnavaliableCompleted"
 
+export const CLEAR_ACTIONS = "project/search/clearSearchActions";
+export const SEARCH_ACTIONS_COMPLETED = "project/search/searchActionsCompleted";

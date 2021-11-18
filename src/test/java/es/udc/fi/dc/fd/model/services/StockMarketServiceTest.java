@@ -22,12 +22,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.common.exceptions.InvalidOperationException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotAvaliableException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.NotOwnedException;
 import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
 import es.udc.fi.dc.fd.model.entities.OrderLine;
+import es.udc.fi.dc.fd.model.entities.OrderLine.OrderLineType;
 import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
 import es.udc.fi.dc.fd.model.entities.OrderLineDao;
 import es.udc.fi.dc.fd.model.entities.User;
@@ -121,7 +123,7 @@ public class StockMarketServiceTest {
 
 	@Test
 	public void createOrders() throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException,
-			DuplicateInstanceException, PermissionException, NumberException, NotOwnedException {
+			DuplicateInstanceException, PermissionException, NumberException, NotOwnedException, NotAvaliableException {
 
 		User client = createClient();
 		Enterprise enterprise = createEnterprise();
@@ -130,9 +132,9 @@ public class StockMarketServiceTest {
 		enterprise.setCreatorId(client.getId());
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
-		stockMarketService.order(savedClient.getId(), OrderType.BUY, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, OrderLineType.LIMIT, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, OrderLineType.LIMIT, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
+		stockMarketService.order(savedClient.getId(), OrderType.BUY, OrderLineType.LIMIT, Float.valueOf(10), 3, savedEnterprise.getId(), LocalDate.now().plusDays(1));
 		Optional<List<OrderLine>> orderListOp = orderLineDao
 				.findByOwnerAndOrderTypeAndAvaliableOrderByRequestDateDesc(savedClient, OrderType.BUY, true);
 

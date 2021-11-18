@@ -10,5 +10,6 @@ export {default as FindEnterpriseResult} from './components/FindEnterpriseResult
 export {default as Orders} from './components/Orders';
 export {default as FindOrdersResult} from './components/FindOrdersResult';
 export {default as FindOrders} from './components/FindOrders';
+export {default as FindActionsResult} from './components/FindActionsResult';
 
 export default {actions, actionTypes, reducer, selectors};

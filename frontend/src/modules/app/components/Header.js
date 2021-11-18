@@ -31,21 +31,19 @@ const Header = () => {
 				
                   {loggedIn &&  <Link className="navbar-brand" to="/search/enterprises"><FormattedMessage id='project.global.fields.enterprises'/></Link>}
 			       
-				  {loggedIn && <Link className="navbar-brand" to="/search/orders"><FormattedMessage id='project.global.fields.orders' /></Link>}	     
+				  {(loggedIn && isAdmin==false) && <Link className="navbar-brand" to="/search/orders"><FormattedMessage id='project.global.fields.orders' /></Link>}	     
                 
 				</ul>
 				
 				
                 {userName ? 
 
-                <ul className="navbar-nav">
+                <ul className="navbar-nav">		
 
 					{isAdmin==false && <Link className="navbar-brand" to="/market/transfer"> <FormattedMessage id="project.app.Transfer"/></Link>}
-            			
 
 					{isAdmin==false && <Link className="navbar-brand" to="/"><ShowBalance/></Link>}
-            			 
-
+					
 					{isAdmin && <li className="nav-item dropdown">
 
                         <a className="dropdown-toggle nav-link" href="/"
@@ -70,7 +68,10 @@ const Header = () => {
                             {userName}
                         </a>
 						
-                        <div className="dropdown-menu dropdown-menu-right">
+                        <div className="dropdown-menu dropdown-menu-right">	
+							<Link className="dropdown-item" to="/search/users/actions">
+                                <FormattedMessage id="project.users.Actions.title"/>
+                            </Link>
                             <Link className="dropdown-item" to="/users/update-profile">
                                 <FormattedMessage id="project.users.UpdateProfile.title"/>
                             </Link>

@@ -66,6 +66,7 @@ export default {
 
 	'project.enterprise.CreateEnterprise.title': 'Create Enterprise',
 	'project.enterprise.UpdateEnterprise.title':'Update Enterprise',
+	'project.users.Actions.title':'Actions',
 	'project.global.fields.enterpriseName': 'Enterprise name',
 	'project.global.fields.acronim': 'Acronim',
 	'project.global.fields.fundation': 'Fundation',
@@ -93,6 +94,10 @@ export default {
 	'project.global.button.deleteElement':'Delete Element',
 	'project.global.button.submit':'Submit',
 	'project.global.button.clearValues':'Clear Values',
+	'project.global.fields.actionsList':'Actions List',
+	
+	'project.global.fields.orderType': 'Order type',
+	'project.global.fields.priceNotEspecified': 'Not especified',
 	
 	
 	'project.shopping.BuyForm.title':'Balance',
