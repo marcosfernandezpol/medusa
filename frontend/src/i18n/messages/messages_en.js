@@ -9,6 +9,10 @@ export default {
 
     'project.common.ErrorDialog.title': 'Error',
 
+	'project.global.buttons.sell': 'Sell',
+	'project.global.buttons.marketPriceSell': 'Sell orders by market price',
+	'project.global.buttons.marketPriceBuy': 'Buy orders by market price',
+	
     'project.global.buttons.buy': 'Buy',
     'project.global.buttons.cancel': 'Cancel',
     'project.global.buttons.close': 'Close',
