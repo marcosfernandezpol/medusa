@@ -147,7 +147,7 @@ public class SearchServiceImpl implements SearchService {
 		List<Enterprise> allEnterprises = findAllEnterprises();
 		
 		for(Enterprise enterprise : allEnterprises) {
-			int aux = marketService.searchUserActionsNumber(user,enterprise);
+			int aux = marketService.searchUserActionsNumber(user,enterprise, true);
 			if(aux != 0) {
 				userActions.add(new Actions(aux,enterprise));
 			}

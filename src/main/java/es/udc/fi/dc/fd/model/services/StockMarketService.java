@@ -38,5 +38,5 @@ public interface StockMarketService {
 	public Enterprise modifyAvaliableEnterprise(Long creator, Long enterpriseId, Boolean avaliable)
 			throws NotCreatorException, InstanceNotFoundException;
 	
-	public int searchUserActionsNumber(User user, Enterprise enterprise);
+	public int searchUserActionsNumber(User user, Enterprise enterprise, Boolean avaliable);
 }

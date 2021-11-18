@@ -154,6 +154,9 @@ public class StockMarketServiceImpl implements StockMarketService {
 			OrderLine sellRemain = new OrderLine(OrderType.SELL, sellOrder.getOrderLineType(), sellOrder.getOwner(),
 					sellOrder.getPrice(), numRemain, sellOrder.getEnterprise(), sellOrder.getDeadline());
 			sellRemain.setRequestDate(sellOrder.getRequestDate());
+			if(sellRemain.getOrderLineType()==OrderLineType.MARKET) {
+				sellRemain.setPrice(0F);
+			}
 			orderLineDao.save(sellRemain);
 
 			sellOrder.setNumber(numSold);
@@ -167,6 +170,10 @@ public class StockMarketServiceImpl implements StockMarketService {
 			OrderLine buyRemain = new OrderLine(OrderType.BUY, buyOrder.getOrderLineType(), buyOrder.getOwner(),
 					buyOrder.getPrice(), numRemain, buyOrder.getEnterprise(), buyOrder.getDeadline());
 			buyRemain.setRequestDate(buyOrder.getRequestDate());
+			
+			if(buyRemain.getOrderLineType()==OrderLineType.MARKET) {
+				buyRemain.setPrice(0F);
+			}
 			orderLineDao.save(buyRemain);
 
 			buyOrder.setNumber(numSold);
@@ -198,15 +205,14 @@ public class StockMarketServiceImpl implements StockMarketService {
 			if(numSold>0) {
 				if (sellOrder.getNumber() > numSold ) {
 					int numRemain = sellOrder.getNumber() - numSold;
-					if(numSold<buyOrder.getNumber()) {
-						matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 1);
-					}
 	
 					matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 0);
-				} else if (sellOrder.getNumber() < numSold) {
+				}
+				if (buyOrder.getNumber() > numSold) {
 					int numRemain = buyOrder.getNumber() - numSold;
 					matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 1);
-				} else if (sellOrder.getNumber() == buyOrder.getNumber() && sellOrder.getNumber() != 0) {
+				}
+				if (sellOrder.getNumber() == buyOrder.getNumber() && buyOrder.getNumber()==numSold && sellOrder.getNumber() != 0) {
 					int numRemain = 0;
 					matchOrderManagement(buyOrder, sellOrder, numSold, numRemain, operationPrice, 2);
 				}
@@ -301,15 +307,24 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 	}
 
-	public int searchUserActionsNumber(User user, Enterprise enterprise) {
+	public int searchUserActionsNumber(User user, Enterprise enterprise, Boolean sellOnlyNotAvaliable) {
 		List<OrderLine> boughtStock = null;
 		List<OrderLine> soldStock = null;
+		Optional<List<OrderLine>> soldStockOp = null;
 
 		Optional<List<OrderLine>> boughtStockOp = orderLineDao
-				.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, user, enterprise,
-						false);
-		Optional<List<OrderLine>> soldStockOp = orderLineDao
-				.findByOrderTypeAndOwnerAndEnterpriseOrderByRequestDateDesc(OrderType.SELL, user, enterprise);
+				.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, user,
+						enterprise, false);
+		
+		
+		if (sellOnlyNotAvaliable) {
+			soldStockOp = orderLineDao
+					.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.SELL, user,
+							enterprise, false);
+		} else{
+			soldStockOp = orderLineDao.findByOrderTypeAndOwnerAndEnterpriseOrderByRequestDateDesc(OrderType.SELL, user, enterprise);
+		}
+			
 
 		int bs = 0;
 		int ss = 0;
@@ -320,7 +335,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 				bs += orderLine.getNumber();
 			}
 
-		}
+		} 
 
 		if (soldStockOp.isPresent()) {
 			soldStock = soldStockOp.get();
@@ -328,8 +343,8 @@ public class StockMarketServiceImpl implements StockMarketService {
 				ss += orderLine.getNumber();
 			}
 		}
-
-		return bs - ss;
+		
+		return bs-ss;
 	}
 
 	@Override
@@ -353,12 +368,15 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 			if (order.getOrderType() == OrderType.SELL) {
 
-				int ownedActionNumber = searchUserActionsNumber(user, enterprise);
+				int ownedActionNumber = searchUserActionsNumber(user, enterprise, false);
 
 				if (ownedActionNumber < number) {
 					throw new NotOwnedException();
 				}
 
+			}
+			if(order.getOrderLineType()==OrderLineType.MARKET) {
+				order.setPrice(0F);
 			}
 			orderLineDao.save(order);
 
