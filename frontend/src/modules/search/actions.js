@@ -29,6 +29,27 @@ export const searchAllEnterprises = () => (dispatch, getState) => {
 	);
 }
 
+
+export const clearSearchActions = () => ({
+	type: actionTypes.CLEAR_ACTIONS
+})
+
+
+export const searchActionsCompleted = (actions) => ({
+	type: actionTypes.SEARCH_ACTIONS_COMPLETED,
+	actions
+});
+
+export const searchActions = () => (dispatch, getState) => {
+
+	dispatch(clearSearchActions());
+
+	backend.searchService.findActions(
+		actions => dispatch(searchActionsCompleted(actions))
+	);
+}
+
+
 export const searchEnterpriseByIdCompleted = enterprise => ({
 	type: actionTypes.SEARCH_ENTERPRISE_BY_ID_COMPLETED,
 	enterprise
@@ -49,7 +70,6 @@ export const searchEnterpriseHistoric = (id, numberOfDays) => (dispatch) => {
 	backend.searchService.findEnterpriseHistoric(id,numberOfDays,
 		enterpriseHistoric => dispatch(searchEnterpriseHistoricCompleted(enterpriseHistoric)))
 }
-
 
 
 export const searchBoughtOrdersCompleted = (bought) => ({

@@ -19,7 +19,7 @@ const FindOrdersResult = ({orders, displayTrash}) =>{
 	}
 
 	
-	const handleClick = () => {
+	const handleClick = ({order}) => {
 		dispatch(actions.deleteOrder(order.id, displayTrash));
 		window.location.reload();
 	}
@@ -63,7 +63,7 @@ const FindOrdersResult = ({orders, displayTrash}) =>{
 					<td> {selectors.getEnterpriseName(enterprises,order.enterpriseId)} </td>
 					<td> {order.deadline} </td>
 
-					{displayTrash && <td> <button class=" fas fa-trash btn btn-light shadow-none" onClick={handleClick}></button></td>}
+					{displayTrash && <td> <button class=" fas fa-trash btn btn-light shadow-none" onClick={() => handleClick({ order })}></button></td>}
 				</tr>
 
 

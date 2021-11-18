@@ -10,6 +10,7 @@ const initialState = {
 	sold: null,
 	notSold: null,
 	enterpriseHistoric: null,
+	actions:null,
 }
 
 
@@ -121,6 +122,20 @@ const notSold = (state = initialState.notSold, action) => {
 	}
 }
 
+const actions = (state = initialState.actions, action) => {
+	
+	switch (action.type){
+		
+		case actionTypes.CLEAR_ACTIONS:
+			return initialState.actions;
+			
+		case actionTypes.SEARCH_ACTIONS_COMPLETED:
+			return action.actions;
+			
+		default:
+			return state;
+	}
+}
 
 const reducer = combineReducers({
 	enterprises,
@@ -129,7 +144,8 @@ const reducer = combineReducers({
 	notBought,
 	sold,
 	notSold,
-	enterpriseHistoric
+	enterpriseHistoric,
+	actions
 });
 
 export default reducer;
