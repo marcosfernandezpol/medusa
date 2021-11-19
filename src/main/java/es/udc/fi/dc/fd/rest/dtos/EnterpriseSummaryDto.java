@@ -1,6 +1,7 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class EnterpriseSummaryDto {
 
@@ -124,6 +125,30 @@ public class EnterpriseSummaryDto {
 	public void setCreatorId(Long creatorId) {
 		this.creatorId = creatorId;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(acronim, actions, actionsPrice, avaliable, creatorId, enterpriseName, fundation, id,
+				incomes);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EnterpriseSummaryDto other = (EnterpriseSummaryDto) obj;
+		return Objects.equals(acronim, other.acronim) && actions == other.actions
+				&& Objects.equals(actionsPrice, other.actionsPrice) && avaliable == other.avaliable
+				&& Objects.equals(creatorId, other.creatorId) && Objects.equals(enterpriseName, other.enterpriseName)
+				&& Objects.equals(fundation, other.fundation) && Objects.equals(id, other.id)
+				&& Objects.equals(incomes, other.incomes);
+	}
+	
+	
 	
 	
 

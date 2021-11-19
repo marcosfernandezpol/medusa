@@ -89,8 +89,6 @@ public class EnterpriseTest {
 				incomes,actions,actionsPrice,anualBenefitsDto);
 		enterprise.setAvaliable(avaliable);
 		
-		EnterpriseDto enterprise3 = new EnterpriseDto(id,enterpriseName,acronim,date,
-				incomes,actions,actionsPrice,anualBenefitsDto,avaliable);
 		
 		Enterprise enterpriseAux = new Enterprise();
 		Enterprise enterpriseAux2 = new Enterprise();
@@ -116,7 +114,6 @@ public class EnterpriseTest {
 		enterpriseAux = EnterpriseConversor.toEnterprise(enterprise2);
 		Assert.assertTrue(enterpriseAux.getClass().equals(enterpriseAux2.getClass()));
 		
-		List<EnterpriseDto> enterprisesDto = new ArrayList<>();
 		List<Enterprise> list = new ArrayList<>();
 		List<EnterpriseDto> list2 = new ArrayList<>();
 		
