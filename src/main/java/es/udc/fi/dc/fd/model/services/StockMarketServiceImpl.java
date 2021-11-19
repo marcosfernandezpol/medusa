@@ -474,7 +474,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 		if (adminOp.isEmpty()) {
 			throw new InstanceNotFoundException("No existe admin con id", adminId);
 		}
-		
+
 		if (enterpriseOp.isEmpty()) {
 			throw new InstanceNotFoundException("No existe empresa con id", enterpriseId);
 		}

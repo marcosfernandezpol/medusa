@@ -8,6 +8,7 @@ import static org.mockito.ArgumentMatchers.floatThat;
 import static org.mockito.ArgumentMatchers.longThat;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +40,11 @@ import es.udc.fi.dc.fd.model.entities.OrderLineDao;
 import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.entities.User.RoleType;
 import es.udc.fi.dc.fd.model.entities.UserDao;
+import es.udc.fi.dc.fd.model.services.exceptions.InvalidArgumentException;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
+import es.udc.fi.dc.fd.rest.dtos.AnnualBenefitsDto;
+import es.udc.fi.dc.fd.rest.dtos.AnnualBenefitsListDto;
+import es.udc.fi.dc.fd.rest.dtos.AnnualBenefitsParamsDto;
 
 /**
  * The Class StockMarketServiceTest.
@@ -103,6 +108,18 @@ public class StockMarketServiceTest {
 	private Enterprise createEnterprise() {
 		return new Enterprise("MedusaEnterprises", "ME", Date.valueOf("1999-01-17"), Float.valueOf(1000), 28,
 				Float.valueOf(18));
+	}
+	
+	private AnnualBenefitsListDto createAnnualBenefits() {
+		List <AnnualBenefitsParamsDto> annualBenefitsList = new ArrayList<AnnualBenefitsParamsDto>();
+		
+		AnnualBenefitsParamsDto AnnualBenefits2000 = new AnnualBenefitsParamsDto(2000, 1000f);
+		AnnualBenefitsParamsDto AnnualBenefits2001 = new AnnualBenefitsParamsDto(2001, 9000f);
+		
+		annualBenefitsList.add(AnnualBenefits2000);
+		annualBenefitsList.add(AnnualBenefits2001);
+		AnnualBenefitsListDto annualBenefitsListDto = new AnnualBenefitsListDto(annualBenefitsList);
+		return annualBenefitsListDto;
 	}
 
 	@Test
@@ -557,6 +574,56 @@ public void modifyAvaliableEnterpriseThrowsInstanceNotFoundExceptionUser()
 	stockMarketService.modifyAvaliableEnterprise(2451l, enterprise.getId(), false);
 
 }
+
+@Test 
+public void createAnnualBenefitsTest() 
+		throws DuplicateInstanceException, PermissionException, NumberException, InstanceNotFoundException,
+		InvalidOperationException, NotEnoughBalanceException, NotOwnedException, NotAvaliableException, NotCreatorException, InvalidArgumentException {
+
+	User admin = createSavedAdmin();
+	User client = createSavedClient();
+	Enterprise enterprise = createEnterprise();
+	enterprise.setCreatorId(admin.getId());
+	enterprise.setStockPrice(10F);
+	enterprise.setStock(10);
+
+	stockMarketService.createEnterprise(admin.getId(), enterprise);
+	stockMarketService.createAnnualBenefits(admin.getId(), enterprise.getId(), createAnnualBenefits());
+
+}
+
+@Test (expected = PermissionException.class)
+public void createAnnualBenefitsTestThrowsPermissionException() 
+		throws DuplicateInstanceException, PermissionException, NumberException, InstanceNotFoundException,
+		InvalidOperationException, NotEnoughBalanceException, NotOwnedException, NotAvaliableException, NotCreatorException, InvalidArgumentException {
+
+	User admin = createSavedAdmin();
+	User client = createSavedClient();
+	Enterprise enterprise = createEnterprise();
+	enterprise.setCreatorId(admin.getId());
+	enterprise.setStockPrice(10F);
+	enterprise.setStock(10);
+
+	stockMarketService.createEnterprise(admin.getId(), enterprise);
+	stockMarketService.createAnnualBenefits(client.getId(), enterprise.getId(), createAnnualBenefits());
+
+}
 	
+@Test (expected = InstanceNotFoundException.class)
+public void createAnnualBenefitsTestThrowsInstanceNotFoundException() 
+		throws DuplicateInstanceException, PermissionException, NumberException, InstanceNotFoundException,
+		InvalidOperationException, NotEnoughBalanceException, NotOwnedException, NotAvaliableException, NotCreatorException, InvalidArgumentException {
+
+	User admin = createSavedAdmin();
+	User client = createSavedClient();
+	Enterprise enterprise = createEnterprise();
+	enterprise.setCreatorId(admin.getId());
+	enterprise.setStockPrice(10F);
+	enterprise.setStock(10);
+
+	stockMarketService.createEnterprise(admin.getId(), enterprise);
+	stockMarketService.createAnnualBenefits(admin.getId(), 23453245l, createAnnualBenefits());
+
+}
 
 }
