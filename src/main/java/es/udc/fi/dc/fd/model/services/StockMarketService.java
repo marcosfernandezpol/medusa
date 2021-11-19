@@ -29,7 +29,7 @@ public interface StockMarketService {
 	public float transfer(Long userId, Float money, String Operation)
 			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException;
 
-	public void order(Long owner, OrderType orderType, OrderLineType orderLineType, Float price, int number, Long enterpriseId, LocalDate deadline)
+	public long order(Long owner, OrderType orderType, OrderLineType orderLineType, Float price, int number, Long enterpriseId, LocalDate deadline)
 			throws NotEnoughBalanceException, NotOwnedException, NotAvaliableException;
 
 	public void deleteOrder(Long owner, Long orderId, Boolean avaliable)
@@ -38,5 +38,5 @@ public interface StockMarketService {
 	public Enterprise modifyAvaliableEnterprise(Long creator, Long enterpriseId, Boolean avaliable)
 			throws NotCreatorException, InstanceNotFoundException;
 	
-	public int searchUserActionsNumber(User user, Enterprise enterprise, Boolean avaliable);
+	public int searchUserActionsNumber(User user, Enterprise enterprise, Boolean sellOnlyNotAbaliable);
 }
