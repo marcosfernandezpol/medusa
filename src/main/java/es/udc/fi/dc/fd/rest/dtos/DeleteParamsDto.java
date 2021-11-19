@@ -1,5 +1,7 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
+import java.util.Objects;
+
 import javax.validation.constraints.NotNull;
 
 public class DeleteParamsDto {
@@ -8,7 +10,6 @@ public class DeleteParamsDto {
 	
 	private Boolean avaliable;
 
-	
 
 	@NotNull
 	public Long getOrderId() {
@@ -26,7 +27,7 @@ public class DeleteParamsDto {
 	public void setAvaliable(Boolean avaliable) {
 		this.avaliable = avaliable;
 	}
-	
-	
+
+
 
 }

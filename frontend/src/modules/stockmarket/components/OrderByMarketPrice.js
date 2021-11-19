@@ -6,15 +6,15 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Errors } from '../../common';
 import * as actions from '../actions';
 
-const CreateOrders = () => {
+const OrderByMarketPrice = () => {
 
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const [numberActions, setNumberActions] = useState('');
-	const [priceActions, setPriceActions] = useState('');
 	const [deadline, setDeadline] = useState('');
 	const [backendErrors, setBackendErrors] = useState(null);
-	const { id, enterpriseName, type } = useParams();
+	const { id, type } = useParams();
+	
 	let form;
 
 	const handleSubmit = event => {
@@ -26,8 +26,8 @@ const CreateOrders = () => {
 			dispatch(actions.createOrder(
 				{
 					type: type.trim(),
-					orderLineType: 'LIMIT',
-					price: priceActions.trim(),
+					orderLineType: 'MARKET',
+					price: 0,
 					number: numberActions.trim(),
 					enterpriseId: id.trim(),
 					deadline: deadline.trim()
@@ -44,6 +44,7 @@ const CreateOrders = () => {
 		}
 
 	}
+	
 
 	return (
 		<div>
@@ -59,7 +60,7 @@ const CreateOrders = () => {
 							<label htmlFor="numberActions" className="col-md-3 col-form-label">									<FormattedMessage id='project.global.fields.actionsNumber'/>
                             </label>
 							<div className="col-md-4">
-								<input type="text" id="userName" className="form-control"
+								<input type="number" id="userName" className="form-control"
 									value={numberActions}
 									onChange={e => setNumberActions(e.target.value)}
 									autoFocus
@@ -70,21 +71,6 @@ const CreateOrders = () => {
 							</div>
 						</div>
 
-
-						<div className="form-group row">
-							<label htmlFor="priceActions" className="col-md-3 col-form-label">
-								<FormattedMessage id="project.global.fields.actionPrice" />
-							</label>
-							<div className="col-md-4">
-								<input type="text" id="priceActions" className="form-control"
-									value={priceActions}
-									onChange={e => setPriceActions(e.target.value)}
-									required />
-								<div className="invalid-feedback">
-									<FormattedMessage id='project.global.validator.required' />
-								</div>
-							</div>
-						</div>
 						
 						<div className="form-group row">
 							<label htmlFor="deadline" className="col-md-3 col-form-label">
@@ -93,7 +79,7 @@ const CreateOrders = () => {
 							<div className="col-md-4">
 								<input type="date" id="deadline" className="form-control"
 									value={deadline}
-									min = {new Date().toISOString().split('T')[0]}
+									min= {new Date().toISOString().split('T')[0]}
 									onChange={e => setDeadline(e.target.value)}
 									required />
 								<div className="invalid-feedback">
@@ -117,4 +103,4 @@ const CreateOrders = () => {
 
 }
 
-export default CreateOrders;
+export default OrderByMarketPrice;

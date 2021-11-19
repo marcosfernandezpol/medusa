@@ -26,6 +26,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.NumberException;
 import es.udc.fi.dc.fd.model.entities.Enterprise;
 import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
 import es.udc.fi.dc.fd.model.entities.OrderLine;
+import es.udc.fi.dc.fd.model.entities.OrderLine.OrderLineType;
 import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
 import es.udc.fi.dc.fd.model.entities.OrderLineDao;
 import es.udc.fi.dc.fd.model.entities.User;
@@ -121,12 +122,9 @@ public class SearchServiceTest {
 		User savedClient = userDao.save(client);
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise,
-				LocalDate.now().plusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise,
-				LocalDate.now().plusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise,
-				LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
 		List<OrderLine> orderList = searchService.findOrders(savedClient.getId(), true, true);
 
 		assertTrue(orderList.size() == 3);
@@ -145,12 +143,9 @@ public class SearchServiceTest {
 		User savedClient = userDao.save(client);
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise,
-				LocalDate.now().minusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise,
-				LocalDate.now().plusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, savedClient, Float.valueOf(10), 3, savedEnterprise,
-				LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().minusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
 		List<OrderLine> orderList = searchService.findOrders(savedClient.getId(), true, true);
 
 		assertTrue(orderList.size() == 2);

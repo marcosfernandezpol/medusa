@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
+import es.udc.fi.dc.fd.model.entities.Actions;
 import es.udc.fi.dc.fd.model.services.SearchService;
 import es.udc.fi.dc.fd.rest.dtos.ActionPriceHistoricConversor;
 import es.udc.fi.dc.fd.rest.dtos.ActionPriceHistoricDto;
@@ -55,6 +56,11 @@ public class SearchController {
 	@GetMapping("/enterprise/{id}/historic")
 	public List<ActionPriceHistoricDto> findHistoricPrice(@PathVariable Long id, @RequestParam int numberOfDays) throws InstanceNotFoundException {
 		return ActionPriceHistoricConversor.toActionPriceHistoricsDto(searchService.findHistorics(id,numberOfDays));
+	}
+	
+	@GetMapping("/user/actions")
+	public List<Actions> findUserActions(@RequestAttribute Long userId) throws InstanceNotFoundException {
+		return searchService.findUserActions(userId);
 	}
 
 }

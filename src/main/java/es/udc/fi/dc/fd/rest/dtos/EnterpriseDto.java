@@ -2,6 +2,7 @@ package es.udc.fi.dc.fd.rest.dtos;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 public class EnterpriseDto {
@@ -39,22 +40,6 @@ public class EnterpriseDto {
 	public EnterpriseDto() {
 	}
 
-	/*public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
-			Float actionsPrice) {
-
-		super();
-		this.id = id;
-		this.enterpriseName = enterpriseName;
-		this.acronim = acronim;
-		this.fundation = fundation;
-		this.incomes = incomes;
-		this.actions = actions;
-		this.actionsPrice = actionsPrice;
-		this.avaliable = true;
-
-	}*/
-	
-	
 
 	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
 			Float actionsPrice, List<AnnualBenefitsDto> anualBenefitsDto, boolean avaliable) {
@@ -155,6 +140,32 @@ public class EnterpriseDto {
 	public void setAvaliable(boolean availiable) {
 		this.avaliable = availiable;
 	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(acronim, actions, actionsPrice, anualBenefitsDto, avaliable, enterpriseName, fundation, id,
+				incomes);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EnterpriseDto other = (EnterpriseDto) obj;
+		return Objects.equals(acronim, other.acronim) && actions == other.actions
+				&& Objects.equals(actionsPrice, other.actionsPrice)
+				&& Objects.equals(anualBenefitsDto, other.anualBenefitsDto) && avaliable == other.avaliable
+				&& Objects.equals(enterpriseName, other.enterpriseName) && Objects.equals(fundation, other.fundation)
+				&& Objects.equals(id, other.id) && Objects.equals(incomes, other.incomes);
+	}
+	
+	
 	
 	
 
