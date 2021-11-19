@@ -1,5 +1,7 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
+import java.util.Objects;
+
 public class AnnualBenefitsDto {
 
 	/**
@@ -52,5 +54,24 @@ public class AnnualBenefitsDto {
 	public void setBenefits(Float benefits) {
 		this.benefits = benefits;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(benefits, id, year);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AnnualBenefitsDto other = (AnnualBenefitsDto) obj;
+		return Objects.equals(benefits, other.benefits) && Objects.equals(id, other.id) && year == other.year;
+	}
+	
+	
 
 }
