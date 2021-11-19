@@ -1,10 +1,5 @@
 package es.udc.fi.dc.fd.model.entities;
 
-import java.time.LocalDateTime;
-import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.transaction.Transactional;
 
 import org.junit.Assert;
