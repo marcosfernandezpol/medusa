@@ -2,6 +2,7 @@ package es.udc.fi.dc.fd.rest.dtos;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 public class EnterpriseDto {
@@ -33,13 +34,15 @@ public class EnterpriseDto {
 	private Float actionsPrice;
 
 	private List<AnnualBenefitsDto> anualBenefitsDto;
+	
+	private boolean avaliable;
 
 	public EnterpriseDto() {
 	}
 
-	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
-			Float actionsPrice) {
 
+	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
+			Float actionsPrice, List<AnnualBenefitsDto> anualBenefitsDto, boolean avaliable) {
 		super();
 		this.id = id;
 		this.enterpriseName = enterpriseName;
@@ -48,7 +51,8 @@ public class EnterpriseDto {
 		this.incomes = incomes;
 		this.actions = actions;
 		this.actionsPrice = actionsPrice;
-
+		this.anualBenefitsDto = anualBenefitsDto;
+		this.avaliable = avaliable;
 	}
 
 	public EnterpriseDto(Long id, String enterpriseName, String acronim, Date fundation, Float incomes, int actions,
@@ -62,6 +66,7 @@ public class EnterpriseDto {
 		this.actions = actions;
 		this.actionsPrice = actionsPrice;
 		this.anualBenefitsDto = anualBenefitsDto;
+		this.avaliable = true;
 	}
 
 	public Long getId() {
@@ -127,5 +132,41 @@ public class EnterpriseDto {
 	public void setanualBenefitsDto(List<AnnualBenefitsDto> anualBenefitsDto) {
 		this.anualBenefitsDto = anualBenefitsDto;
 	}
+
+	public boolean isAvaliable() {
+		return avaliable;
+	}
+
+	public void setAvaliable(boolean availiable) {
+		this.avaliable = availiable;
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(acronim, actions, actionsPrice, anualBenefitsDto, avaliable, enterpriseName, fundation, id,
+				incomes);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EnterpriseDto other = (EnterpriseDto) obj;
+		return Objects.equals(acronim, other.acronim) && actions == other.actions
+				&& Objects.equals(actionsPrice, other.actionsPrice)
+				&& Objects.equals(anualBenefitsDto, other.anualBenefitsDto) && avaliable == other.avaliable
+				&& Objects.equals(enterpriseName, other.enterpriseName) && Objects.equals(fundation, other.fundation)
+				&& Objects.equals(id, other.id) && Objects.equals(incomes, other.incomes);
+	}
+	
+	
+	
+	
 
 }

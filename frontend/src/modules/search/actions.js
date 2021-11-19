@@ -16,6 +16,10 @@ export const clearSearchEnterprise = () => ({
 	type: actionTypes.CLEAR_ENTERPRISE
 })
 
+export const clearSearchEnterpriseHistoric = () => ({
+	type: actionTypes.CLEAR_ENTERPRISE_HISTORIC
+})
+
 export const searchAllEnterprises = () => (dispatch, getState) => {
 
 	dispatch(clearSearchEnterprises());
@@ -25,9 +29,35 @@ export const searchAllEnterprises = () => (dispatch, getState) => {
 	);
 }
 
+
+export const clearSearchActions = () => ({
+	type: actionTypes.CLEAR_ACTIONS
+})
+
+
+export const searchActionsCompleted = (actions) => ({
+	type: actionTypes.SEARCH_ACTIONS_COMPLETED,
+	actions
+});
+
+export const searchActions = () => (dispatch, getState) => {
+
+	dispatch(clearSearchActions());
+
+	backend.searchService.findActions(
+		actions => dispatch(searchActionsCompleted(actions))
+	);
+}
+
+
 export const searchEnterpriseByIdCompleted = enterprise => ({
 	type: actionTypes.SEARCH_ENTERPRISE_BY_ID_COMPLETED,
 	enterprise
+})
+
+export const searchEnterpriseHistoricCompleted = enterpriseHistoric => ({
+	type: actionTypes.SEARCH_ENTERPRISE_HISTORIC_COMPLETED,
+	enterpriseHistoric
 })
 
 export const searchEnterpriseById = id => (dispatch) => {
@@ -35,6 +65,11 @@ export const searchEnterpriseById = id => (dispatch) => {
 		enterprise => dispatch(searchEnterpriseByIdCompleted(enterprise)))
 }
 
+export const searchEnterpriseHistoric = (id, numberOfDays) => (dispatch) => {
+	dispatch(clearSearchEnterpriseHistoric());
+	backend.searchService.findEnterpriseHistoric(id,numberOfDays,
+		enterpriseHistoric => dispatch(searchEnterpriseHistoricCompleted(enterpriseHistoric)))
+}
 
 
 export const searchBoughtOrdersCompleted = (bought) => ({
@@ -57,8 +92,6 @@ export const searchBoughtOrders = (option, avaliable, onErrors) => (dispatch ,ge
 		bought => dispatch(searchBoughtOrdersCompleted(bought))
 	);
 }
-
-
 
 
 export const searchNotBoughtOrdersCompleted = (notBought) => ({
@@ -125,6 +158,42 @@ export const searchNotSoldOrders = (option, avaliable,onErrors) => (dispatch,get
 		option,
 		avaliable,
 		notSold => dispatch(searchNotSoldOrdersCompleted(notSold))
+	);
+}
+
+
+export const deleteOrdersCompleted = () => ({
+	type: actionTypes.DELETE_ORDER_COMPLETED
+});
+
+export const deleteOrder = (orderId, avaliable, onErrors) => (dispatch,getState) => {
+	
+	backend.stockMarketService.deleteOrder(
+		orderId,
+		avaliable,
+		()=>dispatch(deleteOrdersCompleted())
+	);
+}
+
+export const clearUnavaliable = () => ({
+	type: actionTypes.CLEAR_UNAVALIABLE
+})
+
+export const setUnavaliableCompleted = enterprise => ({
+    type: actionTypes.SET_UNAVALIABLE_COMPLETED,
+    enterprise
+})
+
+export const setUnavaliable = (enterprise,enterpriseId,onSuccess,onErrors) => (dispatch, getState) => {
+	
+	backend.searchService.setUnavaliable(
+		enterprise,
+		enterpriseId,
+		enterprise => {
+			dispatch(setUnavaliableCompleted(enterprise));
+		},
+		onSuccess,
+		onErrors
 	);
 }
 

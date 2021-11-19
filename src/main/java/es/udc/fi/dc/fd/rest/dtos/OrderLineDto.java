@@ -1,8 +1,11 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.time.LocalDate;
 
 import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
+import es.udc.fi.dc.fd.model.entities.OrderLine.OrderLineType;
 
 public class OrderLineDto {
 
@@ -31,6 +34,12 @@ public class OrderLineDto {
 	private int number;
 
 	private Long enterpriseId;
+	
+	private LocalDate deadline;
+	
+	private OrderLineType orderLineType;
+	
+	
 
 	public OrderLineDto() {
 		super();
@@ -47,6 +56,33 @@ public class OrderLineDto {
 		this.number = number;
 		this.enterpriseId = enterpriseId;
 	}
+	
+	public OrderLineDto(Long id, LocalDateTime requestDate, OrderType orderType, Long ownerId, Float price, int number,
+			Long enterpriseId, LocalDate deadline) {
+		super();
+		this.id = id;
+		this.requestDate = requestDate;
+		this.orderType = orderType;
+		this.ownerId = ownerId;
+		this.price = price;
+		this.number = number;
+		this.enterpriseId = enterpriseId;
+		this.deadline = deadline;
+	}
+	
+	public OrderLineDto(Long id, LocalDateTime requestDate, OrderType orderType, Long ownerId, Float price, int number,
+			Long enterpriseId, LocalDate deadline, OrderLineType orderLineType) {
+		super();
+		this.id = id;
+		this.requestDate = requestDate;
+		this.orderType = orderType;
+		this.ownerId = ownerId;
+		this.price = price;
+		this.number = number;
+		this.enterpriseId = enterpriseId;
+		this.deadline = deadline;
+		this.orderLineType = orderLineType;
+	}
 
 	public Long getId() {
 		return id;
@@ -54,6 +90,14 @@ public class OrderLineDto {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public OrderLineType getOrderLineType() {
+		return orderLineType;
+	}
+
+	public void setOrderLineType(OrderLineType type) {
+		this.orderLineType = type;
 	}
 
 	public LocalDateTime getRequestDate() {
@@ -103,11 +147,42 @@ public class OrderLineDto {
 	public void setEnterpriseId(Long enterpriseId) {
 		this.enterpriseId = enterpriseId;
 	}
+	
+	public LocalDate getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(LocalDate deadline) {
+		this.deadline = deadline;
+	}
+
+	
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(deadline, enterpriseId, id, number, orderLineType, orderType, ownerId, price, requestDate);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderLineDto other = (OrderLineDto) obj;
+		return Objects.equals(deadline, other.deadline) && Objects.equals(enterpriseId, other.enterpriseId)
+				&& Objects.equals(id, other.id) && number == other.number && orderLineType == other.orderLineType
+				&& orderType == other.orderType && Objects.equals(ownerId, other.ownerId)
+				&& Objects.equals(price, other.price) && Objects.equals(requestDate, other.requestDate);
+	}
 
 	@Override
 	public String toString() {
 		return "OrderLineDto [id=" + id + ", requestDate=" + requestDate + ", orderType=" + orderType + ", ownerId="
-				+ ownerId + ", price=" + price + ", number=" + number + ", enterpriseId=" + enterpriseId + "]";
+				+ ownerId + ", price=" + price + ", number=" + number + ", enterpriseId=" + enterpriseId + ", deadline="
+				+ deadline + "]";
 	}
 
 }

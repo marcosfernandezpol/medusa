@@ -11,4 +11,5 @@ export {default as CreateEnterpriseAccessButton} from './components/CreateEnterp
 export {default as Transfer} from './components/Transfer';
 export {default as TransferPage} from './components/TransferPage';
 export {default as CreateOrders} from './components/CreateOrders'
+export {default as OrderByMarketPrice} from './components/OrderByMarketPrice'
 export default {actions, actionTypes, reducer, selectors};

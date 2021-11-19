@@ -9,6 +9,10 @@ export default {
 
     'project.common.ErrorDialog.title': 'Error',
 
+	'project.global.buttons.sell': 'Sell',
+	'project.global.buttons.marketPriceSell': 'Sell orders by market price',
+	'project.global.buttons.marketPriceBuy': 'Buy orders by market price',
+	
     'project.global.buttons.buy': 'Buy',
     'project.global.buttons.cancel': 'Cancel',
     'project.global.buttons.close': 'Close',
@@ -62,6 +66,7 @@ export default {
 
 	'project.enterprise.CreateEnterprise.title': 'Create Enterprise',
 	'project.enterprise.UpdateEnterprise.title':'Update Enterprise',
+	'project.users.Actions.title':'Actions',
 	'project.global.fields.enterpriseName': 'Enterprise name',
 	'project.global.fields.acronim': 'Acronim',
 	'project.global.fields.fundation': 'Fundation',
@@ -75,18 +80,24 @@ export default {
 	'project.global.fields.requestdate':'Request Date',
 	'project.global.fields.orderType' : 'OrderType',
 	'project.global.fields.price':'Price',
+	'project.global.fields.avaliable':'Avaliable',
 	'project.global.fields.actionPrice':'Price per Action',
 	'project.global.fields.actionsNumber':'Number of Actions',
 	'project.global.fields.enterpriseName':'Enterprise Name',
 	'project.global.fields.orderList':'Order Lists',
 	'project.global.fields.executedList':'Executed List',
 	'project.global.fields.notExecutedList':'Not Executed List',
+	'project.global.fields.deadLine':'Dead Line',
 	'project.global.buttons.submitOperation':'Submit Operation',
 	'project.global.form.buySellForm':'Operation Formulary',
 	'project.global.button.addElement':'Add Element',
 	'project.global.button.deleteElement':'Delete Element',
 	'project.global.button.submit':'Submit',
 	'project.global.button.clearValues':'Clear Values',
+	'project.global.fields.actionsList':'Actions List',
+	
+	'project.global.fields.orderType': 'Order type',
+	'project.global.fields.priceNotEspecified': 'Not especified',
 	
 	
 	'project.shopping.BuyForm.title':'Balance',

@@ -59,5 +59,7 @@ public class ChangePasswordParamsDto {
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
 	}
+	
+	
 
 }

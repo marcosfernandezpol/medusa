@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FormattedMessage, FormattedNumber } from 'react-intl';
@@ -10,6 +10,7 @@ import * as selectors from '../selectors';
 import { Errors, BackLink } from '../../common';
 import * as actions from '../actions';
 import { Pager } from '../../common';
+import GraphicChart from '../../stockmarket/components/GraphicChart';
 
 
 const FindEnterpriseResult = () => {
@@ -17,6 +18,10 @@ const FindEnterpriseResult = () => {
 	const enterprise = useSelector(selectors.getEnterprise);
 	const isAdmin = useSelector(users.selectors.isAdmin);
 	const dispatch = useDispatch();
+	const [numDays, setNumDays] = useState('');
+	const [loaded, setLoaded] = useState(false);
+	let form;
+
 
 	const history = useHistory();
 	const { id } = useParams();
@@ -32,20 +37,51 @@ const FindEnterpriseResult = () => {
 		history.push(`/market/create_order/${id}`)
 	}
 
+
 	useEffect(() => {
 		const enterpriseId = Number(id);
 		if (!Number.isNaN(enterpriseId)) {
 			dispatch(actions.searchEnterpriseById(enterpriseId));
+			dispatch(actions.searchEnterpriseHistoric(enterpriseId, 1));
+
 		}
 
 		return () => null;
 
-	}, [id, dispatch]);
+	}, [id, dispatch, !numDays]);
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+
+		const enterpriseId = Number(id);
+		let number = Number(numDays);
+		if (!Number.isNaN(enterpriseId)) {
+			dispatch(actions.searchEnterpriseHistoric(enterpriseId, numDays));
+
+		}
+	}
+
+	const data = useSelector(selectors.getEnterpriseHistoric);
+
 
 	if (!enterprise) {
 
 		return null;
 	}
+
+	if (!data) {
+
+		return null;
+	}
+
+
+	const dataExample = [
+		{
+			"id": "Enterprise",
+			"color": "hsl(255, 70%, 50%)",
+			"data": data
+		}
+	]
 
 	return (
 
@@ -79,6 +115,22 @@ const FindEnterpriseResult = () => {
                 </h5>
 				</div>
 			</div>
+			<div className="col-md-4">
+				<form ref={node => form = node}
+					className="needs-validation" noValidate
+					onSubmit={handleSubmit}>
+					<input type="number" step="1" id="numDays" className="form-control"
+						value={numDays}
+						onChange={e => setNumDays(e.target.value)}
+						placeholder="Number of Days"
+						autoFocus
+						required />
+					<button onClick={handleSubmit} className="fas fa-sort"></button>
+				</form>
+			</div>
+			<div style={{ height: 500 }}>
+				<GraphicChart data={dataExample} />
+			</div>
 			{isAdmin &&
 				<div className="card text-center">&nbsp;
 				<h4>
@@ -93,13 +145,26 @@ const FindEnterpriseResult = () => {
 			{!isAdmin &&
 				<div className="card text-center">&nbsp;
 				<h4>
-						<Link to={`/market/create_order/${id}/enterpriseName=${enterprise.enterpriseName}/${buy}`} className="btn btn-secondary mx-5">buy </Link>
+						<Link to={`/market/create_order/${id}/enterpriseName=${enterprise.enterpriseName}/${buy}`} className="btn btn-secondary mx-5">
+							<FormattedMessage id='project.global.buttons.buy' />
+						</Link>
 
 
 
-						<Link to={`/market/create_order/${id}/enterpriseName=${enterprise.enterpriseName}/${sell}`} className="btn btn-secondary mx-5">sell </Link> &nbsp;
+						<Link to={`/market/create_order/${id}/enterpriseName=${enterprise.enterpriseName}/${sell}`} className="btn btn-secondary mx-5">
+							<FormattedMessage id='project.global.buttons.sell' />
+						</Link> &nbsp;
 
-				</h4>
+						<Link to={`/market/create_order_market_price/${id}/${buy}`} className="btn btn-secondary mx-5">
+							<FormattedMessage id='project.global.buttons.marketPriceBuy' />
+						</Link>
+
+						<Link to={`/market/create_order_market_price/${id}/${sell}`} className="btn btn-secondary mx-5">
+							<FormattedMessage id='project.global.buttons.marketPriceSell' />
+						</Link>
+
+
+					</h4>
 
 				</div>
 			}

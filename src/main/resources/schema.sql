@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS ActionPriceHistoric;
 DROP TABLE IF EXISTS OrderLine;
 DROP TABLE IF EXISTS AnnualBenefits;
 DROP TABLE IF EXISTS Enterprise;
@@ -22,14 +23,26 @@ CREATE TABLE User (
 
 CREATE TABLE Enterprise (
     id BIGINT NOT NULL AUTO_INCREMENT,
+    creatorId BIGINT NOT NULL,
     enterpriseName VARCHAR(60) NOT NULL, 
     acronim VARCHAR(10) NOT NULL,
     fundation DATE,
     incomes FLOAT NOT NULL,
     stock BIGINT NOT NULL,
     stockPrice FLOAT NOT NULL,
+    avaliable BIT,
     CONSTRAINT EnterprisePK PRIMARY KEY (id),
+    CONSTRAINT creatorFK FOREIGN KEY (creatorId) REFERENCES User(id),
     CONSTRAINT enterpriseNameUnique UNIQUE (enterpriseName)
+);
+
+CREATE TABLE ActionPriceHistoric (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	enterpriseId BIGINT NOT NULL,
+	date DATETIME NOT NULL,
+	price BIGINT NOT NULL,
+	CONSTRAINT ActionPriceHistoricPK PRIMARY KEY (id),
+	CONSTRAINT EnterpriseActionPriceHistoricFK FOREIGN KEY (enterpriseId) REFERENCES Enterprise(id)
 );
 
 
@@ -64,11 +77,13 @@ CREATE TABLE OrderLine (
 	id BIGINT NOT NULL AUTO_INCREMENT,
 	requestDate DATETIME NOT NULL,
 	orderType TINYINT NOT NULL,
+	orderLineType TINYINT NOT NULL,
 	userId BIGINT,
 	price FLOAT NOT NULL,
 	number INT  NOT NULL,
 	enterpriseId BIGINT NOT NULL,
-	avaliable BIT NOT NULL,
+	avaliable BIT,
+	deadline DATE,
 	CONSTRAINT Order_linePK PRIMARY KEY (id),
 	CONSTRAINT OwnerFK FOREIGN KEY (userId) REFERENCES User(id),
 	CONSTRAINT enterpriseFK FOREIGN KEY (enterpriseId) REFERENCES Enterprise(id)
