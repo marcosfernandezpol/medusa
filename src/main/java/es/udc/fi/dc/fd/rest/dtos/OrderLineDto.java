@@ -1,6 +1,7 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.time.LocalDate;
 
 import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
@@ -153,6 +154,28 @@ public class OrderLineDto {
 
 	public void setDeadline(LocalDate deadline) {
 		this.deadline = deadline;
+	}
+
+	
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(deadline, enterpriseId, id, number, orderLineType, orderType, ownerId, price, requestDate);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderLineDto other = (OrderLineDto) obj;
+		return Objects.equals(deadline, other.deadline) && Objects.equals(enterpriseId, other.enterpriseId)
+				&& Objects.equals(id, other.id) && number == other.number && orderLineType == other.orderLineType
+				&& orderType == other.orderType && Objects.equals(ownerId, other.ownerId)
+				&& Objects.equals(price, other.price) && Objects.equals(requestDate, other.requestDate);
 	}
 
 	@Override
