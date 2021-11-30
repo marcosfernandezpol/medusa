@@ -83,7 +83,8 @@ CREATE TABLE OrderLine (
 	number INT  NOT NULL,
 	enterpriseId BIGINT NOT NULL,
 	avaliable BIT,
-	deadline DATE,
+	cancelled BIT,
+	deadline DATETIME,
 	CONSTRAINT Order_linePK PRIMARY KEY (id),
 	CONSTRAINT OwnerFK FOREIGN KEY (userId) REFERENCES User(id),
 	CONSTRAINT enterpriseFK FOREIGN KEY (enterpriseId) REFERENCES Enterprise(id)

@@ -17,6 +17,7 @@ import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
 import es.udc.fi.dc.fd.rest.dtos.AnnualBenefitsListDto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public interface StockMarketService {
 
@@ -29,9 +30,9 @@ public interface StockMarketService {
 	public float transfer(Long userId, Float money, String Operation)
 			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException;
 
-	public long order(Long owner, OrderType orderType, OrderLineType orderLineType, Float price, int number, Long enterpriseId, LocalDate deadline)
+	public long order(Long owner, OrderType orderType, OrderLineType orderLineType, Float price, int number, Long enterpriseId, LocalDateTime deadline)
 			throws NotEnoughBalanceException, NotOwnedException, NotAvaliableException;
-
+	
 	public void deleteOrder(Long owner, Long orderId, Boolean avaliable)
 			throws NotOwnedException, InstanceNotFoundException, NotAvaliableException;
 

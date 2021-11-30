@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.util.List;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.transaction.Transactional;
 
@@ -122,9 +123,9 @@ public class SearchServiceTest {
 		User savedClient = userDao.save(client);
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDateTime.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDateTime.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDateTime.now().plusDays(1)));
 		List<OrderLine> orderList = searchService.findOrders(savedClient.getId(), true, true);
 
 		assertTrue(orderList.size() == 3);
@@ -143,9 +144,9 @@ public class SearchServiceTest {
 		User savedClient = userDao.save(client);
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().minusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDateTime.now().minusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDateTime.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDateTime.now().plusDays(1)));
 		List<OrderLine> orderList = searchService.findOrders(savedClient.getId(), true, true);
 
 		assertTrue(orderList.size() == 2);

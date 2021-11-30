@@ -95,6 +95,7 @@ export default {
 	'project.global.button.submit':'Submit',
 	'project.global.button.clearValues':'Clear Values',
 	'project.global.fields.actionsList':'Actions List',
+	'project.global.fields.cancelledList':'Cancelled List',
 	
 	'project.global.fields.orderType': 'Order type',
 	'project.global.fields.priceNotEspecified': 'Not especified',

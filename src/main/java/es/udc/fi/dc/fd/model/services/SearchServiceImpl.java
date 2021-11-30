@@ -83,7 +83,7 @@ public class SearchServiceImpl implements SearchService {
 			else {
 				List<OrderLine> onTimeOrders = new ArrayList<OrderLine>();
 				for (OrderLine ord : returnList) 
-					if (ord.getDeadline().isAfter(LocalDate.now()))
+					if (ord.getDeadline().isAfter(LocalDateTime.now()))
 						onTimeOrders.add(ord);
 				
 				return onTimeOrders;
