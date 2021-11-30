@@ -36,7 +36,8 @@ public class OrderLineTest {
 		int number = 100;
 		Enterprise enterprise = new Enterprise();
 		boolean avaliable = true;
-		LocalDate deadline = LocalDate.now();
+		boolean cancelled = false;
+		LocalDateTime deadline = LocalDateTime.now();
 		
 		order.setId(id);
 		order.setRequestDate(date);
@@ -48,6 +49,7 @@ public class OrderLineTest {
 		order.setEnterprise(enterprise);
 		order.setAvaliable(avaliable);
 		order.setDeadline(deadline);
+		order.setCancelled(cancelled);
 		
 		OrderLine order2 = new OrderLine(
 				orderType,orderLineType,user,price,number,enterprise);
@@ -56,12 +58,13 @@ public class OrderLineTest {
 		order2.setRequestDate(date);
 		order2.setAvaliable(avaliable);
 		order2.setDeadline(deadline);
+		order2.setCancelled(cancelled);
 		
 		
 		
 		
 		
-		Assert.assertTrue(order.equals(order2));
+		Assert.assertEquals(order,order2);
 		Assert.assertTrue(order.hashCode()==(order2.hashCode()));
 	
 		String str = "Order_line [id=" + id + ", date=" + date + ", orderType=" + orderType + ", orderType=" + orderType 

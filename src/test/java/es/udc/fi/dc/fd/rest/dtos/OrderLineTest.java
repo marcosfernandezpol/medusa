@@ -29,7 +29,7 @@ public class OrderLineTest {
 		
 		long id = 1L;
 		LocalDateTime date = LocalDateTime.now();
-		LocalDate localDate = LocalDate.now();
+		LocalDateTime localDate = LocalDateTime.now();
 		OrderType orderType = OrderType.BUY;
 		long ownerId = 1L;
 		float price = 1.5F;
@@ -38,7 +38,7 @@ public class OrderLineTest {
 		OrderLineType orderLineType= OrderLineType.LIMIT;
 		String str = "OrderLineDto [id=" + id + ", requestDate=" + date + ", orderType=" + orderType + ", ownerId="
 				+ ownerId + ", price=" + price + ", number=" + number + ", enterpriseId=" + enterpriseId + ", deadline="
-				+ localDate + "]";
+				+ localDate + ", orderLineType=" + orderLineType + ", cancelled=" + false + "]";
 		
 		params.setId(id);
 		params.setRequestDate(date);
@@ -51,16 +51,16 @@ public class OrderLineTest {
 		params.setOrderLineType(orderLineType);
 		
 		OrderLineDto params2 = new OrderLineDto(id,date,orderType,
-				ownerId,price,number,enterpriseId);
+				ownerId,price,number,enterpriseId,false);
 		params2.setDeadline(localDate);
 		params2.setOrderLineType(orderLineType);
 		
 		OrderLineDto params3 = new OrderLineDto(id,date,orderType,
-				ownerId,price,number,enterpriseId,localDate);
+				ownerId,price,number,enterpriseId,localDate,false);
 		params3.setOrderLineType(orderLineType);
 		
 		OrderLineDto params4 = new OrderLineDto(id,date,orderType,
-				ownerId,price,number,enterpriseId,localDate,orderLineType);
+				ownerId,price,number,enterpriseId,localDate,orderLineType,false);
 		
 		Assert.assertTrue(params2.getId()==params4.getId());
 		Assert.assertTrue(params2.getOrderLineType()==params4.getOrderLineType());
