@@ -42,29 +42,37 @@ const FindOrders = () => {
 	
 	let executed = null;
 	let notExecuted = null;
+	let cancelled = null;
+	let executedAux = null;
 		
 	if (bought) {
-		executed=bought;
+		notExecuted=bought;
 		if (sold)
-			executed = bought.concat(sold) ;
+			notExecuted = bought.concat(sold) ;
 	} else
-		executed = sold;
+		notExecuted = sold;
 		
 	if (notBought) {
-		notExecuted = notBought;
+		executed = notBought;
 		if (notSold)
-			notExecuted = notBought.concat(notSold);
+			executed = notBought.concat(notSold);
 	} else 
-		notExecuted = notSold;
-
+		executed = notSold;
+		
+	if (executed){
+		cancelled = executed.filter(execute => execute.cancelled==true);
+		executedAux = executed.filter(execute => execute.cancelled==false);
+	}
 
 	return (
 		<div>
 			<h1 className="table table-striped table-hover text-center"> <FormattedMessage id='project.global.fields.orderList'/> </h1>
 			<h2 className="table table-striped table-hover text-center"> <FormattedMessage id='project.global.fields.notExecutedList'/> </h2>
-			{executed && <FindOrdersResult orders={executed} displayTrash = {true}/>}
+			{notExecuted && <FindOrdersResult orders={notExecuted} displayTrash = {true}/>}
 			<h2 className="table table-striped table-hover text-center"> <FormattedMessage id='project.global.fields.executedList'/> </h2>
-			{notExecuted && <FindOrdersResult orders={notExecuted} displayTrash = {false}/>}
+			{executedAux && <FindOrdersResult orders={executedAux} displayTrash = {false}/>}
+			<h2 className="table table-striped table-hover text-center"> <FormattedMessage id='project.global.fields.cancelledList'/> </h2>
+			{cancelled && <FindOrdersResult orders={cancelled} displayTrash = {false}/>}
 			
 			
         </div>

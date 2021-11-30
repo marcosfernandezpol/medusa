@@ -12,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+/**
+ * @author siro
+ *
+ */
 @Entity
 public class OrderLine {
 
@@ -24,6 +28,7 @@ public class OrderLine {
 		/** The order. */
 		LIMIT, MARKET
 	}
+	
 	
 	private Long id;
 
@@ -42,8 +47,10 @@ public class OrderLine {
 	private Enterprise enterprise;
 
 	private Boolean avaliable;
+	
+	private Boolean cancelled;
 
-	private LocalDate deadline;
+	private LocalDateTime deadline;
 
 	public OrderLine() {
 		super();
@@ -59,9 +66,10 @@ public class OrderLine {
 		this.number = number;
 		this.enterprise = enterprise;
 		this.avaliable = true;
+		this.cancelled = false;
 	}
 
-	public OrderLine(OrderType orderType, OrderLineType orderLineType, User owner, Float price, int number, Enterprise enterprise, LocalDate deadline) {
+	public OrderLine(OrderType orderType, OrderLineType orderLineType, User owner, Float price, int number, Enterprise enterprise, LocalDateTime deadline) {
 		super();
 		this.requestDate = LocalDateTime.now();
 		this.orderType = orderType;
@@ -71,6 +79,7 @@ public class OrderLine {
 		this.number = number;
 		this.enterprise = enterprise;
 		this.avaliable = true;
+		this.cancelled = false;
 		this.deadline = deadline;
 	}
 
@@ -142,12 +151,20 @@ public class OrderLine {
 		this.avaliable = avaliable;
 	}
 
-	public LocalDate getDeadline() {
+	public LocalDateTime getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(LocalDate deadline) {
+	public void setDeadline(LocalDateTime deadline) {
 		this.deadline = deadline;
+	}
+
+	public Boolean getCancelled() {
+		return cancelled;
+	}
+
+	public void setCancelled(Boolean cancelled) {
+		this.cancelled = cancelled;
 	}
 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -177,7 +194,7 @@ public class OrderLine {
 		return Objects.equals(avaliable, other.avaliable) && Objects.equals(requestDate, other.requestDate)
 				&& Objects.equals(enterprise, other.enterprise) && Objects.equals(id, other.id)
 				&& number == other.number && Objects.equals(owner, other.owner) && Objects.equals(price, other.price)
-				&& orderType == other.orderType && orderLineType == other.orderLineType && deadline == other.deadline;
+				&& orderType == other.orderType && orderLineType == other.orderLineType && deadline == other.deadline && cancelled == other.cancelled;
 	}
 
 	@Override

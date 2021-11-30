@@ -238,7 +238,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 			List<OrderLine> sellOrders = sellOrdersO.get();
 
 			for (OrderLine sellOrder : sellOrders) {
-				if (sellOrder.getDeadline() == null || sellOrder.getDeadline().isAfter(LocalDate.now())) {
+				if (sellOrder.getDeadline() == null || sellOrder.getDeadline().isAfter(LocalDateTime.now())) {
 
 					if ((sellOrder.getPrice() <= buyOrder.getPrice())
 							|| (sellOrder.getOrderLineType().equals(OrderLineType.MARKET))) {
@@ -253,7 +253,13 @@ public class StockMarketServiceImpl implements StockMarketService {
 						}
 						manageOrdersNumber(enterprise, sellOrder, buyOrder, price);
 					}
+				}else {
+				try {
+					deleteOrder(sellOrder.getOwner().getId(), sellOrder.getId(), sellOrder.getAvaliable());
+				} catch (InstanceNotFoundException | NotOwnedException | NotAvaliableException e) {
+					e.printStackTrace();
 				}
+			}
 			}
 		}
 	}
@@ -267,7 +273,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 			List<OrderLine> sellOrders = sellOrdersO.get();
 
 			for (OrderLine sellOrder : sellOrders) {
-				if (sellOrder.getDeadline() == null || sellOrder.getDeadline().isAfter(LocalDate.now())) {
+				if (sellOrder.getDeadline() == null || sellOrder.getDeadline().isAfter(LocalDateTime.now())) {
 					float price;
 
 					if (sellOrder.getOwner() == null) {
@@ -277,6 +283,12 @@ public class StockMarketServiceImpl implements StockMarketService {
 								: sellOrder.getPrice();
 					}
 					manageOrdersNumber(enterprise, sellOrder, buyOrder, price);
+				}else {
+					try {
+						deleteOrder(sellOrder.getOwner().getId(), sellOrder.getId(), sellOrder.getAvaliable());
+					} catch (InstanceNotFoundException | NotOwnedException | NotAvaliableException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -293,12 +305,18 @@ public class StockMarketServiceImpl implements StockMarketService {
 				List<OrderLine> buyOrders = buyOrdersO.get();
 
 				for (OrderLine buyOrder : buyOrders) {
-					if (buyOrder.getDeadline().isAfter(LocalDate.now())) {
+					if (buyOrder.getDeadline().isAfter(LocalDateTime.now())) {
 
 						if (buyOrder.getOrderLineType().equals(OrderLineType.LIMIT)) {
 							matchBuyLimitOrder(buyOrder, enterprise);
 						} else {
 							matchBuyMarketOrder(buyOrder, enterprise);
+						}
+					}else {
+						try {
+							deleteOrder(buyOrder.getOwner().getId(), buyOrder.getId(), buyOrder.getAvaliable());
+						} catch (InstanceNotFoundException | NotOwnedException | NotAvaliableException e) {
+							e.printStackTrace();
 						}
 					}
 				}
@@ -347,7 +365,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 	@Override
 	public long order(Long owner, OrderType orderType, OrderLineType orderLineType, Float price, int number,
-			Long enterpriseId, LocalDate deadline)
+			Long enterpriseId, LocalDateTime deadline)
 			throws NotEnoughBalanceException, NotOwnedException, NotAvaliableException {
 
 		User user = null;
@@ -448,7 +466,8 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 				if (avaliable) {
 					order.setAvaliable(false);
-					orderLineDao.delete(order);
+					order.setCancelled(true);
+					orderLineDao.save(order);
 				} else {
 					throw new NotAvaliableException();
 				}
