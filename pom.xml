@@ -208,7 +208,7 @@
 					<enricher>
 						<config>
 							<jkube-service>
-								<type>LoadBalancer</type>
+								<type>ClusterIP</type>
 								<port>8080</port>
 								<expose>true</expose>
 								<multiPort>true</multiPort>
