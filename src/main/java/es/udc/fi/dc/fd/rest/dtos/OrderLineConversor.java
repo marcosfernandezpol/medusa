@@ -26,5 +26,5 @@ public class OrderLineConversor {
 	public static final List<OrderLineDto> toOrderLineDtos(List<OrderLine> orders) {
 		return orders.stream().map(order -> toOrderLineDto(order)).collect(Collectors.toList());
 	}
-
+	
 }

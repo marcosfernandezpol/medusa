@@ -50,6 +50,6 @@ spec:
         securityContext:
           privileged: false
         ports:
-          -  containerPort: 8080
+          - containerPort: 8080
       imagePullSecrets:
         - name: medusa

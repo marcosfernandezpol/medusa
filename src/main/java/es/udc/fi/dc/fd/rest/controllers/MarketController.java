@@ -187,6 +187,7 @@ public class MarketController {
 	 * @throws DuplicateInstanceException the duplicate instance exception
 	 * @throws PermissionException
 	 * @throws NumberException
+	 * @throws InvalidArgumentException
 	 */
 	@PostMapping("/create_enterprise")
 	public EnterpriseSummaryDto createEnterprise(@RequestAttribute Long userId,

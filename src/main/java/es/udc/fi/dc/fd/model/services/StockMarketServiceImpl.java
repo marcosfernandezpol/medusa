@@ -64,14 +64,13 @@ public class StockMarketServiceImpl implements StockMarketService {
 	public Enterprise createEnterprise(Long userId, Enterprise enterprise)
 			throws DuplicateInstanceException, PermissionException, NumberException {
 
-		Optional<User> userOp = null;
 		User user = null;
 
 		if (enterpriseDao.existsByEnterpriseName(enterprise.getEnterpriseName())) {
 			throw new DuplicateInstanceException("project.entities.enterprise", enterprise.getEnterpriseName());
 		}
 
-		userOp = userDao.findById(userId);
+		Optional<User> userOp = userDao.findById(userId);
 		if (userOp.isPresent()) { // Aqui habría que añadir algo para cuando el user no exista
 			user = userOp.get();
 
