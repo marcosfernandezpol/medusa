@@ -43,8 +43,7 @@ public class SearchController {
 	public List<OrderLineDto> findOrders(@RequestAttribute Long userId, @RequestParam Boolean option,
 			@RequestParam Boolean avaliable) {
 		
-		List<OrderLineDto> returned = new ArrayList<OrderLineDto>();
-		returned = OrderLineConversor.toOrderLineDtos(searchService.findOrders(userId, option, avaliable));
+		 List<OrderLineDto> returned = OrderLineConversor.toOrderLineDtos(searchService.findOrders(userId, option, avaliable));
 		return returned;
 	}
 

@@ -113,8 +113,6 @@ public class SearchServiceImpl implements SearchService {
 		if (enterprise.isEmpty()) {
 			throw new InstanceNotFoundException("No existe empresa con id", id);
 		}
-		Enterprise enter;
-		enter = enterprise.get();
 
 		List<ActionPriceHistoric> historic = historicDao.findActionPriceHistoricByEnterpriseIdOrderByDateAsc(id);
 		List<ActionPriceHistoric> result = new ArrayList<>();
