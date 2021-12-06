@@ -1,12 +1,8 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
 import javax.validation.constraints.NotNull;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import es.udc.fi.dc.fd.model.entities.OrderLine.OrderLineType;
-import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
+import es.udc.fi.dc.fd.model.entities.OrderLine.*;
 
 public class OrderParamsDto {
 

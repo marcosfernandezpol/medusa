@@ -337,7 +337,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 				.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, user, enterprise,
 						false);
 
-		if (sellOnlyNotAvaliable) {
+		if (Boolean.TRUE.equals(sellOnlyNotAvaliable)) {
 			soldStockOp = orderLineDao.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(
 					OrderType.SELL, user, enterprise, false);
 		} else {
@@ -464,7 +464,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 			if (userOp.get().equals(order.getOwner())) { // condition changed
 
-				if (avaliable) {
+				if (Boolean.TRUE.equals(avaliable)) {
 					order.setAvaliable(false);
 					order.setCancelled(true);
 					orderLineDao.save(order);
@@ -507,7 +507,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 		enterprise.setAvaliable(avaliable);
 		enterpriseDao.save(enterprise);
 
-		if (avaliable) {
+		if (Boolean.TRUE.equals(avaliable)) {
 			match(enterprise);
 		}
 

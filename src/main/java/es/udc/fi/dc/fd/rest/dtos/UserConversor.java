@@ -35,7 +35,7 @@ public class UserConversor {
 		
 		User.RoleType role = null;
 		
-		if (userDto.getRole().toUpperCase().equals("ADMIN")){
+		if (userDto.getRole().equalsIgnoreCase("ADMIN")){
 			role = User.RoleType.ADMIN;
 		}else role = User.RoleType.CLIENT;
 

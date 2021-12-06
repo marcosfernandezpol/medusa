@@ -1,7 +1,5 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
-import java.util.Objects;
-
 import javax.validation.constraints.NotNull;
 
 public class DeleteParamsDto {

@@ -1,16 +1,8 @@
 package es.udc.fi.dc.fd.model.entities;
 
 import java.time.LocalDateTime;
-import java.time.LocalDate;
 import java.util.Objects;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * @author siro
