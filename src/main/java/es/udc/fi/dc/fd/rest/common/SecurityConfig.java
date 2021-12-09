@@ -23,6 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtGenerator jwtGenerator;
 
+	private static final String CLIENT = "CLIENT"; 
+	private static final String ADMIN = "ADMIN";
 	/**
 	 * Configure.
 	 *
@@ -41,10 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET,"/search/enterprises").permitAll()
 				.antMatchers(HttpMethod.GET,"/search/enterprises/*/historic").permitAll()
 				.antMatchers(HttpMethod.GET,"/search/orders").permitAll()
-				.antMatchers(HttpMethod.GET,"/search/user/actions").hasRole("CLIENT")
-				.antMatchers(HttpMethod.POST,"/market/create_enterprise").hasRole("ADMIN")
-				.antMatchers(HttpMethod.POST,"/market/transfer").hasRole("CLIENT")
-				.antMatchers(HttpMethod.POST,"/market/delete_order").hasRole("CLIENT");
+				.antMatchers(HttpMethod.GET,"/search/user/actions").hasRole(CLIENT)
+				.antMatchers(HttpMethod.POST,"/market/create_enterprise").hasRole(ADMIN)
+				.antMatchers(HttpMethod.POST,"/market/transfer").hasRole(CLIENT)
+				.antMatchers(HttpMethod.POST,"/market/delete_order").hasRole(CLIENT);
 		// @formatter:on
 
 	}

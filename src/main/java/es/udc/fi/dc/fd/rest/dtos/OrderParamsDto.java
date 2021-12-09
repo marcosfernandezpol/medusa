@@ -1,11 +1,8 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
 import javax.validation.constraints.NotNull;
-
-import java.time.LocalDate;
-
-import es.udc.fi.dc.fd.model.entities.OrderLine.OrderLineType;
-import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
+import java.time.LocalDateTime;
+import es.udc.fi.dc.fd.model.entities.OrderLine.*;
 
 public class OrderParamsDto {
 
@@ -19,7 +16,7 @@ public class OrderParamsDto {
 
 	private Long enterpriseId;
 	
-	private LocalDate deadline;
+	private LocalDateTime deadline;
 
 	@NotNull
 	public OrderType getType() {
@@ -66,11 +63,11 @@ public class OrderParamsDto {
 		this.enterpriseId = enterpriseId;
 	}
 	
-	public LocalDate getDeadline() {
+	public LocalDateTime getDeadline() {
 		return deadline;
 	}
 	
-	public void setDeadline(LocalDate deadline) {
+	public void setDeadline(LocalDateTime deadline) {
 		this.deadline = deadline;
 	}
 

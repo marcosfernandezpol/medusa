@@ -35,21 +35,21 @@ spec:
         group: es.udc.fi.dc.fd
     spec:
       containers:
-      - env:
-        - name: KUBERNETES_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        - name: HOSTNAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
+        env:
+          - name: KUBERNETES_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: HOSTNAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
         image: gitlab.fic.udc.es:5050/ferramentas.2021/medusa:latest
         imagePullPolicy: Always
         name: deploy-medusa
         securityContext:
           privileged: false
         ports:
-        - containerPort: 8080
+          - containerPort: 8080
       imagePullSecrets:
         - name: medusa

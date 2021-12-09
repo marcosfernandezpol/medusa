@@ -1,6 +1,7 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
 import java.sql.Date;
+
 import java.util.Objects;
 
 public class EnterpriseSummaryDto {

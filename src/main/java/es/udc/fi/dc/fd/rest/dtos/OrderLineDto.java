@@ -2,10 +2,7 @@ package es.udc.fi.dc.fd.rest.dtos;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.time.LocalDate;
-
-import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
-import es.udc.fi.dc.fd.model.entities.OrderLine.OrderLineType;
+import es.udc.fi.dc.fd.model.entities.OrderLine.*;
 
 public class OrderLineDto {
 
@@ -35,9 +32,13 @@ public class OrderLineDto {
 
 	private Long enterpriseId;
 	
-	private LocalDate deadline;
+	private LocalDateTime deadline;
 	
 	private OrderLineType orderLineType;
+	
+	private boolean cancelled;
+	
+	
 	
 	
 
@@ -46,7 +47,7 @@ public class OrderLineDto {
 	}
 
 	public OrderLineDto(Long id, LocalDateTime requestDate, OrderType orderType, Long ownerId, Float price, int number,
-			Long enterpriseId) {
+			Long enterpriseId, boolean cancelled) {
 		super();
 		this.id = id;
 		this.requestDate = requestDate;
@@ -55,10 +56,11 @@ public class OrderLineDto {
 		this.price = price;
 		this.number = number;
 		this.enterpriseId = enterpriseId;
+		this.cancelled = cancelled;
 	}
 	
 	public OrderLineDto(Long id, LocalDateTime requestDate, OrderType orderType, Long ownerId, Float price, int number,
-			Long enterpriseId, LocalDate deadline) {
+			Long enterpriseId, LocalDateTime deadline, boolean cancelled) {
 		super();
 		this.id = id;
 		this.requestDate = requestDate;
@@ -68,10 +70,11 @@ public class OrderLineDto {
 		this.number = number;
 		this.enterpriseId = enterpriseId;
 		this.deadline = deadline;
+		this.cancelled = cancelled;
 	}
 	
 	public OrderLineDto(Long id, LocalDateTime requestDate, OrderType orderType, Long ownerId, Float price, int number,
-			Long enterpriseId, LocalDate deadline, OrderLineType orderLineType) {
+			Long enterpriseId, LocalDateTime deadline, OrderLineType orderLineType, boolean cancelled) {
 		super();
 		this.id = id;
 		this.requestDate = requestDate;
@@ -82,6 +85,7 @@ public class OrderLineDto {
 		this.enterpriseId = enterpriseId;
 		this.deadline = deadline;
 		this.orderLineType = orderLineType;
+		this.cancelled = cancelled;
 	}
 
 	public Long getId() {
@@ -148,19 +152,26 @@ public class OrderLineDto {
 		this.enterpriseId = enterpriseId;
 	}
 	
-	public LocalDate getDeadline() {
+	public LocalDateTime getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(LocalDate deadline) {
+	public void setDeadline(LocalDateTime deadline) {
 		this.deadline = deadline;
 	}
 
-	
-	
+	public boolean isCancelled() {
+		return cancelled;
+	}
+
+	public void setCancelled(boolean cancelled) {
+		this.cancelled = cancelled;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(deadline, enterpriseId, id, number, orderLineType, orderType, ownerId, price, requestDate);
+		return Objects.hash(cancelled, deadline, enterpriseId, id, number, orderLineType, orderType, ownerId, price,
+				requestDate);
 	}
 
 	@Override
@@ -172,17 +183,20 @@ public class OrderLineDto {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderLineDto other = (OrderLineDto) obj;
-		return Objects.equals(deadline, other.deadline) && Objects.equals(enterpriseId, other.enterpriseId)
-				&& Objects.equals(id, other.id) && number == other.number && orderLineType == other.orderLineType
-				&& orderType == other.orderType && Objects.equals(ownerId, other.ownerId)
-				&& Objects.equals(price, other.price) && Objects.equals(requestDate, other.requestDate);
+		return cancelled == other.cancelled && Objects.equals(deadline, other.deadline)
+				&& Objects.equals(enterpriseId, other.enterpriseId) && Objects.equals(id, other.id)
+				&& number == other.number && orderLineType == other.orderLineType && orderType == other.orderType
+				&& Objects.equals(ownerId, other.ownerId) && Objects.equals(price, other.price)
+				&& Objects.equals(requestDate, other.requestDate);
 	}
 
 	@Override
 	public String toString() {
 		return "OrderLineDto [id=" + id + ", requestDate=" + requestDate + ", orderType=" + orderType + ", ownerId="
 				+ ownerId + ", price=" + price + ", number=" + number + ", enterpriseId=" + enterpriseId + ", deadline="
-				+ deadline + "]";
+				+ deadline + ", orderLineType=" + orderLineType + ", cancelled=" + cancelled + "]";
 	}
+
+	
 
 }
