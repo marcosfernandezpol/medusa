@@ -43,14 +43,13 @@ import es.udc.fi.dc.fd.rest.dtos.TransferParamsDto;
 @RequestMapping("/market")
 public class MarketController {
 
-	private final static String DUPLICATE_INSTANCE_EXCEPTION_CODE = "project.exceptions.DuplicateInstanceException";
-	private final static String INVALID_OPERATION_EXCEPTION_CODE = "project.exceptions.InvalidOperationException";
-	private final static String NOT_ENOUGH_BALANCE_EXCEPTION_CODE = "project.exceptions.NotEnoughBalanceException";
-	private final static String NOT_OWNED_EXCEPTION_CODE = "project.exceptions.NotOwnedException";
-	private final static String NUMBER_EXCEPTION_CODE = "project.exceptions.NumberException";
-	private final static String INVALID_ARGUMENT_EXCEPTION_CODE = "project.exceptions.InvalidArgumentException";
-	private final static String NOT_AVALIABLE_EXCEPTION_CODE = "project.exceptions.NotAvaliableException";
-	private final static String PERMISSION_EXCEPTION_CODE = "project.exceptions.PermissionException";
+	private static final String DUPLICATE_INSTANCE_EXCEPTION_CODE = "project.exceptions.DuplicateInstanceException";
+	private static final String INVALID_OPERATION_EXCEPTION_CODE = "project.exceptions.InvalidOperationException";
+	private static final String NOT_ENOUGH_BALANCE_EXCEPTION_CODE = "project.exceptions.NotEnoughBalanceException";
+	private static final String NOT_OWNED_EXCEPTION_CODE = "project.exceptions.NotOwnedException";
+	private static final String NUMBER_EXCEPTION_CODE = "project.exceptions.NumberException";
+	private static final String INVALID_ARGUMENT_EXCEPTION_CODE = "project.exceptions.InvalidArgumentException";
+	private static final String NOT_AVALIABLE_EXCEPTION_CODE = "project.exceptions.NotAvaliableException";
 
 	/** The user service. */
 	@Autowired
@@ -157,7 +156,7 @@ public class MarketController {
 	@ExceptionHandler(InvalidArgumentException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
-	public ErrorsDto InvalidArgumentException(InvalidArgumentException exception, Locale locale) {
+	public ErrorsDto handleInvalidArgumentException(InvalidArgumentException exception, Locale locale) {
 
 		String errorMessage = messageSource.getMessage(INVALID_ARGUMENT_EXCEPTION_CODE, null,
 				INVALID_ARGUMENT_EXCEPTION_CODE, locale);
@@ -171,7 +170,7 @@ public class MarketController {
 	@ExceptionHandler(NotAvaliableException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
-	public ErrorsDto NotAvaliableException(NotAvaliableException exception, Locale locale) {
+	public ErrorsDto handleNotAvaliableException(NotAvaliableException exception, Locale locale) {
 
 		String errorMessage = messageSource.getMessage(NOT_AVALIABLE_EXCEPTION_CODE, null,
 				NOT_AVALIABLE_EXCEPTION_CODE, locale);
@@ -188,6 +187,7 @@ public class MarketController {
 	 * @throws DuplicateInstanceException the duplicate instance exception
 	 * @throws PermissionException
 	 * @throws NumberException
+	 * @throws InvalidArgumentException
 	 */
 	@PostMapping("/create_enterprise")
 	public EnterpriseSummaryDto createEnterprise(@RequestAttribute Long userId,

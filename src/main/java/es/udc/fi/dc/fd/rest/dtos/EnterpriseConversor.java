@@ -12,8 +12,8 @@ public class EnterpriseConversor {
 	private EnterpriseConversor() {
 	}
 
-	public final static EnterpriseDto toEnterpriseDto(Enterprise t) {
-		List<AnnualBenefitsDto> annualBenefit = new ArrayList<AnnualBenefitsDto>();
+	public static final EnterpriseDto toEnterpriseDto(Enterprise t) {
+		List<AnnualBenefitsDto> annualBenefit = new ArrayList<>();
 
 		for (AnnualBenefits benefit : t.getAnnualBenefits()) {
 			annualBenefit.add(AnnualBenefitsConversor.toAnnualBenefits(benefit));
@@ -23,7 +23,7 @@ public class EnterpriseConversor {
 				t.getStock(), t.getStockPrice(), annualBenefit, t.isAvaliable());
 	}
 
-	public final static List<EnterpriseDto> toEnterprisesDtos(List<Enterprise> list) {
+	public static final List<EnterpriseDto> toEnterprisesDtos(List<Enterprise> list) {
 		return list.stream().map(t -> toEnterpriseDto(t)).collect(Collectors.toList());
 	}
 

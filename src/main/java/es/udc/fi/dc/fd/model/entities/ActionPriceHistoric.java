@@ -1,16 +1,8 @@
 package es.udc.fi.dc.fd.model.entities;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * The Class AnnualBenefits.
@@ -28,19 +20,12 @@ public class ActionPriceHistoric {
 
 	public ActionPriceHistoric() {
 	}
-	
-	
-
-	
 
 	public ActionPriceHistoric(LocalDateTime date, Float price) {
 		super();
 		this.date = date;
 		this.price = price;
 	}
-
-
-
 
 
 	public ActionPriceHistoric(Enterprise enterprise, LocalDateTime date, Float price) {

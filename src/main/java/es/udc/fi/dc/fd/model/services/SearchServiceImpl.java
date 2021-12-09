@@ -1,31 +1,16 @@
 package es.udc.fi.dc.fd.model.services;
 
 import java.time.LocalDateTime;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import java.util.Collection;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
-import es.udc.fi.dc.fd.model.entities.ActionPriceHistoric;
-import es.udc.fi.dc.fd.model.entities.ActionPriceHistoricDao;
-import es.udc.fi.dc.fd.model.entities.Actions;
-import es.udc.fi.dc.fd.model.entities.Enterprise;
-import es.udc.fi.dc.fd.model.entities.EnterpriseDao;
-import es.udc.fi.dc.fd.model.entities.OrderLine;
+import es.udc.fi.dc.fd.model.entities.*;
 import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
-import es.udc.fi.dc.fd.model.entities.OrderLineDao;
-import es.udc.fi.dc.fd.model.entities.User;
-import es.udc.fi.dc.fd.model.entities.UserDao;
-import es.udc.fi.dc.fd.model.services.StockMarketServiceImpl;
 
 
 @Service
@@ -50,7 +35,7 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public List<Enterprise> findAllEnterprises() {
 
-		List<Enterprise> enterpriseList = new ArrayList<Enterprise>();
+		List<Enterprise> enterpriseList = new ArrayList<>();
 
 		Iterable<Enterprise> enterprises = enterpriseDao.findAll(Sort.by(Sort.Direction.ASC, "enterpriseName"));
 		enterprises.forEach(enterpriseList::add);
@@ -68,7 +53,7 @@ public class SearchServiceImpl implements SearchService {
 			user = userOp.get();
 
 		OrderType type = null;
-		if (option)
+		if (Boolean.TRUE.equals(option))
 			type = OrderType.BUY;
 		else
 			type = OrderType.SELL;
@@ -78,10 +63,10 @@ public class SearchServiceImpl implements SearchService {
 
 		if (orders.isPresent()) {
 			List<OrderLine> returnList = orders.get();
-			if (!avaliable)
+			if (Boolean.FALSE.equals(avaliable))
 				return returnList;
 			else {
-				List<OrderLine> onTimeOrders = new ArrayList<OrderLine>();
+				List<OrderLine> onTimeOrders = new ArrayList<>();
 				for (OrderLine ord : returnList) 
 					if (ord.getDeadline().isAfter(LocalDateTime.now()))
 						onTimeOrders.add(ord);
@@ -113,8 +98,6 @@ public class SearchServiceImpl implements SearchService {
 		if (enterprise.isEmpty()) {
 			throw new InstanceNotFoundException("No existe empresa con id", id);
 		}
-		Enterprise enter;
-		enter = enterprise.get();
 
 		List<ActionPriceHistoric> historic = historicDao.findActionPriceHistoricByEnterpriseIdOrderByDateAsc(id);
 		List<ActionPriceHistoric> result = new ArrayList<>();

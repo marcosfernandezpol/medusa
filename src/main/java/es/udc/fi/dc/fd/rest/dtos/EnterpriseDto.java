@@ -1,8 +1,7 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
 import java.sql.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 public class EnterpriseDto {

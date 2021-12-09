@@ -2,10 +2,7 @@ package es.udc.fi.dc.fd.rest.dtos;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.time.LocalDate;
-
-import es.udc.fi.dc.fd.model.entities.OrderLine.OrderType;
-import es.udc.fi.dc.fd.model.entities.OrderLine.OrderLineType;
+import es.udc.fi.dc.fd.model.entities.OrderLine.*;
 
 public class OrderLineDto {
 
