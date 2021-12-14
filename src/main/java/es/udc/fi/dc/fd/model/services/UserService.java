@@ -5,6 +5,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.services.exceptions.IncorrectLoginException;
 import es.udc.fi.dc.fd.model.services.exceptions.IncorrectPasswordException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 
 /**
  * The Interface UserService.
@@ -61,5 +62,9 @@ public interface UserService {
 	 */
 	void changePassword(Long id, String oldPassword, String newPassword)
 		throws InstanceNotFoundException, IncorrectPasswordException;
+	
+	void upgradeAccount(Long id) throws InstanceNotFoundException, NotEnoughBalanceException;
+	
+	public void demoteAccount(Long id) throws InstanceNotFoundException;
 
 }

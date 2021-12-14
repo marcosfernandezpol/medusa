@@ -71,7 +71,7 @@ public class StockMarketServiceTest {
 	// Creamos un usuario de tipo Administrador
 	private User createAdmin() {
 		return new User("Pol", "fdezpol", "masmejor", "password", "fdezpol007elmasmejor@gmail.com", "Spain", "Santiago",
-				RoleType.ADMIN, 1000F);
+				RoleType.ADMIN, 1000F,User.UserType.STANDARD);
 
 	}
 
@@ -83,7 +83,7 @@ public class StockMarketServiceTest {
 	// Creamos un usuario de tipo Cliente
 	private User createClient() {
 		return new User("MariaM", "Maria", "Martinez", "password", "mariamartinez@gmail.com", "Spain", "A Coruña",
-				RoleType.CLIENT, 1200F);
+				RoleType.CLIENT, 1200F,User.UserType.STANDARD);
 
 	}
 
@@ -94,14 +94,14 @@ public class StockMarketServiceTest {
 	private User createNSavedClientWhitBalance(int n, float balance) {
 		String name = "Maria";
 		User user = new User(name + n, "Maria", "Martinez", "password", "mariamartinez@gmail.com", "Spain", "A Coruña",
-				RoleType.CLIENT, balance);
+				RoleType.CLIENT, balance,User.UserType.STANDARD);
 		return userDao.save(user);
 	}
 
 	// Creamos un usuario de tipo Cliente sin dinero.
 	private User createClientNoMoney() {
 		return new User("MariaM", "Maria", "Martinez", "password", "mariamartinez@gmail.com", "Spain", "A Coruña",
-				RoleType.CLIENT, 0F);
+				RoleType.CLIENT, 0F,User.UserType.STANDARD);
 
 	}
 

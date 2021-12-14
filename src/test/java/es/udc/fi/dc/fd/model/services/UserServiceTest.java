@@ -35,7 +35,7 @@ public class UserServiceTest {
 	 * @return the user
 	 */
 	private User createUser(String userName) {
-		return new User(userName, "firstName", "lastName","password" ,userName + "@" + userName + ".com",User.RoleType.CLIENT,"Spain","Galicia");
+		return new User(userName, "firstName", "lastName","password" ,userName + "@" + userName + ".com",User.RoleType.CLIENT,"Spain","Galicia",User.UserType.STANDARD);
 	}
 
 	/**

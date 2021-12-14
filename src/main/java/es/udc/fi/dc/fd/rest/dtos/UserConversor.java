@@ -22,7 +22,7 @@ public class UserConversor {
 	 */
 	public static final UserDto toUserDto(User user) {
 		return new UserDto (user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(), user.getEmail(), 
-				user.getRole().toString(), user.getBalance(), user.getCountry(), user.getCity());
+				user.getRole().toString(), user.getBalance(), user.getCountry(), user.getCity(), user.getType().toString());
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class UserConversor {
 		}else role = User.RoleType.CLIENT;
 
 		return new User(userDto.getLogin(), userDto.getFirstName(), userDto.getLastName(), userDto.getPassword(), userDto.getEmail(), role,
-			  userDto.getCountry(), userDto.getCity());
+			  userDto.getCountry(), userDto.getCity(),User.UserType.STANDARD);
 	}
 
 	/**
