@@ -68,7 +68,7 @@ public class SearchServiceTest {
 	 */
 	private User createUser(String userName) {
 		return new User(userName, "firstName", "lastName", "password", userName + "@" + userName + ".com",
-				User.RoleType.ADMIN, "Spain", "Galicia");
+				User.RoleType.ADMIN, "Spain", "Galicia",User.UserType.STANDARD);
 	}
 
 	private Long adminId(User user) throws DuplicateInstanceException {
@@ -87,7 +87,7 @@ public class SearchServiceTest {
 	// Creamos un usuario de tipo Cliente
 	private User createClient() {
 		return new User("MariaM", "Maria", "Martinez", "password", "mariamartinez@gmail.com", "Spain", "A Coruña",
-				RoleType.CLIENT, 1200F);
+				RoleType.CLIENT, 1200F,User.UserType.STANDARD);
 
 	}
 

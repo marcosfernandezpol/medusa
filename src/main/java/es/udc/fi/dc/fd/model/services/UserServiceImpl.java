@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.dc.fd.model.common.exceptions.DuplicateInstanceException;
 import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.entities.UserDao;
 import es.udc.fi.dc.fd.model.services.exceptions.IncorrectLoginException;
@@ -137,6 +138,34 @@ public class UserServiceImpl implements UserService {
 			user.setPassword(passwordEncoder.encode(newPassword));
 		}
 
+	}
+	
+	@Override
+	public void upgradeAccount(Long id) throws InstanceNotFoundException, NotEnoughBalanceException{
+		
+		Optional<User> user = userDao.findById(id);
+		
+		if (user.isPresent()) {
+			user.get().setType(User.UserType.PREMIUM);
+			if(user.get().getBalance()>=20)
+				user.get().setBalance(user.get().getBalance()-20);
+			else 
+				throw new NotEnoughBalanceException("Not enough balance");
+		}else 
+			throw new InstanceNotFoundException("Usuario no encontrado con id: ", id);
+		
+	}
+	
+	@Override
+	public void demoteAccount(Long id) throws InstanceNotFoundException{
+		
+		Optional<User> user = userDao.findById(id);
+		
+		if (user.isPresent()) {
+			user.get().setType(User.UserType.STANDARD);
+		}else 
+			throw new InstanceNotFoundException("Usuario no encontrado con id: ", id);
+		
 	}
 
 }

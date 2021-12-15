@@ -15,7 +15,7 @@ const CreateOrders = () => {
 	const [deadline, setDeadline] = useState('');
 	const [time, setTime] = useState('');
 	const [backendErrors, setBackendErrors] = useState(null);
-	const { id, enterpriseName, type } = useParams();
+	const { id, type } = useParams();
 	let form;
 
 	const handleSubmit = event => {

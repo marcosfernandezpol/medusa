@@ -37,10 +37,12 @@ public class UserTest {
 		user2.setCity(city);
 		user2.setCountry(country);
 		user2.setBalance(balance);
+		user.setType(null);
+		user2.setType(null);
 		
 		
 		
-		Assert.assertTrue(user.equals(user2));
+		Assert.assertEquals(user,user2);
 		Assert.assertTrue(user.hashCode()==(user2.hashCode()));
 		user2.setEmail(country);
 		user2.setRole(User.RoleType.CLIENT);
@@ -48,7 +50,7 @@ public class UserTest {
 		String str = "User [id=" + 1 + ", login=" + login + ", firstName=" + firstname + ", lastName=" + lastname
 				+ ", password=" + password + ", city=" + city + ", country=" + country + ", role=" + User.RoleType.CLIENT + ", email="
 				+ country + ", balance=" + balance + "]";
-		Assert.assertTrue(user2.toString().equals(str));
+		Assert.assertEquals(user2.toString(),str);
 		
 	}
 

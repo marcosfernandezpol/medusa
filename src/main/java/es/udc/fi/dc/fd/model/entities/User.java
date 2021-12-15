@@ -21,6 +21,12 @@ public class User {
 		ADMIN,
 		CLIENT
 	}
+	
+	public enum UserType {
+		/** The user. */
+		PREMIUM,
+		STANDARD
+	}
 
 	/** The id. */
 	private Long id;
@@ -52,6 +58,8 @@ public class User {
 	/** The balance. */
 	private Float balance;
 	
+	private UserType type;
+	
 	public User() {
 		
 	}
@@ -79,10 +87,11 @@ public class User {
 		this.city = city;
 		this.country = country;
 		this.balance = balance;
+		this.type = UserType.STANDARD;
 
 	}
 	
-	public User(String login, String firstName, String lastName, String password, String email, RoleType role, String country, String city) {
+	public User(String login, String firstName, String lastName, String password, String email, RoleType role, String country, String city, UserType type) {
 
 		this.login = login;
 		this.firstName = firstName;
@@ -93,14 +102,13 @@ public class User {
 		this.balance = 0F;
 		this.country = country;
 		this.city = city;
-
-		
+		this.type = UserType.STANDARD;
 
 	}
 
 	
 	
-	public User(String login, String firstName, String lastName, String password, String email, RoleType role) {
+	public User(String login, String firstName, String lastName, String password, String email, RoleType role , UserType type) {
 		this.login = login;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -108,6 +116,7 @@ public class User {
 		this.email = email;
 		this.role = role;
 		this.balance = 0F;
+		this.type = UserType.STANDARD;
 	}
 
 	/**
@@ -121,7 +130,7 @@ public class User {
 	 * @param role
 	 */
 	public User(String login, String firstName,  String lastName, String password, String email, String country, String city,
-			 RoleType role, Float balance) {
+			 RoleType role, Float balance, UserType type) {
 		
 		this.login = login;
 		this.firstName = firstName;
@@ -132,6 +141,7 @@ public class User {
 		this.country = country;
 		this.role = role;
 		this.balance = balance;
+		this.type = UserType.STANDARD;
 	}
 
 	/**
@@ -315,10 +325,21 @@ public class User {
 		this.balance = balance;
 	}
 
+	
+	public UserType getType() {
+		return type;
+	}
+
+	public void setType(UserType type) {
+		this.type = type;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(balance, city, country, email, firstName, id, lastName, login, password, role);
+		return Objects.hash(balance, city, country, email, firstName, id, lastName, login, password, role, type);
 	}
+
+	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -333,7 +354,7 @@ public class User {
 				&& Objects.equals(country, other.country) && Objects.equals(email, other.email)
 				&& Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)
 				&& Objects.equals(lastName, other.lastName) && Objects.equals(login, other.login)
-				&& Objects.equals(password, other.password) && role == other.role;
+				&& Objects.equals(password, other.password) && role == other.role && type == other.type;
 	}
 
 	@Override

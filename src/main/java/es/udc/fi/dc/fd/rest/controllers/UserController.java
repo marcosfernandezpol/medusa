@@ -29,6 +29,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.services.exceptions.IncorrectLoginException;
 import es.udc.fi.dc.fd.model.services.exceptions.IncorrectPasswordException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
 import es.udc.fi.dc.fd.model.services.UserService;
 import es.udc.fi.dc.fd.rest.common.ErrorsDto;
@@ -206,6 +207,33 @@ public class UserController {
 		userService.changePassword(id, params.getOldPassword(), params.getNewPassword());
 
 	}
+	
+	@PostMapping("/{id}/upgrade")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void upgrade(@RequestAttribute Long userId, @PathVariable Long id)
+			throws PermissionException, InstanceNotFoundException, NotEnoughBalanceException{
+
+		if (!id.equals(userId)) {
+			throw new PermissionException();
+		}
+
+		userService.upgradeAccount(id);
+
+	}
+	
+	@PostMapping("/{id}/downgrade")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void downgrade(@RequestAttribute Long userId, @PathVariable Long id)
+			throws PermissionException, InstanceNotFoundException{
+
+		if (!id.equals(userId)) {
+			throw new PermissionException();
+		}
+
+		userService.demoteAccount(id);
+
+	}
+	
 	
 	/**
 	 * Generate service token.
