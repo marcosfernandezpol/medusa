@@ -161,8 +161,8 @@ public class SearchServiceTest {
 		Enterprise enterprise = createEnterprise("adidas", "ads", id);
 
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
-		searchService.findEnterprise(savedEnterprise.getId());
-		searchService.findEnterprise(Long.valueOf(-1));
+		searchService.findEnterprise(id, savedEnterprise.getId());
+		searchService.findEnterprise(id, Long.valueOf(-1));
 
 	}
 
