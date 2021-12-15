@@ -49,7 +49,7 @@ public class SearchServiceImpl implements SearchService {
 		try {
 			enterprise.setStockPrice(result.get(-1).getPrice());
 		} catch (IndexOutOfBoundsException e) {
-			enterprise.setStockPrice(0);
+			enterprise.setStockPrice(Float.valueOf(0));
 		}
 
 		return enterprise;
