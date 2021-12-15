@@ -12,6 +12,7 @@ const OrderByMarketPrice = () => {
 	const history = useHistory();
 	const [numberActions, setNumberActions] = useState('');
 	const [deadline, setDeadline] = useState('');
+	const [time, setTime] = useState('');
 	const [backendErrors, setBackendErrors] = useState(null);
 	const { id, type } = useParams();
 	
@@ -22,6 +23,8 @@ const OrderByMarketPrice = () => {
 		event.preventDefault();
 
 		if (form.checkValidity()) {
+			
+			const fechaHora = deadline+"T"+time+":00";
 
 			dispatch(actions.createOrder(
 				{
@@ -30,7 +33,7 @@ const OrderByMarketPrice = () => {
 					price: 0,
 					number: numberActions.trim(),
 					enterpriseId: id.trim(),
-					deadline: deadline.trim()
+					deadline: fechaHora
 				},
 				() => history.push('/search/orders'),
 				errors => setBackendErrors(errors),
@@ -81,6 +84,13 @@ const OrderByMarketPrice = () => {
 									value={deadline}
 									min= {new Date().toISOString().split('T')[0]}
 									onChange={e => setDeadline(e.target.value)}
+									required />
+								<div className="invalid-feedback">
+									<FormattedMessage id='project.global.validator.required' />
+								</div>
+								<input type="time" id="deadline-time" className="form-control"
+									value={time}
+									onChange={e => setTime(e.target.value)}
 									required />
 								<div className="invalid-feedback">
 									<FormattedMessage id='project.global.validator.required' />
