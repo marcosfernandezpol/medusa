@@ -11,6 +11,7 @@ import users from '../../users';
 const Header = () => {
 
     const userName = useSelector(users.selectors.getUserName);
+	const userType = useSelector(users.selectors.getUserType);
 	const loggedIn = useSelector(users.selectors.isLoggedIn);
 	const isAdmin = useSelector(users.selectors.isAdmin);
     
@@ -38,7 +39,10 @@ const Header = () => {
 				
                 {userName ? 
 
-                <ul className="navbar-nav">		
+                <ul className="navbar-nav">
+
+					{(isAdmin==false && userType=='STANDARD') && <Link className="navbar-brand" to="/users/premium/"> <FormattedMessage id="project.app.GetPremium"/></Link>}
+					{(isAdmin==false && userType=='PREMIUM') && <Link className="navbar-brand" to="/users/premium/"> <FormattedMessage id="project.app.IsPremium"/></Link>}		
 
 					{isAdmin==false && <Link className="navbar-brand" to="/market/transfer"> <FormattedMessage id="project.app.Transfer"/></Link>}
 

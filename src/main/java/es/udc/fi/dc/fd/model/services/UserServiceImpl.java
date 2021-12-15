@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 	public User login(String userName, String password) throws IncorrectLoginException {
 
 		Optional<User> user = userDao.findByLogin(userName);
-		
+
 		if (!user.isPresent()) {
 			throw new IncorrectLoginException(userName, password);
 		}
@@ -74,8 +74,7 @@ public class UserServiceImpl implements UserService {
 		if (!passwordEncoder.matches(password, user.get().getPassword())) {
 			throw new IncorrectLoginException(userName, password);
 		}
-		
-		
+
 		return user.get();
 
 	}
@@ -139,33 +138,34 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
-	
+
 	@Override
-	public void upgradeAccount(Long id) throws InstanceNotFoundException, NotEnoughBalanceException{
-		
+	public void upgradeAccount(Long id) throws InstanceNotFoundException, NotEnoughBalanceException {
+
 		Optional<User> user = userDao.findById(id);
-		
+
 		if (user.isPresent()) {
-			user.get().setType(User.UserType.PREMIUM);
-			if(user.get().getBalance()>=20)
-				user.get().setBalance(user.get().getBalance()-20);
-			else 
+
+			if (user.get().getBalance() >= 20) {
+				user.get().setBalance(user.get().getBalance() - 20);
+				user.get().setType(User.UserType.PREMIUM);
+			} else
 				throw new NotEnoughBalanceException("Not enough balance");
-		}else 
+		} else
 			throw new InstanceNotFoundException("Usuario no encontrado con id: ", id);
-		
+
 	}
-	
+
 	@Override
-	public void demoteAccount(Long id) throws InstanceNotFoundException{
-		
+	public void demoteAccount(Long id) throws InstanceNotFoundException {
+
 		Optional<User> user = userDao.findById(id);
-		
+
 		if (user.isPresent()) {
 			user.get().setType(User.UserType.STANDARD);
-		}else 
+		} else
 			throw new InstanceNotFoundException("Usuario no encontrado con id: ", id);
-		
+
 	}
 
 }
