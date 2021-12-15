@@ -63,3 +63,7 @@ export const changePassword = (
     onSuccess,
     onErrors
   );
+
+
+export const upgradeProfile = (user, onSuccess, onErrors) =>
+	appFetch(`/users/${user.id}/upgrade`, fetchConfig("POST",user), onSuccess, onErrors);

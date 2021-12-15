@@ -52,6 +52,9 @@ public class UserController {
 
 	/** The Constant INCORRECT_PASSWORD_EXCEPTION_CODE. */
 	private static final String INCORRECT_PASS_EXCEPTION_CODE = "project.exceptions.IncorrectPasswordException";
+	
+	/** The Constant INCORRECT_PASSWORD_EXCEPTION_CODE. */
+	private static final String INCORRECT_NOT_ENOUGH_MONEY = "project.exceptions.NotEnoughMoneyException";
 
 	/** The message source. */
 	@Autowired
@@ -98,6 +101,25 @@ public class UserController {
 
 		String errorMessage = messageSource.getMessage(INCORRECT_PASS_EXCEPTION_CODE, null,
 				INCORRECT_PASS_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
+	}
+	
+	/**
+	 * Handle no money exception.
+	 *
+	 * @param exception the exception
+	 * @param locale    the locale
+	 * @return the errors dto
+	 */
+	@ExceptionHandler(NotEnoughBalanceException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ErrorsDto handleNotEnoughBalanceException(NotEnoughBalanceException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(INCORRECT_NOT_ENOUGH_MONEY, null,
+				INCORRECT_NOT_ENOUGH_MONEY, locale);
 
 		return new ErrorsDto(errorMessage);
 
@@ -207,6 +229,7 @@ public class UserController {
 		userService.changePassword(id, params.getOldPassword(), params.getNewPassword());
 
 	}
+	
 	
 	@PostMapping("/{id}/upgrade")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
