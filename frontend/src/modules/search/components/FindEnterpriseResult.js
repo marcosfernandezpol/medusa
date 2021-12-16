@@ -12,6 +12,7 @@ import * as actions from '../actions';
 import { Pager } from '../../common';
 import GraphicChart from '../../stockmarket/components/GraphicChart';
 import PremiumLink from './PremiumLink';
+import PlusSvg from './plus-solid.svg';
 
 
 const FindEnterpriseResult = () => {
@@ -113,7 +114,7 @@ const FindEnterpriseResult = () => {
 					<h5 className="card-text font-weight-bold">
 						<FormattedMessage id='project.global.fields.actionsPrice' />
                     :  {(enterprise.actionsPrice == 0) ? < PremiumLink name={<FormattedMessage id='project.global.fields.notAvaliable' />} /> : <p>{enterprise.actionsPrice} €</p>}
-                </h5>
+					</h5>
 				</div>
 			</div>
 			<div className="col-md-4">
@@ -126,7 +127,7 @@ const FindEnterpriseResult = () => {
 						placeholder="Number of Days"
 						autoFocus
 						required />
-					<button onClick={handleSubmit} className="fas fa-sort"></button>
+
 				</form>
 			</div>
 			<div style={{ height: 500 }}>
@@ -136,7 +137,7 @@ const FindEnterpriseResult = () => {
 				<div className="card text-center">&nbsp;
 				<h4>
 						<FormattedMessage id='project.global.fields.anualBenefits' /> &nbsp;
-					<button onClick={handleClick} class="fas fa-plus"></button>
+					<button onClick={handleClick} className="btn btn-secondary" ><img src={PlusSvg} width="18em" height="18em" /></button>
 					</h4>
 
 

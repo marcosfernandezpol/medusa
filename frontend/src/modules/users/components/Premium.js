@@ -7,6 +7,9 @@ import * as selectors from '../selectors';
 
 import * as actions from '../actions';
 
+import TickSVG from './check-solid.svg';
+import CrossSVG from './times-solid.svg';
+
 
 const Premium = ({ }) => {
 
@@ -58,14 +61,14 @@ const Premium = ({ }) => {
 
 					<tr>
 						<td> <FormattedMessage id='project.global.user.premium' /> </td>
-						<td> <i class="fas fa-check"></i> </td>
-						<td> <i class="fas fa-times"></i> </td>
+						<td> <img src={TickSVG} width="18em" height="18em"/> </td>
+						<td> <img src={CrossSVG} width="18em" height="18em"/> </td>
 					</tr>
 
 					<tr>
 						<td> <FormattedMessage id='project.global.user.premium1' /> </td>
-						<td> <i class="fas fa-check"></i> </td>
-						<td> <i class="fas fa-times"></i> </td>
+						<td> <img src={TickSVG} width="18em" height="18em"/> </td>
+						<td> <img src={CrossSVG} width="18em" height="18em"/> </td>
 					</tr>
 
 					<tr>
