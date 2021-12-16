@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import FindEnterpriseLink from './FindEnterpriseLink';
 import ModifyAvaliableButton from './ModifyAvaliableButton';
+import PremiumLink from './PremiumLink';
 import * as userSelectors from '../../users/selectors';
 import * as actions from '../actions';
 
@@ -62,7 +63,7 @@ const Enterprises = ({ enterprises }) => {
 						<td> {enterprise.fundation} </td>
 						<td> {enterprise.incomes} </td>
 						<td> {enterprise.actions} </td>
-						<td> {enterprise.actionsPrice} </td>
+						{ (enterprise.actionsPrice==0) ? <td> {<PremiumLink name={<FormattedMessage id= 'project.global.fields.notAvaliable'/>} /> } </td> :  <td> {enterprise.actionsPrice} </td>}
 						<ModifyAvaliableButton id = {user.id} enterprise={enterprise} />
 
 					</tr>

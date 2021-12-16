@@ -11,6 +11,7 @@ import { Errors, BackLink } from '../../common';
 import * as actions from '../actions';
 import { Pager } from '../../common';
 import GraphicChart from '../../stockmarket/components/GraphicChart';
+import PremiumLink from './PremiumLink';
 
 
 const FindEnterpriseResult = () => {
@@ -111,7 +112,7 @@ const FindEnterpriseResult = () => {
 
 					<h5 className="card-text font-weight-bold">
 						<FormattedMessage id='project.global.fields.actionsPrice' />
-                    :   <FormattedNumber value={enterprise.actionsPrice} />€
+                    :  { (enterprise.actionsPrice==0) ?< PremiumLink name={<FormattedMessage id= 'project.global.fields.notAvaliable'/>} /> : enterprise.actionsPrice} €
                 </h5>
 				</div>
 			</div>
