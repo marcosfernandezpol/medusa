@@ -4,6 +4,8 @@ import {FormattedMessage} from 'react-intl';
 
 import * as selectors from '../selectors';
 
+import EuroSvg from './euro-sign-solid.svg';
+
 import * as stockMarketSelector from '../../stockmarket/selectors';
 
 const ShowBalance = () => {
@@ -15,7 +17,7 @@ const ShowBalance = () => {
     return (
         <div>
 			<FormattedMessage id="project.users.ShowBalance.balance"/> : {balance}&nbsp;
-            <span className="fas fa-euro-sign"></span>
+            <img src={EuroSvg} width="18em" height="18em"/>
         </div>
     );
 

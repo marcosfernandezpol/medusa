@@ -1,17 +1,16 @@
 export default {
 
-	'project.app.Footer.text': 'Medusa - Area of Telematics Engineering - University of A Coruña',
+	'project.app.Footer.text': 'Medusa - University of A Coruña',
 	'project.app.Header.home': 'Home',
 	'project.app.Header.logout': 'Logout',
-	'project.shopping.header.orders': 'Orders',
 	'project.app.Home.welcome': 'Browse our catalog of products.',
 	'project.app.Header.createEnterprise': 'Create Enterprise',
 
 	'project.common.ErrorDialog.title': 'Error',
 
 	'project.global.buttons.sell': 'Sell',
-	'project.global.buttons.marketPriceSell': 'Sell orders by market price',
-	'project.global.buttons.marketPriceBuy': 'Buy orders by market price',
+	'project.global.buttons.marketPriceSell': 'Sell Market',
+	'project.global.buttons.marketPriceBuy': 'Buy Market',
 
 	'project.global.buttons.buy': 'Buy',
 	'project.global.buttons.cancel': 'Cancel',
