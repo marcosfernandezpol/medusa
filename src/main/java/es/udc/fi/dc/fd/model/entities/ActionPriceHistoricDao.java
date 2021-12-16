@@ -6,5 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface ActionPriceHistoricDao extends PagingAndSortingRepository<ActionPriceHistoric, Long> {
 
 	List<ActionPriceHistoric> findActionPriceHistoricByEnterpriseIdOrderByDateAsc(Long id);
+	
+	List<ActionPriceHistoric> findActionPriceHistoricByEnterpriseIdOrderByDateDesc(Long id);
 
 }

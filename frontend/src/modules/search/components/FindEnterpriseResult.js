@@ -112,7 +112,7 @@ const FindEnterpriseResult = () => {
 
 					<h5 className="card-text font-weight-bold">
 						<FormattedMessage id='project.global.fields.actionsPrice' />
-                    :  { (enterprise.actionsPrice==0) ?< PremiumLink name={<FormattedMessage id= 'project.global.fields.notAvaliable'/>} /> : enterprise.actionsPrice} €
+                    :  {(enterprise.actionsPrice == 0) ? < PremiumLink name={<FormattedMessage id='project.global.fields.notAvaliable' />} /> : <p>{enterprise.actionsPrice} €</p>}
                 </h5>
 				</div>
 			</div>
