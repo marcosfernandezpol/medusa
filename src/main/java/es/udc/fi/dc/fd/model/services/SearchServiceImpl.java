@@ -3,6 +3,7 @@ package es.udc.fi.dc.fd.model.services;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import org.hibernate.boot.model.relational.AuxiliaryDatabaseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -34,24 +35,25 @@ public class SearchServiceImpl implements SearchService {
 
 	private Enterprise getDelayedPriceEnterprise(Enterprise enterprise) {
 		List<ActionPriceHistoric> historic = historicDao
-				.findActionPriceHistoricByEnterpriseIdOrderByDateAsc(enterprise.getId());
+				.findActionPriceHistoricByEnterpriseIdOrderByDateDesc(enterprise.getId());
 		List<ActionPriceHistoric> result = new ArrayList<>();
 
 		LocalDateTime standardTimeLapse = LocalDateTime.now().minusMinutes(10);
 
-		for (int i = 0; i < historic.size(); i++) {
+		boolean aux = false;
+		
+		for (int i = 0; i < historic.size() && aux == false; i++) {
 
 			if (standardTimeLapse.isAfter(historic.get(i).getDate())) {
-				result.add(historic.get(i));
+					enterprise.setStockPrice(historic.get(i).getPrice());
+					aux = true;
 			}
 		}
-
-		try {
-			enterprise.setStockPrice(result.get(-1).getPrice());
-		} catch (IndexOutOfBoundsException e) {
-			enterprise.setStockPrice(Float.valueOf(0));
+		
+		if (aux==false) {
+				enterprise.setStockPrice(0f);
 		}
-
+			
 		return enterprise;
 	}
 
