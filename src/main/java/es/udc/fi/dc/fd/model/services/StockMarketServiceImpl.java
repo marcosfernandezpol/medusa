@@ -92,6 +92,10 @@ public class StockMarketServiceImpl implements StockMarketService {
 						enterprise.getStock(), enterprise);
 
 				orderLineDao.save(order);
+				
+				ActionPriceHistoric historic = new ActionPriceHistoric(enterprise, LocalDateTime.now(),
+						enterprise.getStockPrice());
+				actionPriceHistoricDao.save(historic);
 
 			} else {
 				throw new PermissionException();
