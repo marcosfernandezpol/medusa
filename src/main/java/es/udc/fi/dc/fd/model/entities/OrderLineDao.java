@@ -36,5 +36,11 @@ public interface OrderLineDao extends PagingAndSortingRepository<OrderLine, Long
 	public Optional<Slice<OrderLine>> findByOwner(User owner, Pageable pageable);
 	
 	public Optional<List<OrderLine>> findByOwnerAndAvaliableOrderByRequestDateDesc(User owner, Boolean avaliable);
+	
+	public Optional<List<OrderLine>> findByOrderTypeAndOwnerAndEnterpriseAndAvaliableAndCancelledOrderByRequestDateDesc(OrderType orderType,User owner,
+		Enterprise enterprise, Boolean avaliable, Boolean cancelled);
+	
+	public Optional<List<OrderLine>> findByOrderTypeAndOwnerAndEnterpriseAndCancelledOrderByRequestDateDesc(OrderType orderType, User owner,
+			Enterprise enterprise, Boolean cancelled);
 
 }

@@ -337,15 +337,15 @@ public class StockMarketServiceImpl implements StockMarketService {
 		int ss = 0;
 
 		Optional<List<OrderLine>> boughtStockOp = orderLineDao
-				.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, user, enterprise,
-						false);
+				.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableAndCancelledOrderByRequestDateDesc(
+						OrderType.BUY, user, enterprise, false, false);
 
 		if (Boolean.TRUE.equals(sellOnlyNotAvaliable)) {
-			soldStockOp = orderLineDao.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(
-					OrderType.SELL, user, enterprise, false);
+			soldStockOp = orderLineDao.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableAndCancelledOrderByRequestDateDesc(
+					OrderType.SELL, user, enterprise, false, false);
 		} else {
-			soldStockOp = orderLineDao.findByOrderTypeAndOwnerAndEnterpriseOrderByRequestDateDesc(OrderType.SELL, user,
-					enterprise);
+			soldStockOp = orderLineDao.findByOrderTypeAndOwnerAndEnterpriseAndCancelledOrderByRequestDateDesc(OrderType.SELL, user,
+					enterprise,false);
 		}
 
 
