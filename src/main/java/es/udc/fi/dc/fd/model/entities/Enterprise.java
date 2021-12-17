@@ -1,18 +1,10 @@
 package es.udc.fi.dc.fd.model.entities;
 
 import java.beans.Transient;
+
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
+import java.util.*;
+import javax.persistence.*;
 /**
  * The Class Enterprise.
  */

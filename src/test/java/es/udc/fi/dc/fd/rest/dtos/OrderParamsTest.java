@@ -1,6 +1,7 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.transaction.Transactional;
 
@@ -30,7 +31,7 @@ public class OrderParamsTest {
 		int number = 100;
 		long enterpriseId = 1L;
 		OrderLineType orderLineType= OrderLineType.LIMIT;
-		LocalDate deadline = LocalDate.now();
+		LocalDateTime deadline = LocalDateTime.now();
 		
 		params.setType(orderType);
 		params.setPrice(price);

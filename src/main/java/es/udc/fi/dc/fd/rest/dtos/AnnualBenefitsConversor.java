@@ -1,9 +1,7 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import es.udc.fi.dc.fd.model.entities.AnnualBenefits;
-import es.udc.fi.dc.fd.model.entities.Enterprise;
+import es.udc.fi.dc.fd.model.entities.*;
 import es.udc.fi.dc.fd.model.services.SearchService;
 
 public class AnnualBenefitsConversor {
@@ -14,11 +12,11 @@ public class AnnualBenefitsConversor {
 	private AnnualBenefitsConversor() {
 	}
 
-	public final static AnnualBenefitsDto toAnnualBenefitsDto(AnnualBenefits t) {
+	public static final AnnualBenefitsDto toAnnualBenefitsDto(AnnualBenefits t) {
 		return new AnnualBenefitsDto(t.getYear(), t.getBenefits());
 	}
 	
-	public final static AnnualBenefits toAnnualBenefits(AnnualBenefitsDto t) {
+	public static final AnnualBenefits toAnnualBenefits(AnnualBenefitsDto t) {
 		return new AnnualBenefits(t.getYear(), t.getBenefits());
 	}
 

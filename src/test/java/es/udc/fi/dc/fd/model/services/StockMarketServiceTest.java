@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.transaction.Transactional;
 
@@ -70,7 +71,7 @@ public class StockMarketServiceTest {
 	// Creamos un usuario de tipo Administrador
 	private User createAdmin() {
 		return new User("Pol", "fdezpol", "masmejor", "password", "fdezpol007elmasmejor@gmail.com", "Spain", "Santiago",
-				RoleType.ADMIN, 1000F);
+				RoleType.ADMIN, 1000F,User.UserType.STANDARD);
 
 	}
 
@@ -82,7 +83,7 @@ public class StockMarketServiceTest {
 	// Creamos un usuario de tipo Cliente
 	private User createClient() {
 		return new User("MariaM", "Maria", "Martinez", "password", "mariamartinez@gmail.com", "Spain", "A Coruña",
-				RoleType.CLIENT, 1200F);
+				RoleType.CLIENT, 1200F,User.UserType.STANDARD);
 
 	}
 
@@ -93,14 +94,14 @@ public class StockMarketServiceTest {
 	private User createNSavedClientWhitBalance(int n, float balance) {
 		String name = "Maria";
 		User user = new User(name + n, "Maria", "Martinez", "password", "mariamartinez@gmail.com", "Spain", "A Coruña",
-				RoleType.CLIENT, balance);
+				RoleType.CLIENT, balance,User.UserType.STANDARD);
 		return userDao.save(user);
 	}
 
 	// Creamos un usuario de tipo Cliente sin dinero.
 	private User createClientNoMoney() {
 		return new User("MariaM", "Maria", "Martinez", "password", "mariamartinez@gmail.com", "Spain", "A Coruña",
-				RoleType.CLIENT, 0F);
+				RoleType.CLIENT, 0F,User.UserType.STANDARD);
 
 	}
 
@@ -258,11 +259,11 @@ public class StockMarketServiceTest {
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
 		stockMarketService.order(savedClient.getId(), OrderType.BUY, OrderLineType.LIMIT, Float.valueOf(10), 3,
-				savedEnterprise.getId(), LocalDate.now().plusDays(1));
+				savedEnterprise.getId(), LocalDateTime.now().plusDays(1));
 		stockMarketService.order(savedClient.getId(), OrderType.BUY, OrderLineType.LIMIT, Float.valueOf(10), 3,
-				savedEnterprise.getId(), LocalDate.now().plusDays(1));
+				savedEnterprise.getId(), LocalDateTime.now().plusDays(1));
 		stockMarketService.order(savedClient.getId(), OrderType.BUY, OrderLineType.LIMIT, Float.valueOf(10), 3,
-				savedEnterprise.getId(), LocalDate.now().plusDays(1));
+				savedEnterprise.getId(), LocalDateTime.now().plusDays(1));
 		Optional<List<OrderLine>> orderListOp = orderLineDao
 				.findByOwnerAndOrderTypeAndAvaliableOrderByRequestDateDesc(savedClient, OrderType.BUY, true);
 
@@ -285,7 +286,7 @@ public class StockMarketServiceTest {
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
 		stockMarketService.order(savedClient.getId(), OrderType.SELL, OrderLineType.LIMIT, Float.valueOf(10), 3,
-				savedEnterprise.getId(), LocalDate.now().plusDays(1));
+				savedEnterprise.getId(), LocalDateTime.now().plusDays(1));
 
 	}
 
@@ -305,7 +306,7 @@ public class StockMarketServiceTest {
 		User client = createSavedClient();
 		stockMarketService.transfer(client.getId(), 1000F, "INCOME");
 		stockMarketService.order(client.getId(), OrderType.BUY, OrderLineType.LIMIT, 12F, 12, enterprise.getId(),
-				LocalDate.of(2040, 10, 10));
+				LocalDateTime.now().plusDays(10));
 		assertEquals(10, stockMarketService.searchUserActionsNumber(client, enterprise, false));
 		
 	}
@@ -326,7 +327,7 @@ public class StockMarketServiceTest {
 		User client = createSavedClient();
 		stockMarketService.transfer(client.getId(), 1000F, "INCOME");
 		stockMarketService.order(client.getId(), OrderType.BUY, OrderLineType.MARKET, 12F, 12, enterprise.getId(),
-				LocalDate.of(2040, 10, 10));
+				LocalDateTime.now().plusDays(10));
 		assertEquals(stockMarketService.searchUserActionsNumber(client, enterprise, false), 10);
 		
 	}
@@ -348,7 +349,7 @@ public class StockMarketServiceTest {
 		User client = createSavedClient();
 		stockMarketService.transfer(client.getId(), 1000F, "INCOME");
 		stockMarketService.order(client.getId(), OrderType.BUY, OrderLineType.MARKET, 12F, 12, enterprise.getId(),
-				LocalDate.of(2040, 10, 10));
+				LocalDateTime.now().plusDays(10));
 		assertEquals(stockMarketService.searchUserActionsNumber(client, enterprise, false), 0);
 		assertEquals(false, enterprise.isAvaliable());
 		
@@ -371,7 +372,7 @@ public class StockMarketServiceTest {
 		User client = createSavedClient();
 		stockMarketService.transfer(client.getId(), 1000F, "INCOME");
 		stockMarketService.order(client.getId(), OrderType.BUY, OrderLineType.MARKET, 12F, 12, enterprise.getId(),
-				LocalDate.of(2040, 10, 10));
+				LocalDateTime.now().plusDays(10));
 		stockMarketService.modifyAvaliableEnterprise(admin.getId(), enterprise.getId(), true);
 		assertEquals(stockMarketService.searchUserActionsNumber(client, enterprise, false), 10);
 		assertEquals(true, enterprise.isAvaliable());
@@ -394,13 +395,13 @@ public class StockMarketServiceTest {
 		User client = createSavedClient();
 		stockMarketService.transfer(client.getId(), 1000F, "INCOME");
 		stockMarketService.order(client.getId(), OrderType.BUY, OrderLineType.MARKET, 12F, 12, enterprise.getId(),
-				LocalDate.of(2040, 10, 10));
+				LocalDateTime.now().plusDays(10));
 		stockMarketService.order(client.getId(), OrderType.SELL, OrderLineType.LIMIT, 8F, 10, enterprise.getId(),
-				LocalDate.of(2040, 10, 10));
+				LocalDateTime.now().plusDays(10));
 		
 		User client2 = createNSavedClientWhitBalance(1, 1000F);
 		stockMarketService.order(client2.getId(), OrderType.BUY, OrderLineType.MARKET, 12F, 8, enterprise.getId(),
-				LocalDate.of(2040, 10, 10));
+				LocalDateTime.now().plusDays(10));
 		
 		
 		assertEquals(8, stockMarketService.searchUserActionsNumber(client2, enterprise, false));
@@ -423,41 +424,41 @@ public class StockMarketServiceTest {
 		User client = createSavedClient();
 		stockMarketService.transfer(client.getId(), 1000F, "INCOME");
 		stockMarketService.order(client.getId(), OrderType.BUY, OrderLineType.MARKET, 12F, 12, enterprise.getId(),
-				LocalDate.of(2040, 10, 10));
+				LocalDateTime.now().plusDays(10));
 		stockMarketService.order(client.getId(), OrderType.SELL, OrderLineType.MARKET, 8F, 10, enterprise.getId(),
-				LocalDate.of(2040, 10, 10));
+				LocalDateTime.now().plusDays(10));
 		
 		User client2 = createNSavedClientWhitBalance(1, 1000F);
 		stockMarketService.order(client2.getId(), OrderType.BUY, OrderLineType.LIMIT, 12F, 8, enterprise.getId(),
-				LocalDate.of(2040, 10, 10));
+				LocalDateTime.now().plusDays(10));
 		
 		assertEquals(2, stockMarketService.searchUserActionsNumber(client, enterprise, true));
 		assertEquals(8, stockMarketService.searchUserActionsNumber(client2, enterprise, false));
 		
 	}
 	
-	@Test (expected = InstanceNotFoundException.class)
-	
-	public void sellUserActionsMarketAndBuyUserLimitDeletedOrder()
-			throws DuplicateInstanceException, PermissionException, NumberException, InstanceNotFoundException,
-			InvalidOperationException, NotEnoughBalanceException, NotOwnedException, NotAvaliableException {
-
-		User admin = createSavedAdmin();
-		Enterprise enterprise = createEnterprise();
-		enterprise.setCreatorId(admin.getId());
-		enterprise.setStockPrice(10F);
-		enterprise.setStock(10);
-
-		stockMarketService.createEnterprise(admin.getId(), enterprise);
-
-		User client = createSavedClient();
-		long orderId = stockMarketService.order(client.getId(), OrderType.BUY, OrderLineType.MARKET, 12F, 12, enterprise.getId(),
-				LocalDate.of(2040, 10, 10));
-		stockMarketService.deleteOrder(client.getId(), orderId, true);
-		stockMarketService.deleteOrder(client.getId(), orderId, true);
-		
-		
-	}
+//	@Test (expected = InstanceNotFoundException.class)
+//	
+//	public void sellUserActionsMarketAndBuyUserLimitDeletedOrder()
+//			throws DuplicateInstanceException, PermissionException, NumberException, InstanceNotFoundException,
+//			InvalidOperationException, NotEnoughBalanceException, NotOwnedException, NotAvaliableException {
+//
+//		User admin = createSavedAdmin();
+//		Enterprise enterprise = createEnterprise();
+//		enterprise.setCreatorId(admin.getId());
+//		enterprise.setStockPrice(10F);
+//		enterprise.setStock(10);
+//
+//		stockMarketService.createEnterprise(admin.getId(), enterprise);
+//
+//		User client = createSavedClient();
+//		long orderId = stockMarketService.order(client.getId(), OrderType.BUY, OrderLineType.MARKET, 12F, 12, enterprise.getId(),
+//				LocalDateTime.now().plusDays(10));
+//		stockMarketService.deleteOrder(client.getId(), orderId, true);
+//		stockMarketService.deleteOrder(client.getId(), orderId, true);
+//		
+//		
+//	}
 	
 @Test 
 	public void searchUserActionsDeletedOrders()
@@ -474,9 +475,9 @@ public class StockMarketServiceTest {
 
 		User client = createSavedClient();
 		long orderId = stockMarketService.order(client.getId(), OrderType.BUY, OrderLineType.MARKET, 12F, 12, enterprise.getId(),
-				LocalDate.of(2040, 10, 10));
+				LocalDateTime.now().plusDays(10));
 		stockMarketService.deleteOrder(client.getId(), orderId, true);
-		assertEquals(0, stockMarketService.searchUserActionsNumber(client, enterprise, true));
+		assertEquals(true,orderLineDao.findById(orderId).get().getCancelled());
 		
 		
 	}
@@ -496,7 +497,7 @@ public void searchUserActionsDeletedOrdersNotAvaliableThrowsNotAvaliableExceptio
 
 	User client = createSavedClient();
 	long orderId = stockMarketService.order(client.getId(), OrderType.BUY, OrderLineType.MARKET, 12F, 12, enterprise.getId(),
-			LocalDate.of(2040, 10, 10));
+			LocalDateTime.now().plusDays(10));
 	stockMarketService.deleteOrder(client.getId(), orderId, false);
 	
 	
@@ -517,7 +518,7 @@ public void searchUserActionsDeletedOrdersThrowsNotOwnedException()
 
 	User client = createSavedClient();
 	long orderId = stockMarketService.order(client.getId(), OrderType.BUY, OrderLineType.MARKET, 12F, 12, enterprise.getId(),
-			LocalDate.of(2040, 10, 10));
+			LocalDateTime.now().plusDays(10));
 	User client2 = createNSavedClientWhitBalance(1, 10f);
 	stockMarketService.deleteOrder(client2.getId(), orderId, false);
 	

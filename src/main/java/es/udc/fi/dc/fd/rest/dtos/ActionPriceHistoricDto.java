@@ -1,7 +1,5 @@
 package es.udc.fi.dc.fd.rest.dtos;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 public class ActionPriceHistoricDto {

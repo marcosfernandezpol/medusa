@@ -64,14 +64,13 @@ public class StockMarketServiceImpl implements StockMarketService {
 	public Enterprise createEnterprise(Long userId, Enterprise enterprise)
 			throws DuplicateInstanceException, PermissionException, NumberException {
 
-		Optional<User> userOp = null;
 		User user = null;
 
 		if (enterpriseDao.existsByEnterpriseName(enterprise.getEnterpriseName())) {
 			throw new DuplicateInstanceException("project.entities.enterprise", enterprise.getEnterpriseName());
 		}
 
-		userOp = userDao.findById(userId);
+		Optional<User> userOp = userDao.findById(userId);
 		if (userOp.isPresent()) { // Aqui habría que añadir algo para cuando el user no exista
 			user = userOp.get();
 
@@ -93,6 +92,10 @@ public class StockMarketServiceImpl implements StockMarketService {
 						enterprise.getStock(), enterprise);
 
 				orderLineDao.save(order);
+				
+				ActionPriceHistoric historic = new ActionPriceHistoric(enterprise, LocalDateTime.now(),
+						enterprise.getStockPrice());
+				actionPriceHistoricDao.save(historic);
 
 			} else {
 				throw new PermissionException();
@@ -106,33 +109,36 @@ public class StockMarketServiceImpl implements StockMarketService {
 	public float transfer(Long userId, Float money, String operation)
 			throws InvalidOperationException, InstanceNotFoundException, NotEnoughBalanceException {
 
-		// Comprobamos la existencia del usuario
 		permissionChecker.checkUser(userId);
 
-		// Recuperamos el usuario ya existente
 		Optional<User> existUser = userDao.findById(userId);
-		User user = existUser.get();
 
-		if (money <= 0) {
-			throw new InvalidOperationException();
-		}
-
-		if (operation.equals("INCOME")) { // Caso de ingresar
-			user.setBalance(money + user.getBalance());
-			userDao.save(user);
-			return user.getBalance();
-		} else if (operation.equals("WITHDRAW")) { // Caso de retirar
-			if (user.getBalance() >= money) {
-				user.setBalance(user.getBalance() - money);
-				userDao.save(user);
-				return user.getBalance();
-			} else {
-
-				throw new NotEnoughBalanceException("Not enough balance"); // Cantidad para retirar insuficiente
+		if (existUser.isPresent()) {
+			User user = existUser.get();
+			
+			if (money <= 0) {
+				throw new InvalidOperationException();
 			}
 
-		} else {
-			throw new InvalidOperationException();
+			if (operation.equals("INCOME")) { 
+				user.setBalance(money + user.getBalance());
+				userDao.save(user);
+				return user.getBalance();
+			} else if (operation.equals("WITHDRAW")) { 
+				if (user.getBalance() >= money) {
+					user.setBalance(user.getBalance() - money);
+					userDao.save(user);
+					return user.getBalance();
+				} else {
+
+					throw new NotEnoughBalanceException("Not enough balance"); 
+				}
+
+			} else {
+				throw new InvalidOperationException();
+			}
+		}else {
+			throw new InstanceNotFoundException("No existe usuario con id", existUser);
 		}
 
 	}
@@ -238,7 +244,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 			List<OrderLine> sellOrders = sellOrdersO.get();
 
 			for (OrderLine sellOrder : sellOrders) {
-				if (sellOrder.getDeadline() == null || sellOrder.getDeadline().isAfter(LocalDate.now())) {
+				if (sellOrder.getDeadline() == null || sellOrder.getDeadline().isAfter(LocalDateTime.now())) {
 
 					if ((sellOrder.getPrice() <= buyOrder.getPrice())
 							|| (sellOrder.getOrderLineType().equals(OrderLineType.MARKET))) {
@@ -253,7 +259,13 @@ public class StockMarketServiceImpl implements StockMarketService {
 						}
 						manageOrdersNumber(enterprise, sellOrder, buyOrder, price);
 					}
+				}else {
+				try {
+					deleteOrder(sellOrder.getOwner().getId(), sellOrder.getId(), sellOrder.getAvaliable());
+				} catch (InstanceNotFoundException | NotOwnedException | NotAvaliableException e) {
+					e.printStackTrace();
 				}
+			}
 			}
 		}
 	}
@@ -267,7 +279,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 			List<OrderLine> sellOrders = sellOrdersO.get();
 
 			for (OrderLine sellOrder : sellOrders) {
-				if (sellOrder.getDeadline() == null || sellOrder.getDeadline().isAfter(LocalDate.now())) {
+				if (sellOrder.getDeadline() == null || sellOrder.getDeadline().isAfter(LocalDateTime.now())) {
 					float price;
 
 					if (sellOrder.getOwner() == null) {
@@ -277,6 +289,12 @@ public class StockMarketServiceImpl implements StockMarketService {
 								: sellOrder.getPrice();
 					}
 					manageOrdersNumber(enterprise, sellOrder, buyOrder, price);
+				}else {
+					try {
+						deleteOrder(sellOrder.getOwner().getId(), sellOrder.getId(), sellOrder.getAvaliable());
+					} catch (InstanceNotFoundException | NotOwnedException | NotAvaliableException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -287,24 +305,27 @@ public class StockMarketServiceImpl implements StockMarketService {
 		Optional<List<OrderLine>> buyOrdersO = orderLineDao
 				.findByOrderTypeAndEnterpriseAndAvaliableOrderByRequestDateAsc(OrderType.BUY, enterprise, true);
 
-		if (enterprise.isAvaliable()) {
-			if (buyOrdersO.isPresent()) {
+		if (enterprise.isAvaliable() && buyOrdersO.isPresent()) {
 
 				List<OrderLine> buyOrders = buyOrdersO.get();
 
 				for (OrderLine buyOrder : buyOrders) {
-					if (buyOrder.getDeadline().isAfter(LocalDate.now())) {
+					if (buyOrder.getDeadline().isAfter(LocalDateTime.now())) {
 
 						if (buyOrder.getOrderLineType().equals(OrderLineType.LIMIT)) {
 							matchBuyLimitOrder(buyOrder, enterprise);
 						} else {
 							matchBuyMarketOrder(buyOrder, enterprise);
 						}
+					}else {
+						try {
+							deleteOrder(buyOrder.getOwner().getId(), buyOrder.getId(), buyOrder.getAvaliable());
+						} catch (InstanceNotFoundException | NotOwnedException | NotAvaliableException e) {
+							e.printStackTrace();
+						}
 					}
 				}
-			}
 		}
-
 	}
 
 	public int searchUserActionsNumber(User user, Enterprise enterprise, Boolean sellOnlyNotAvaliable) {
@@ -312,20 +333,21 @@ public class StockMarketServiceImpl implements StockMarketService {
 		List<OrderLine> soldStock = null;
 		Optional<List<OrderLine>> soldStockOp = null;
 
-		Optional<List<OrderLine>> boughtStockOp = orderLineDao
-				.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(OrderType.BUY, user, enterprise,
-						false);
-
-		if (sellOnlyNotAvaliable) {
-			soldStockOp = orderLineDao.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableOrderByRequestDateDesc(
-					OrderType.SELL, user, enterprise, false);
-		} else {
-			soldStockOp = orderLineDao.findByOrderTypeAndOwnerAndEnterpriseOrderByRequestDateDesc(OrderType.SELL, user,
-					enterprise);
-		}
-
 		int bs = 0;
 		int ss = 0;
+
+		Optional<List<OrderLine>> boughtStockOp = orderLineDao
+				.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableAndCancelledOrderByRequestDateDesc(
+						OrderType.BUY, user, enterprise, false, false);
+
+		if (Boolean.TRUE.equals(sellOnlyNotAvaliable)) {
+			soldStockOp = orderLineDao.findByOrderTypeAndOwnerAndEnterpriseAndAvaliableAndCancelledOrderByRequestDateDesc(
+					OrderType.SELL, user, enterprise, false, false);
+		} else {
+			soldStockOp = orderLineDao.findByOrderTypeAndOwnerAndEnterpriseAndCancelledOrderByRequestDateDesc(OrderType.SELL, user,
+					enterprise,false);
+		}
+
 
 		if (boughtStockOp.isPresent()) {
 			boughtStock = boughtStockOp.get();
@@ -347,7 +369,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 	@Override
 	public long order(Long owner, OrderType orderType, OrderLineType orderLineType, Float price, int number,
-			Long enterpriseId, LocalDate deadline)
+			Long enterpriseId, LocalDateTime deadline)
 			throws NotEnoughBalanceException, NotOwnedException, NotAvaliableException {
 
 		User user = null;
@@ -386,7 +408,6 @@ public class StockMarketServiceImpl implements StockMarketService {
 			throws DuplicateInstanceException, PermissionException, InstanceNotFoundException,
 			InvalidArgumentException {
 
-		Optional<User> userOp = null;
 		User user = null;
 
 		Optional<Enterprise> enterprise = enterpriseDao.findById(enterpriseId);
@@ -396,8 +417,8 @@ public class StockMarketServiceImpl implements StockMarketService {
 		}
 		Enterprise enter = enterprise.get();
 
-		userOp = userDao.findById(userId);
-		if (userOp.isPresent()) { // Aqui habría que añadir algo para cuando el user no exista
+		Optional<User> userOp = userDao.findById(userId);
+		if (userOp.isPresent()) {
 			user = userOp.get();
 
 			if (user.getRole() != RoleType.ADMIN) {
@@ -441,14 +462,15 @@ public class StockMarketServiceImpl implements StockMarketService {
 		Optional<User> userOp = userDao.findById(owner);
 		Optional<OrderLine> orderOp = orderLineDao.findById(orderId);
 
-		if (orderOp.isPresent()) {
+		if (orderOp.isPresent() && userOp.isPresent()){
 			order = orderOp.get();
 
 			if (userOp.get().equals(order.getOwner())) { // condition changed
 
-				if (avaliable) {
+				if (Boolean.TRUE.equals(avaliable)) {
 					order.setAvaliable(false);
-					orderLineDao.delete(order);
+					order.setCancelled(true);
+					orderLineDao.save(order);
 				} else {
 					throw new NotAvaliableException();
 				}
@@ -481,14 +503,14 @@ public class StockMarketServiceImpl implements StockMarketService {
 
 		enterprise = enterpriseOp.get();
 
-		if (adminId != enterprise.getCreatorId()) {
+		if (!adminId.equals(enterprise.getCreatorId())) {
 			throw new NotCreatorException();
 		}
 
 		enterprise.setAvaliable(avaliable);
 		enterpriseDao.save(enterprise);
 
-		if (avaliable) {
+		if (Boolean.TRUE.equals(avaliable)) {
 			match(enterprise);
 		}
 

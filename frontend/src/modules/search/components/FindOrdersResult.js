@@ -7,6 +7,8 @@ import { useHistory } from 'react-router-dom';
 import * as actions from '../actions';
 
 
+import TrashSvg from './trash-alt-solid.svg';
+
 const FindOrdersResult = ({ orders, displayTrash }) => {
 
 	const enterprises = useSelector(selectors.getEnterprises);
@@ -65,10 +67,10 @@ const FindOrdersResult = ({ orders, displayTrash }) => {
 						{order.price == 0 && <td> <FormattedMessage id='project.global.fields.priceNotEspecified' /> </td>}
 						<td> {order.number} </td>
 						<td> {selectors.getEnterpriseName(enterprises, order.enterpriseId)} </td>
-						<td> {order.deadline} </td>
+						<td> {new Date(order.deadline).toLocaleString()} </td>
 						<td> {order.orderLineType} </td>
 
-						{displayTrash && <td> <button class=" fas fa-trash btn btn-light shadow-none" onClick={() => handleClick({ order })}></button></td>}
+						{displayTrash && <td> <button class="btn btn-danger shadow-none text-centerS" onClick={() => handleClick({ order })}> <img src={TrashSvg} width="16em" height="16em"/></button></td>}
 					</tr>
 
 

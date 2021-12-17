@@ -13,6 +13,7 @@ CREATE TABLE User (
     firstName VARCHAR(60) NOT NULL,
     lastName VARCHAR(60) NOT NULL,
     role TINYINT NOT NULL,
+    type TINYINT NOT NULL,
     country VARCHAR(60),
     city VARCHAR(60),
     email VARCHAR(60) NOT NULL,
@@ -83,7 +84,8 @@ CREATE TABLE OrderLine (
 	number INT  NOT NULL,
 	enterpriseId BIGINT NOT NULL,
 	avaliable BIT,
-	deadline DATE,
+	cancelled BIT,
+	deadline DATETIME,
 	CONSTRAINT Order_linePK PRIMARY KEY (id),
 	CONSTRAINT OwnerFK FOREIGN KEY (userId) REFERENCES User(id),
 	CONSTRAINT enterpriseFK FOREIGN KEY (enterpriseId) REFERENCES Enterprise(id)

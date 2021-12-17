@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.util.List;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.transaction.Transactional;
 
@@ -67,7 +68,7 @@ public class SearchServiceTest {
 	 */
 	private User createUser(String userName) {
 		return new User(userName, "firstName", "lastName", "password", userName + "@" + userName + ".com",
-				User.RoleType.ADMIN, "Spain", "Galicia");
+				User.RoleType.ADMIN, "Spain", "Galicia",User.UserType.STANDARD);
 	}
 
 	private Long adminId(User user) throws DuplicateInstanceException {
@@ -86,12 +87,12 @@ public class SearchServiceTest {
 	// Creamos un usuario de tipo Cliente
 	private User createClient() {
 		return new User("MariaM", "Maria", "Martinez", "password", "mariamartinez@gmail.com", "Spain", "A Coruña",
-				RoleType.CLIENT, 1200F);
+				RoleType.CLIENT, 1200F,User.UserType.STANDARD);
 
 	}
 
 	@Test
-	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException, NumberException {
+	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException, NumberException, InstanceNotFoundException {
 
 		User user = createUser("Manolo");
 		Long id = adminId(user);
@@ -101,7 +102,7 @@ public class SearchServiceTest {
 		marketService.createEnterprise(id, createEnterprise("pol&sons", "PS", id));
 		marketService.createEnterprise(id, createEnterprise("aòiergo", "ASD", id));
 
-		enterprises = searchService.findAllEnterprises();
+		enterprises = searchService.findAllEnterprises(id);
 
 		for (int i = 0; i < 2; i++) {
 			assertNotNull(enterprises.get(i).getId());
@@ -122,9 +123,9 @@ public class SearchServiceTest {
 		User savedClient = userDao.save(client);
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDateTime.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDateTime.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDateTime.now().plusDays(1)));
 		List<OrderLine> orderList = searchService.findOrders(savedClient.getId(), true, true);
 
 		assertTrue(orderList.size() == 3);
@@ -143,9 +144,9 @@ public class SearchServiceTest {
 		User savedClient = userDao.save(client);
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
 
-		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().minusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
-		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDate.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDateTime.now().minusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDateTime.now().plusDays(1)));
+		orderLineDao.save(new OrderLine(OrderType.BUY, OrderLineType.LIMIT, savedClient, Float.valueOf(10), 3, savedEnterprise, LocalDateTime.now().plusDays(1)));
 		List<OrderLine> orderList = searchService.findOrders(savedClient.getId(), true, true);
 
 		assertTrue(orderList.size() == 2);
@@ -160,8 +161,8 @@ public class SearchServiceTest {
 		Enterprise enterprise = createEnterprise("adidas", "ads", id);
 
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
-		searchService.findEnterprise(savedEnterprise.getId());
-		searchService.findEnterprise(Long.valueOf(-1));
+		searchService.findEnterprise(id, savedEnterprise.getId());
+		searchService.findEnterprise(id, Long.valueOf(-1));
 
 	}
 

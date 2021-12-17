@@ -14,3 +14,6 @@ export const getUserName = state =>
 
 export const getUserBalance = state => 
     isLoggedIn(state) ?  getUser(state).balance : null;
+
+export const getUserType = state =>
+	isLoggedIn(state) ? getUser(state).type : null;

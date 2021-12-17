@@ -13,8 +13,9 @@ const CreateOrders = () => {
 	const [numberActions, setNumberActions] = useState('');
 	const [priceActions, setPriceActions] = useState('');
 	const [deadline, setDeadline] = useState('');
+	const [time, setTime] = useState('');
 	const [backendErrors, setBackendErrors] = useState(null);
-	const { id, enterpriseName, type } = useParams();
+	const { id, type } = useParams();
 	let form;
 
 	const handleSubmit = event => {
@@ -22,6 +23,8 @@ const CreateOrders = () => {
 		event.preventDefault();
 
 		if (form.checkValidity()) {
+			
+			const fechaHora = deadline+"T"+time+":00";
 
 			dispatch(actions.createOrder(
 				{
@@ -30,7 +33,7 @@ const CreateOrders = () => {
 					price: priceActions.trim(),
 					number: numberActions.trim(),
 					enterpriseId: id.trim(),
-					deadline: deadline.trim()
+					deadline: fechaHora
 				},
 				() => history.push('/search/orders'),
 				errors => setBackendErrors(errors),
@@ -95,6 +98,13 @@ const CreateOrders = () => {
 									value={deadline}
 									min = {new Date().toISOString().split('T')[0]}
 									onChange={e => setDeadline(e.target.value)}
+									required />
+								<div className="invalid-feedback">
+									<FormattedMessage id='project.global.validator.required' />
+								</div>
+								<input type="time" id="deadline-time" className="form-control"
+									value={time}
+									onChange={e => setTime(e.target.value)}
 									required />
 								<div className="invalid-feedback">
 									<FormattedMessage id='project.global.validator.required' />

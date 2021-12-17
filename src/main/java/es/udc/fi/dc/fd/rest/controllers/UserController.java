@@ -29,6 +29,7 @@ import es.udc.fi.dc.fd.model.common.exceptions.InstanceNotFoundException;
 import es.udc.fi.dc.fd.model.entities.User;
 import es.udc.fi.dc.fd.model.services.exceptions.IncorrectLoginException;
 import es.udc.fi.dc.fd.model.services.exceptions.IncorrectPasswordException;
+import es.udc.fi.dc.fd.model.common.exceptions.NotEnoughBalanceException;
 import es.udc.fi.dc.fd.model.services.exceptions.PermissionException;
 import es.udc.fi.dc.fd.model.services.UserService;
 import es.udc.fi.dc.fd.rest.common.ErrorsDto;
@@ -51,6 +52,9 @@ public class UserController {
 
 	/** The Constant INCORRECT_PASSWORD_EXCEPTION_CODE. */
 	private static final String INCORRECT_PASS_EXCEPTION_CODE = "project.exceptions.IncorrectPasswordException";
+	
+	/** The Constant INCORRECT_PASSWORD_EXCEPTION_CODE. */
+	private static final String INCORRECT_NOT_ENOUGH_MONEY = "project.exceptions.NotEnoughMoneyException";
 
 	/** The message source. */
 	@Autowired
@@ -97,6 +101,25 @@ public class UserController {
 
 		String errorMessage = messageSource.getMessage(INCORRECT_PASS_EXCEPTION_CODE, null,
 				INCORRECT_PASS_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
+	}
+	
+	/**
+	 * Handle no money exception.
+	 *
+	 * @param exception the exception
+	 * @param locale    the locale
+	 * @return the errors dto
+	 */
+	@ExceptionHandler(NotEnoughBalanceException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ErrorsDto handleNotEnoughBalanceException(NotEnoughBalanceException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(INCORRECT_NOT_ENOUGH_MONEY, null,
+				INCORRECT_NOT_ENOUGH_MONEY, locale);
 
 		return new ErrorsDto(errorMessage);
 
@@ -206,6 +229,34 @@ public class UserController {
 		userService.changePassword(id, params.getOldPassword(), params.getNewPassword());
 
 	}
+	
+	
+	@PostMapping("/{id}/upgrade")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void upgrade(@RequestAttribute Long userId, @PathVariable Long id)
+			throws PermissionException, InstanceNotFoundException, NotEnoughBalanceException{
+
+		if (!id.equals(userId)) {
+			throw new PermissionException();
+		}
+
+		userService.upgradeAccount(id);
+
+	}
+	
+	@PostMapping("/{id}/downgrade")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void downgrade(@RequestAttribute Long userId, @PathVariable Long id)
+			throws PermissionException, InstanceNotFoundException{
+
+		if (!id.equals(userId)) {
+			throw new PermissionException();
+		}
+
+		userService.demoteAccount(id);
+
+	}
+	
 	
 	/**
 	 * Generate service token.

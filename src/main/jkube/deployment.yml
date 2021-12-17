@@ -52,4 +52,5 @@ spec:
         ports:
         - containerPort: 8080
       imagePullSecrets:
-        - name: medusa
+        - name: fd-reg-cred
+
