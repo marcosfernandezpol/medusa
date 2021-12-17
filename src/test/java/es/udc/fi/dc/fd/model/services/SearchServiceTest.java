@@ -92,7 +92,7 @@ public class SearchServiceTest {
 	}
 
 	@Test
-	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException, NumberException {
+	public void testCreateEnterprise() throws DuplicateInstanceException, PermissionException, NumberException, InstanceNotFoundException {
 
 		User user = createUser("Manolo");
 		Long id = adminId(user);
@@ -102,7 +102,7 @@ public class SearchServiceTest {
 		marketService.createEnterprise(id, createEnterprise("pol&sons", "PS", id));
 		marketService.createEnterprise(id, createEnterprise("aòiergo", "ASD", id));
 
-		enterprises = searchService.findAllEnterprises();
+		enterprises = searchService.findAllEnterprises(id);
 
 		for (int i = 0; i < 2; i++) {
 			assertNotNull(enterprises.get(i).getId());
@@ -161,8 +161,8 @@ public class SearchServiceTest {
 		Enterprise enterprise = createEnterprise("adidas", "ads", id);
 
 		Enterprise savedEnterprise = enterpriseDao.save(enterprise);
-		searchService.findEnterprise(savedEnterprise.getId());
-		searchService.findEnterprise(Long.valueOf(-1));
+		searchService.findEnterprise(id, savedEnterprise.getId());
+		searchService.findEnterprise(id, Long.valueOf(-1));
 
 	}
 

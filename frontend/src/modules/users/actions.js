@@ -64,3 +64,13 @@ export const updateProfile = (user, onSuccess, onErrors) => dispatch =>
 
 export const changePassword = (id, oldPassword, newPassword, onSuccess, onErrors) => dispatch =>
     backend.userService.changePassword(id, oldPassword, newPassword, onSuccess, onErrors);
+
+
+
+export const upgrade = (id, onSuccess, onErrors) => dispatch =>
+	backend.userService.upgradeProfile(id, onSuccess, onErrors);
+
+
+
+
+

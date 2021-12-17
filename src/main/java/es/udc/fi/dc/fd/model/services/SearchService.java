@@ -10,13 +10,13 @@ import es.udc.fi.dc.fd.model.entities.OrderLine;
 
 public interface SearchService {
 
-	public List<Enterprise> findAllEnterprises();
+	public List<Enterprise> findAllEnterprises(Long userId) throws InstanceNotFoundException;
 
 	public List<OrderLine> findOrders(Long userId, Boolean option, Boolean avaliable);
 
-	public Enterprise findEnterprise(Long id) throws InstanceNotFoundException;
+	public Enterprise findEnterprise(Long userId, Long id) throws InstanceNotFoundException;
 	
-	public List<ActionPriceHistoric> findHistorics(Long id, int numberOfDays) throws InstanceNotFoundException;
+	public List<ActionPriceHistoric> findHistorics(Long userId, Long id, int numberOfDays) throws InstanceNotFoundException;
 
 	public List<Actions> findUserActions(Long userId)throws InstanceNotFoundException;
 }
